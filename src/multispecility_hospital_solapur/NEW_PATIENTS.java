@@ -28,6 +28,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         initComponents();  
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         statement = new GetConnection().Connect_mysql();
+        this.getAllUsers();
         showDate();
         showTime();
 
@@ -50,6 +51,14 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
             
         }).start();
     }
+     public void getAllUsers(){
+        //        PATIENTS
+        String total = new getTotalUsers().getTotalPatients();
+        int tempTotal = 1+ Integer.parseInt(total);
+        PID.setText(Integer.toString(tempTotal)); 
+
+       
+  }
 
      void getData() {
       
@@ -915,14 +924,14 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         getData();
        
         try {
-            String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENT";
+            String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS";
             ResultSet result = statement.executeQuery(query);
             
             while (result.next()) {
                 Sr = Integer.parseInt(result.getString("SR"));
             }
             System.out.println(Sr); 
-           query = ("INSERT INTO VHSHOSPITAL.APPOINTMENT (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','"  + Dob + "','" + Mstatus + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + ",'" + Panno + "','" + Drname + "'," + Fee + "," + Opdno + ",'" + Symptoms + "','" + Address + "','" + City + "','" + District + "','" + State + "','" + Country + "'," + Pincode + ",'" + Date + "','" + Time + "')");
+           query = ("INSERT INTO VHSHOSPITAL.APPOINTMENTS (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','"  + Dob + "','" + Mstatus + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + ",'" + Panno + "','" + Drname + "'," + Fee + "," + Opdno + ",'" + Symptoms + "','" + Address + "','" + City + "','" + District + "','" + State + "','" + Country + "'," + Pincode + ",'" + Date + "','" + Time + "')");
             statement.execute(query);
             clearFields();
         } catch (Exception e) {
@@ -936,7 +945,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
 getData();
         try {
 
-            String query = " UPDATE VHSHOSPITAL.APPOINTMENT SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "AADHAARNO=" + Aadhaarno + "," + "PANNO=" + "'" + Panno + "'," + "DRNAME=" + "'" + Drname + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opdno + "," + "SYMPTOMS=" + "'" + Symptoms + "'," + "ADDRESS=" + "'" + Address + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PINCODE=" + Pincode + " WHERE PID=" + Pid;
+            String query = " UPDATE VHSHOSPITAL.APPOINTMENTS SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "AADHAARNO=" + Aadhaarno + "," + "PANNO=" + "'" + Panno + "'," + "DRNAME=" + "'" + Drname + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opdno + "," + "SYMPTOMS=" + "'" + Symptoms + "'," + "ADDRESS=" + "'" + Address + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PINCODE=" + Pincode + " WHERE PID=" + Pid;
             
             System.out.println(query); 
 
@@ -950,7 +959,7 @@ getData();
 
     private void DELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEActionPerformed
         Pid = Integer.parseInt(PID.getText());
-        String query = "DELETE FROM VHSHOSPITAL.APPOINTMENT WHERE PID=" + Pid;
+        String query = "DELETE FROM VHSHOSPITAL.APPOINTMENTS WHERE PID=" + Pid;
         try {
             statement.execute(query);
             clearFields();
@@ -967,7 +976,7 @@ getData();
     private void PIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PIDKeyPressed
          if (evt.getKeyCode() == (10)) {
             try {
-                String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENT WHERE PID=" + Integer.parseInt(PID.getText());   
+                String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS WHERE PID=" + Integer.parseInt(PID.getText());   
 
                 ResultSet result = statement.executeQuery(query);
                 while (result.next()) { 
@@ -1034,7 +1043,7 @@ getData();
 
     private void VIEWMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWMouseClicked
           try {
-            String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENT";
+            String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS";
             ResultSet result = statement.executeQuery(query);
             
             PATIENTS data = new PATIENTS();

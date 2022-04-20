@@ -67,5 +67,20 @@ public class getTotalUsers {
         return total;
     }
     
+      public static  String getTotalPatients(){
+        String total="";
+        Statement staetment = new GetConnection().Connect_mysql();
+       try{
+            ResultSet res = staetment.executeQuery("SELECT COUNT(SR) AS COUNT FROM VHSHOSPITAL.APPOINTMENTS");
+            while(res.next()){
+            total = res.getString("count");
+        }
+       }catch(Exception e ){
+           System.out.println(e);
+       }
+        
+        return total;
+    }
+    
     
 }

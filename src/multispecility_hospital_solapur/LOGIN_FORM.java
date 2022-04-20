@@ -6,10 +6,15 @@ import java.text.SimpleDateFormat;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import multispecility_hospital_solapur.LOGIN.ADMIN;
+import multispecility_hospital_solapur.LOGIN.DOCTORS;
+import multispecility_hospital_solapur.LOGIN.RECPTIONIST;
 import multispecility_hospital_solapur.use.GetConnection;
 public class LOGIN_FORM extends javax.swing.JFrame {
 
@@ -57,9 +62,9 @@ void showTime(){
         LoginButton = new javax.swing.JButton();
         PasswordLable = new javax.swing.JLabel();
         UsernameLable = new javax.swing.JLabel();
-        USERNAME = new javax.swing.JTextField();
+        edtUsername = new javax.swing.JTextField();
         ShowError = new javax.swing.JLabel();
-        PASSWORD = new javax.swing.JPasswordField();
+        edtPassword = new javax.swing.JPasswordField();
         SeparatorLine = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -102,27 +107,27 @@ void showTime(){
         UsernameLable.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         UsernameLable.setText("USERNAME   :  ");
 
-        USERNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        USERNAME.setToolTipText("Enter UserName");
-        USERNAME.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        USERNAME.addActionListener(new java.awt.event.ActionListener() {
+        edtUsername.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        edtUsername.setToolTipText("Enter UserName");
+        edtUsername.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        edtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                USERNAMEActionPerformed(evt);
+                edtUsernameActionPerformed(evt);
             }
         });
-        USERNAME.addKeyListener(new java.awt.event.KeyAdapter() {
+        edtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                USERNAMEKeyPressed(evt);
+                edtUsernameKeyPressed(evt);
             }
         });
 
         ShowError.setForeground(new java.awt.Color(153, 0, 0));
         ShowError.setText("                                                      ");
 
-        PASSWORD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        PASSWORD.addKeyListener(new java.awt.event.KeyAdapter() {
+        edtPassword.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        edtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                PASSWORDKeyPressed(evt);
+                edtPasswordKeyPressed(evt);
             }
         });
 
@@ -142,8 +147,8 @@ void showTime(){
                                 .addComponent(PasswordLable)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PASSWORD)
-                            .addComponent(USERNAME)))
+                            .addComponent(edtPassword)
+                            .addComponent(edtUsername)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(ShowError, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,11 +164,11 @@ void showTime(){
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(USERNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(UsernameLable, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PasswordLable, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(ShowError)
@@ -298,20 +303,67 @@ void showTime(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-
+ try{
+//            Class.forName("com.mysql.jdbc.Driver");  
+//            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/log","root","");   
+//            
+//            Statement stat = con.createStatement();   
+//            
+            String username =  edtUsername.getText();  
+            String password =  edtPassword.getText();
+//                
+//            Statement stm =  con.createStatement();
+            Statement stm = new GetConnection().Connect_mysql();
+            
+            String sql1 = "select * from LOG.ADMIN WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs1 = stm.executeQuery(sql1);
+            if(rs1.next()){ 
+               this.dispose();
+                ADMIN log = new  ADMIN();
+                     log.setVisible(true);                        
+                     this.setVisible(false);
+                
+            }
+            String sql2 = "select * from LOG.DR WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs2 = stm.executeQuery(sql2);
+            if(rs2.next()){ 
+                this.dispose();
+                DOCTORS S = new  DOCTORS();
+                     S.setVisible(true);                        
+                     this.setVisible(false);
+                     
+           }
+            String sql3 = "select * from LOG.RE WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs3 = stm.executeQuery(sql3);
+            
+             if(rs3.next()){ 
+                this.dispose();
+                RECPTIONIST D = new  RECPTIONIST();
+                     D.setVisible(true);                        
+                     this.setVisible(false);
+            }else{
+               
+                JOptionPane.showMessageDialog(rootPane, "WRONG USERNAME ");
+                edtUsername.setText("");   
+                edtPassword.setText("");
+           } 
+        }catch(Exception e){
+            System.out.println("hiiii");
+            System.out.println(e.getMessage());
+        } 
     }//GEN-LAST:event_LoginButtonActionPerformed
 
-    private void USERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USERNAMEActionPerformed
+    private void edtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUsernameActionPerformed
 
-    }//GEN-LAST:event_USERNAMEActionPerformed
+    }//GEN-LAST:event_edtUsernameActionPerformed
 
-    private void USERNAMEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_USERNAMEKeyPressed
+    private void edtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtUsernameKeyPressed
 
-    }//GEN-LAST:event_USERNAMEKeyPressed
+    }//GEN-LAST:event_edtUsernameKeyPressed
 
-    private void PASSWORDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PASSWORDKeyPressed
+    private void edtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtPasswordKeyPressed
      // TODO add your handling code here:
-    }//GEN-LAST:event_PASSWORDKeyPressed
+    }//GEN-LAST:event_edtPasswordKeyPressed
 
     /**
      * @param args the command line arguments
@@ -351,13 +403,13 @@ void showTime(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DATE;
     private javax.swing.JButton LoginButton;
-    private javax.swing.JPasswordField PASSWORD;
     private javax.swing.JLabel PasswordLable;
     private javax.swing.JSeparator SeparatorLine;
     private javax.swing.JLabel ShowError;
     private javax.swing.JLabel TIME;
-    private javax.swing.JTextField USERNAME;
     private javax.swing.JLabel UsernameLable;
+    private javax.swing.JPasswordField edtPassword;
+    private javax.swing.JTextField edtUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import multispecility_hospital_solapur.use.GetConnection;
@@ -22,7 +23,9 @@ import multispecility_hospital_solapur.use.getTotalUsers;
 public class ADMIN extends javax.swing.JFrame {
 
     public ADMIN() {
-        initComponents();  
+        initComponents();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         this.getAllUsers();
         showDate();
         statement = new GetConnection().Connect_mysql();
@@ -54,6 +57,12 @@ public class ADMIN extends javax.swing.JFrame {
         tempTotal = 1+ Integer.parseInt(total);
         NID.setText(Integer.toString(tempTotal));      
         TNURSES.setText(total);
+        
+         //        PATIENTS
+        total = new getTotalUsers().getTotalPatients();
+        tempTotal = 1+ Integer.parseInt(total);
+//        PID.setText(Integer.toString(tempTotal));      
+        TPATIENTS.setText(total);
   }
     
 void showTime(){
@@ -727,7 +736,7 @@ String Cpassword;
         jPanel20.setBackground(new java.awt.Color(180, 180, 246));
 
         TDOCTORS.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
-        TDOCTORS.setText("64");
+        TDOCTORS.setText("00");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setText("DOCTORS");
@@ -766,7 +775,7 @@ String Cpassword;
         jPanel21.setBackground(new java.awt.Color(180, 180, 246));
 
         TDEATH.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
-        TDEATH.setText("64");
+        TDEATH.setText("00");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel6.setText("DEATH");
@@ -803,7 +812,7 @@ String Cpassword;
         jPanel22.setBackground(new java.awt.Color(180, 180, 246));
 
         TNURSES.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
-        TNURSES.setText("64");
+        TNURSES.setText("00");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel9.setText("NURSE");
@@ -843,7 +852,7 @@ String Cpassword;
         jPanel23.setBackground(new java.awt.Color(180, 180, 246));
 
         TADMIT.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
-        TADMIT.setText("64");
+        TADMIT.setText("00");
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel12.setText("ADMIT PATIENT");
@@ -880,7 +889,7 @@ String Cpassword;
         jPanel24.setBackground(new java.awt.Color(180, 180, 246));
 
         TPATIENTS.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
-        TPATIENTS.setText("64");
+        TPATIENTS.setText("00");
 
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel15.setText("PATIENT");
@@ -917,7 +926,7 @@ String Cpassword;
         jPanel40.setBackground(new java.awt.Color(180, 180, 246));
 
         TRESEPTIONISTS.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
-        TRESEPTIONISTS.setText("64");
+        TRESEPTIONISTS.setText("00");
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel8.setText("RECEPTIONISTS");
@@ -1765,7 +1774,7 @@ String Cpassword;
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(606, 606, 606)
                         .addComponent(TIME2)
                         .addGap(31, 31, 31)
                         .addComponent(DATE)
@@ -1792,19 +1801,15 @@ String Cpassword;
                     .addGroup(jPanel26Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel26Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TIME)
-                            .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(TIME1)
-                                .addComponent(TIME2)
-                                .addComponent(DATE))))
-                    .addGroup(jPanel26Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel46)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(TIME)
+                    .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TIME1)
+                        .addComponent(TIME2)
+                        .addComponent(DATE))
+                    .addComponent(jLabel46))
+                .addGap(12, 12, 12)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(104, Short.MAX_VALUE))
         );
@@ -4312,7 +4317,7 @@ String Cpassword;
                "CONTACT2=" + Contact2 + "," +  
                 "ECONTACT=" + Contact2 + "," + 
                "AADHAAR=" + Aadhaarno + "," + 
-               "PANNO=" + "'" + Panno + "'," + "'," + 
+               "PAN=" + "'" + Panno + "'," + 
                "FEE=" + Fee + "," + 
                "OPDNO=" + Opd + "," + 
                "SYMPTOMS=" + "'"  + 
@@ -4324,7 +4329,7 @@ String Cpassword;
                "DISTRICT=" + "'" + District + "'," + 
                "STATE=" + "'" + State + "'," + 
                "COUNTRY=" + "'" + Country + "'," + 
-               "PINCODE=" + Pincode +
+               "PIN=" + Pincode +
                "EDUCATION="+"'"  +Education +"'," +
                "DATEOFJOIN="+ "'"  +DateJoin +"',"+
                "JOBEXP="+"'" + Jobexperience + "'," + 
@@ -4861,36 +4866,48 @@ String Cpassword;
                     MNAME.setText(result.getString("MNAME"));
                     LNAME.setText(result.getString("LNAME"));
                     AGE.setText(Integer.toString(result.getInt("AGE"))); 
-                    Date dateBirth= new Date(result.getString("DATEOFJOIN"));
-                    DOB.setDate(dateBirth);
+                    DOB.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DOB")));
                     CONTACT1.setText(result.getString("CONTACT1"));
                     CONTACT2.setText(result.getString("CONTACT2"));
-                    AADHAARNO.setText(result.getString("AADHAARNO"));
-                    PANNO.setText(result.getString("PANNO"));
+                    AADHAARNO.setText(result.getString("AADHAAR"));
+                    PANNO.setText(result.getString("PAN"));
                     FEE.setText(result.getString("FEE")); 
-                    OPD_NO.setText(result.getString("OPD_NO")); 
+                    OPD_NO.setText(result.getString("OPDNO")); 
                     ADDRESS.setText(result.getString("ADDRESS"));
                     CITY.setText(result.getString("CITY"));
                     DISTRICT.setText(result.getString("DISTRICT"));
                     STATE.setText(result.getString("STATE"));
                     COUNTRY.setText(result.getString("COUNTRY"));
                     EDUCATION.setText(result.getString( "EDUCATION" ));      
-                    USERPHOTO.setText(result.getString("UESRPHOTO"));
-                    EMERGANCY_CONTACT.setText(result.getString("EMERGANCY_CONTACT"));
-                    JOB_EXPERIENCE.setText(result.getString("JOB_EXPERIENCE"));
+                    USERPHOTO.setText(result.getString("UPHOTO"));
+                    EMERGANCY_CONTACT.setText(result.getString("ECONTACT"));
+                    JOB_EXPERIENCE.setText(result.getString("JOBEXP"));
                     DOCUMENT.setText(result.getString("DOCUMENT"));
                     EMAIL.setText(result.getString("EMAIL"));
                     SPECIALIZATION.setText(result.getString("SPECIALIZATION"));
-                    MSTATUS.setSelectedIndex(0);
-                    PINCODE.setText(result.getString("PINCODE")); 
+                     if(result.getString("MSTATUS").equals("YES")){
+                            MSTATUS.setSelectedIndex(1);
+                        }else{
+                            MSTATUS.setSelectedIndex(0);
+                        }
+                    PINCODE.setText(result.getString("PIN")); 
                     USERNAME.setText(result.getString("USERNAME"));
                     PASSWORD.setText(result.getString("PASSWORD"));
-                    GENDER.setSelectedItem(result.getInt("GENDER"));      
-                    LKNOWN.setText(result.getString("LKNOWN"));  
-                    GENDER.setSelectedIndex(0);
-                    Date dateJoin = new Date(result.getString("DATEOFJOINING"));
-                    DATEOFJOINING.setDate(dateJoin);
-                    CPASSWORD.setText(result.getString("CPASSWORD"));
+                    
+                    DATEOFJOINING.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DATEOFJOIN")));
+
+                    LKNOWN.setText(result.getString("LKNOWN")); 
+                    
+                     switch(result.getString("GENDER")){
+                            case "SELECT":GENDER.setSelectedIndex(0);
+                                         break;
+                            case "MALE":GENDER.setSelectedIndex(1);
+                                         break;
+                            case "FEMALE":GENDER.setSelectedIndex(2);
+                                         break;
+                            default : GENDER.setSelectedIndex(3);
+                        }
+                    CPASSWORD.setText(result.getString("USERNAME"));
                 }
             }catch(Exception e){
                 System.out.println(e);

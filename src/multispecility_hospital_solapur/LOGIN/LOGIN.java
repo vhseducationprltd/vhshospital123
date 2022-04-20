@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import multispecility_hospital_solapur.LOGIN_FORM;
+import multispecility_hospital_solapur.use.GetConnection;
 
 /**
  *
@@ -53,7 +54,11 @@ public class LOGIN extends javax.swing.JFrame {
             }
         });
 
-        edtPassword.setText(" ");
+        edtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtPasswordActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("LOGIN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -119,41 +124,39 @@ public class LOGIN extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       
        try{
-            Class.forName("com.mysql.jdbc.Driver");  
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hellow","root","");   
-            
-            Statement stat = con.createStatement();   
-            
+//            Class.forName("com.mysql.jdbc.Driver");  
+//            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/log","root","");   
+//            
+//            Statement stat = con.createStatement();   
+//            
             String username =  edtUsername.getText();  
             String password =  edtPassword.getText();
-                
-            Statement stm =  con.createStatement();
+//                
+//            Statement stm =  con.createStatement();
+            Statement stm = new GetConnection().Connect_mysql();
             
-            String sql1 = "select * from ADMIN WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            String sql1 = "select * from LOG.ADMIN WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
             ResultSet rs1 = stm.executeQuery(sql1);
-            String sql2 = "select * from DR WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs2 = stm.executeQuery(sql2);
-            String sql3 = "select * from RE WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs3 = stm.executeQuery(sql3);
-            
-            if(rs1.next()){
-                rs1.beforeFirst();
+            if(rs1.next()){ 
                this.dispose();
                 ADMIN log = new  ADMIN();
                      log.setVisible(true);                        
                      this.setVisible(false);
                 
-            }else if(rs2.next()){
-                                rs2.beforeFirst();
-
+            }
+            String sql2 = "select * from LOG.DR WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs2 = stm.executeQuery(sql2);
+            if(rs2.next()){ 
                 this.dispose();
                 DOCTORS S = new  DOCTORS();
                      S.setVisible(true);                        
                      this.setVisible(false);
                      
-           }else if(rs3.next()){
-                               rs3.beforeFirst();
-
+           }
+            String sql3 = "select * from LOG.RE WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs3 = stm.executeQuery(sql3);
+            
+             if(rs3.next()){ 
                 this.dispose();
                 RECPTIONIST D = new  RECPTIONIST();
                      D.setVisible(true);                        
@@ -163,9 +166,7 @@ public class LOGIN extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "WRONG USERNAME ");
                 edtUsername.setText("");   
                 edtPassword.setText("");
-           }
-            con.close();
-            
+           } 
         }catch(Exception e){
             System.out.println("hiiii");
             System.out.println(e.getMessage());
@@ -177,6 +178,10 @@ public class LOGIN extends javax.swing.JFrame {
     private void edtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edtUsernameActionPerformed
+
+    private void edtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtPasswordActionPerformed
 
     /**
      * @param args the command line arguments
