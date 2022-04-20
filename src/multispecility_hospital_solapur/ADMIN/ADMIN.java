@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 import multispecility_hospital_solapur.LOGIN_FORM;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -929,6 +930,11 @@ String Cpassword;
         DID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DIDActionPerformed(evt);
+            }
+        });
+        DID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                DIDKeyPressed(evt);
             }
         });
 
@@ -3949,6 +3955,7 @@ String Cpassword;
         jMenu1.setFont(new java.awt.Font("Imprint MT Shadow", 0, 18)); // NOI18N
         jMenu1.setMargin(new java.awt.Insets(5, 10, 5, 10));
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jMenuItem2.setText("DOCTORS");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -3958,6 +3965,7 @@ String Cpassword;
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jMenuItem1.setText("RECEPTIONIST");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -3967,6 +3975,7 @@ String Cpassword;
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jMenuItem3.setText("NURCE");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -4189,8 +4198,7 @@ String Cpassword;
                "ADDRESS=" + "'" + Address + "'," + 
                "UPHOTO=" + "'" + photo + "'," +                
                "USERNAME=" + "'" + Userid + "'," + 
-               "PASSWORD=" + "'" + Password + "'," + 
-
+               "PASSWORD=" + "'" + Password + "'," +
                "CITY=" + "'" + City + "'," + 
                "DISTRICT=" + "'" + District + "'," + 
                "STATE=" + "'" + State + "'," + 
@@ -4201,6 +4209,12 @@ String Cpassword;
                "JOBEXP="+"'" + Jobexperience + "'," + 
                
                " WHERE ID=" + Did;
+       
+       try{
+           statement.execute(query);
+       }catch(Exception e){
+           System.out.println(e);
+       }
     }//GEN-LAST:event_UPDATEActionPerformed
 
     private void DELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEActionPerformed
@@ -4713,6 +4727,54 @@ String Cpassword;
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         jTabbedPane1.setSelectedIndex(10);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void DIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DIDKeyPressed
+        if(evt.getKeyCode() ==10){
+            String getQuery = "SELECT * FROM VHSHOSPITAL.DOCTORS WHERE ID =" + DID.getText();
+            try{
+                ResultSet result = statement.executeQuery(getQuery);
+                while(result.next()){
+                    DID.setText(result.getString("ID"));
+                    FNAME.setText(result.getString("FNAME"));
+                    MNAME.setText(result.getString("MNAME"));
+                    LNAME.setText(result.getString("LNAME"));
+                    AGE.setText(Integer.toString(result.getInt("AGE"))); 
+                    Date dateBirth= new Date(result.getString("DATEOFJOIN"));
+                    DOB.setDate(dateBirth);
+                    CONTACT1.setText(result.getString("CONTACT1"));
+                    CONTACT2.setText(result.getString("CONTACT2"));
+                    AADHAARNO.setText(result.getString("AADHAARNO"));
+                    PANNO.setText(result.getString("PANNO"));
+                    FEE.setText(result.getString("FEE")); 
+                    OPD_NO.setText(result.getString("OPD_NO")); 
+                    ADDRESS.setText(result.getString("ADDRESS"));
+                    CITY.setText(result.getString("CITY"));
+                    DISTRICT.setText(result.getString("DISTRICT"));
+                    STATE.setText(result.getString("STATE"));
+                    COUNTRY.setText(result.getString("COUNTRY"));
+                    EDUCATION.setText(result.getString( "EDUCATION" ));      
+                    UESRPHOTO.setText(result.getString("UESRPHOTO"));
+                    EMERGANCY_CONTACT.setText(result.getString("EMERGANCY_CONTACT"));
+                    JOB_EXPERIENCE.setText(result.getString("JOB_EXPERIENCE"));
+                    DOCUMENT.setText(result.getString("DOCUMENT"));
+                    EMAIL.setText(result.getString("EMAIL"));
+                    SPECIALIZATION.setText(result.getString("SPECIALIZATION"));
+                    MSTATUS.setSelectedIndex(0);
+                    PINCODE.setText(result.getString("PINCODE")); 
+                    USERNAME.setText(result.getString("USERNAME"));
+                    PASSWORD.setText(result.getString("PASSWORD"));
+                    GENDER.setSelectedItem(result.getInt("GENDER"));      
+                    LKNOWN.setText(result.getString("LKNOWN"));  
+                    GENDER.setSelectedIndex(0);
+                    Date dateJoin = new Date(result.getString("DATEOFJOINING"));
+                    DATEOFJOINING.setDate(dateJoin);
+                    CPASSWORD.setText(result.getString("CPASSWORD"));
+                }
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_DIDKeyPressed
 
     
     
