@@ -1,4 +1,4 @@
-package use;
+package multispecility_hospital_solapur.use;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.print.*;

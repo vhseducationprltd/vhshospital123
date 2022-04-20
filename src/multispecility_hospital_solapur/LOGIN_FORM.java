@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import use.GetConnection;
+import multispecility_hospital_solapur.use.GetConnection;
 public class LOGIN_FORM extends javax.swing.JFrame {
 
     public LOGIN_FORM() {

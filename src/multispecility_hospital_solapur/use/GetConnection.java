@@ -1,4 +1,4 @@
-package use; 
+package multispecility_hospital_solapur.use; 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

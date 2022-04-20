@@ -6,7 +6,7 @@ import java.sql.Statement;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import use.GetConnection;
+import multispecility_hospital_solapur.use.GetConnection;
 
 public class PATIENTS extends javax.swing.JFrame {
 

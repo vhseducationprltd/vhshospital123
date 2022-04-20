@@ -11,8 +11,10 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import multispecility_hospital_solapur.ADMIN.ADMIN;
 import multispecility_hospital_solapur.DATA_TABLES.PATIENTS;
-import use.GetConnection;
+import multispecility_hospital_solapur.use.GetConnection;
+import multispecility_hospital_solapur.use.getTotalUsers;
 
 
 
@@ -21,6 +23,8 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
 
     
     public NEW_PATIENTS() {
+//        int total = new getTotalUsers().getTotalAdmitPatients();
+        
         initComponents();  
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         statement = new GetConnection().Connect_mysql();
@@ -123,7 +127,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         STATE.setText("");
         COUNTRY.setText("");
         PINCODE.setText(""); 
-
+        new ADMIN().getAllUsers();
      }
      
      
