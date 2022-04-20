@@ -1,0 +1,142 @@
+CREATING ADMIN : 
+CREATE TABLE VHSHOSPITAL.ADMIN(SR INT NULL PRIMARY KEY AUTO_INCREMENT , USERNAME VARCHAR(255) NOT NULL , PASSWORD VARCHAR(255) NOT NULL );
+_____________________________________________________________________________________________________________________________________
+
+CREATING RECEPTIONIST :
+CREATE TABLE VHSHOSPITAL.RECEPTIONISTS(
+    SR INT NULL AUTO_INCREMENT PRIMARY KEY,
+    ID INT NOT NULL ,
+    FNAME VARCHAR(100) NOT NULL ,
+    MNAME VARCHAR(100) NOT NULL ,
+    LNAME VARCHAR(100) NOT NULL ,
+    AGE INT NOT NULL ,
+    GENDER VARCHAR(50) NOT NULL ,
+    DOB VARCHAR(50) NOT NULL ,
+    MSTATUS VARCHAR(50) NOT NULL ,
+    UPHOTO VARCHAR(255) NOT NULL ,
+    USERNAME VARCHAR(100) NOT NULL UNIQUE,
+    PASSWORD VARCHAR(100) NOT NULL,
+    SPECIALIZATION VARCHAR(200) NOT NULL,
+    EDUCATION VARCHAR(200) NOT NULL,
+    JOBEXP  VARCHAR(200) NOT NULL,
+    DATEOFJOIN  VARCHAR(200) NOT NULL,
+    LKNOWN  VARCHAR(200) NOT NULL,
+    DOCUMENT  VARCHAR(200) NOT NULL,
+    EMAIL  VARCHAR(200) NOT NULL,
+    CONTACT1 BIGINT NOT NULL,
+    CONTACT2  BIGINT NOT NULL,
+    AADHAAR BIGINT NOT NULL,
+    PAN BIGINT NOT NULL,
+    ADDRESS  VARCHAR(200) NOT NULL,
+    CITY  VARCHAR(200) NOT NULL,
+    DISTRICT  VARCHAR(200) NOT NULL,
+    STATE  VARCHAR(200) NOT NULL,
+    COUNTRY  VARCHAR(200) NOT NULL,
+    PIN  INT NOT NULL ,
+    DATE  VARCHAR(50) NOT NULL,
+    TIME  VARCHAR(50) NOT NULL
+)
+_____________________________________________________________________________________________________________________________________
+CREATE DOCTOR : 
+CREATE TABLE VHSHOSPITAL.DOCTORS(
+    SR INT NULL AUTO_INCREMENT PRIMARY KEY,
+    ID INT NOT NULL ,
+    FNAME VARCHAR(100) NOT NULL ,
+    MNAME VARCHAR(100) NOT NULL ,
+    LNAME VARCHAR(100) NOT NULL ,
+    AGE INT NOT NULL ,
+    GENDER VARCHAR(50) NOT NULL ,
+    DOB VARCHAR(50) NOT NULL ,
+    MSTATUS VARCHAR(50) NOT NULL ,
+    UPHOTO VARCHAR(255) NOT NULL ,
+    USERNAME VARCHAR(100) NOT NULL UNIQUE,
+    PASSWORD VARCHAR(100) NOT NULL,
+    SPECIALIZATION VARCHAR(200) NOT NULL,
+    EDUCATION VARCHAR(200) NOT NULL,
+    FEE INT NOT NULL,
+    OPDNO INT NOT NULL,
+    JOBEXP  VARCHAR(200) NOT NULL,
+    DATEOFJOIN  VARCHAR(200) NOT NULL,
+    LKNOWN  VARCHAR(200) NOT NULL,
+    DOCUMENT  VARCHAR(200) NOT NULL,
+    EMAIL  VARCHAR(200) NOT NULL,
+    CONTACT1 BIGINT NOT NULL,
+    CONTACT2  BIGINT NOT NULL,
+    ECONTACT  BIGINT NOT NULL,
+    AADHAAR BIGINT NOT NULL,
+    PAN BIGINT NOT NULL,
+    ADDRESS  VARCHAR(200) NOT NULL,
+    CITY  VARCHAR(200) NOT NULL,
+    DISTRICT  VARCHAR(200) NOT NULL,
+    STATE  VARCHAR(200) NOT NULL,
+    COUNTRY  VARCHAR(200) NOT NULL,
+    PIN  INT NOT NULL ,
+    DATE  VARCHAR(50) NOT NULL,
+    TIME  VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE APPOINTMENT (
+     SR INT NULL PRIMARY KEY,
+     PID INT NOT NULL,
+     FNAME VARCHAR(100) NOT NULL ,
+    MNAME VARCHAR(100) NOT NULL ,
+    LNAME VARCHAR(100) NOT NULL ,
+    AGE INT NOT NULL ,
+    GENDER VARCHAR(50) NOT NULL ,
+     MSTATUS VARCHAR(50) NOT NULL,
+     CONTACT1 BIGINT NOT NULL ,
+     CONTACT2 BIGINT NOT NULL,
+     AADHAARNO BIGINT NOT NULL,
+     PANNO VARCHAR(50) NOT NULL,
+     DRNAME VARCHAR(50) NOT NULL,
+     FEE INT NOT NULL ,
+     OPDNO  INT NOT NULL,
+     SYMPTOMS VARCHAR(255) NOT NULL,
+     ADDRESS VARCHAR(255) NOT NULL,
+     CITY VARCHAR(50) NOT NULL,
+     DISTRICT VARCHAR(50) NOT NULL,
+     STATE VARCHAR(50) NOT NULL,
+     COUNTRY VARCHAR(50) NOT NULL,
+     PINCODE VARCHAR(50) NOT NULL,
+     DATE VARCHAR(50) NOT NULL,
+     TIME VARCHAR(50) NOT NULL
+)
+
+
+INSERT INTO VHSHOSPITAL.DOCTORS ( ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,FEE,OPDNO,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,ECONTACT,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES("+
+              Did  +  
+    ",'"+  Fname  +"',"+  
+    "'"+  Mname  +"',"+  
+    "'"+  Lname  +"',"+  
+    ""+  Age  +","+  
+    "'"+  Gender  +"',"+  
+    "'"+  Dob  +"',"+  
+    "'"+  Mstatus  +"',"+  
+    "'"+  photo  +"',"+  
+    "'"+  Userid  +"',"+  
+    "'"+  Password  +"',"+
+    "'"+  Specilization  +"',"+  
+    "'"+  Education  +"',"+  
+    Fee  +","+    
+    Opd  +","+  
+    "'"+  Jobexperience  +"',"+  
+    "'"+  DateJoin  +"',"+  
+    "'"+  Lknown  +"',"+  
+    "'"+  Document  +"',"+  
+    "'"+  Email  +"',"+  
+    ""+  Contact1  +","+  
+    ""+  Contact2  +","+  
+    ""+  Cperson  +","
+    +  Adhaarno  +","+  
+    "'"+  Panno  +"',"+  
+    "'"+  Address  +"',"+  
+    "'"+  City  +"',"+  
+    "'"+  District  +"',"+  
+    "'"+  State  +"',"+  
+    "'"+  Country  +"',"+
+    Pincode  +","+   
+    "'"+  Date  +"',"+   
+    "'"+  Time  +"'"+  
+    ")";
+
+     UPDATE VHSHOSPITAL.DOCTORS SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "AADHAARNO=" + Aadhaarno + "," + "PANNO=" + "'" + Panno + "'," + "DRNAME=" + "'" + Drname + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opdno + "," + "SYMPTOMS=" + "'" + Symptoms + "'," + "ADDRESS=" + "'" + Address + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PINCODE=" + Pincode + " WHERE PID=" + Pid

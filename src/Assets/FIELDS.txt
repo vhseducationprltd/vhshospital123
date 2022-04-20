@@ -1,0 +1,43 @@
+NO ADMIT : 
+   PATIENT NO
+   NAME ,
+   AGE
+   GENDER,
+   ADMIT STATUS
+   SYMPTOMS,
+   TREATEMENT,
+   MEDICIENS
+   TESTS,
+   
+   
+ADMIT    :
+   PATIENT NO,
+   NAME ,
+   AGE,
+   GENDER,
+   ADMIT STATUS,
+   SYMPTOMS,
+   TREATEMENT,
+   MEDICIENS,
+   TESTS
+//
+   DATE OF ADMIT,
+   WARD NO
+   BED NO
+   RELATIVES :
+     NAME ,
+     AGE,
+     GENDER,
+     RELATION WITH PATIENT
+     CONTACT
+     ADDRESS
+   DISCHARGE DATE
+   
+   
+   
+   
+   
+   
+   
+   
+   
