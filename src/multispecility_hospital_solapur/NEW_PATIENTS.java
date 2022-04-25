@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -28,9 +29,34 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         initComponents();  
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         statement = new GetConnection().Connect_mysql();
+        
         this.getAllUsers();
+       
         showDate();
         showTime();
+         
+         try {
+             
+            String query = "SELECT * FROM VHSHOSPITAL.DOCTORS";
+            ResultSet result = statement.executeQuery(query);
+            
+            
+            while (result.next()) {
+                 String a = result.getString("FNAME");
+                DrOpds.add(result.getString("OPDNO"));
+                DrFees.add(result.getString("FEE"));
+
+                String b = result.getString("MNAME");
+                String c = result.getString("LNAME");         
+
+                String d = a+" "+b+" "+ c;
+                DRNAME.addItem("DR." +d.toUpperCase()); 
+            } 
+           
+        } catch (Exception e) {
+            System.out.println("Something is happened In NewPatients ..");
+            System.out.println(e);
+        }
 
     }
 
@@ -332,6 +358,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 CONTACT1ActionPerformed(evt);
             }
         });
+        CONTACT1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CONTACT1KeyTyped(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel17.setText("CONTACT  2");
@@ -342,6 +373,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 CONTACT2ActionPerformed(evt);
             }
         });
+        CONTACT2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CONTACT2KeyTyped(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel18.setText("AADHAAR NO");
@@ -350,6 +386,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         AADHAARNO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AADHAARNOActionPerformed(evt);
+            }
+        });
+        AADHAARNO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                AADHAARNOKeyTyped(evt);
             }
         });
 
@@ -378,9 +419,10 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         jLabel21.setText("OPD NO");
 
         OPDNO.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        OPDNO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OPDNOActionPerformed(evt);
+        OPDNO.setCaretColor(new java.awt.Color(255, 255, 255));
+        OPDNO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                OPDNOKeyTyped(evt);
             }
         });
 
@@ -393,9 +435,18 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 FEEActionPerformed(evt);
             }
         });
+        FEE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                FEEKeyTyped(evt);
+            }
+        });
 
         DRNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        DRNAME.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HEMANT", "VIVEK", "SUNNY" }));
+        DRNAME.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                DRNAMEItemStateChanged(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel23.setText("ADDRESS");
@@ -444,6 +495,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         PINCODE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PINCODEActionPerformed(evt);
+            }
+        });
+        PINCODE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PINCODEKeyTyped(evt);
             }
         });
 
@@ -546,8 +602,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel26)
-                                    .addComponent(COUNTRY, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LOGOUT))
+                                    .addComponent(COUNTRY, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel27)
@@ -627,7 +682,9 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
+                .addComponent(LOGOUT)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(SUBMIT)
                 .addGap(34, 34, 34)
                 .addComponent(UPDATE)
@@ -745,10 +802,9 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                     .addComponent(VIEW)
                     .addComponent(UPDATE)
                     .addComponent(DELETE)
-                    .addComponent(SUBMIT))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LOGOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(SUBMIT)
+                    .addComponent(LOGOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58))
         );
 
         jLabel6.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
@@ -874,10 +930,6 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PANNOActionPerformed
  
-    private void OPDNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OPDNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_OPDNOActionPerformed
-
     private void FEEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FEEActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FEEActionPerformed
@@ -914,7 +966,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
             data.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             clearFields();
         } catch (Exception e) { 
-            System.out.println("dfs0");
+            System.out.println("probleam to featch the data base to table");
             System.out.println(e);
         }
     }//GEN-LAST:event_VIEWActionPerformed
@@ -934,6 +986,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
            query = ("INSERT INTO VHSHOSPITAL.APPOINTMENTS (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','"  + Dob + "','" + Mstatus + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + ",'" + Panno + "','" + Drname + "'," + Fee + "," + Opdno + ",'" + Symptoms + "','" + Address + "','" + City + "','" + District + "','" + State + "','" + Country + "'," + Pincode + ",'" + Date + "','" + Time + "')");
             statement.execute(query);
             clearFields();
+            getAllUsers();
         } catch (Exception e) {
             System.out.println("Something is happened In NewPatients ..");
             System.out.println(e);
@@ -951,6 +1004,8 @@ getData();
 
             statement.execute(query);
             clearFields();
+            getAllUsers();
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -963,6 +1018,8 @@ getData();
         try {
             statement.execute(query);
             clearFields();
+            getAllUsers();
+
 
         } catch (Exception e) {
              System.out.println(e);
@@ -1042,23 +1099,58 @@ getData();
     }//GEN-LAST:event_LOGOUTMouseClicked
 
     private void VIEWMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWMouseClicked
-          try {
-            String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS";
-            ResultSet result = statement.executeQuery(query);
-            
-            PATIENTS data = new PATIENTS();
-            data.setVisible(true);
-            data.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            clearFields();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+         
     }//GEN-LAST:event_VIEWMouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
+    private void DRNAMEItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DRNAMEItemStateChanged
+       if(DRNAME.getSelectedIndex()>=0){
+           OPDNO.setText(DrOpds.get(DRNAME.getSelectedIndex()));
+           FEE.setText(DrFees.get(DRNAME.getSelectedIndex()));
+
+       }
+    }//GEN-LAST:event_DRNAMEItemStateChanged
+
+    private void CONTACT1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CONTACT1KeyTyped
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_CONTACT1KeyTyped
+
+    private void CONTACT2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CONTACT2KeyTyped
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_CONTACT2KeyTyped
+
+    private void AADHAARNOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AADHAARNOKeyTyped
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_AADHAARNOKeyTyped
+
+    private void PINCODEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PINCODEKeyTyped
+       
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+           evt.consume();
+        }
+    }//GEN-LAST:event_PINCODEKeyTyped
+
+    private void OPDNOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_OPDNOKeyTyped
+        evt.consume();
+    }//GEN-LAST:event_OPDNOKeyTyped
+
+    private void FEEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FEEKeyTyped
+        evt.consume();
+    }//GEN-LAST:event_FEEKeyTyped
+//
     /**
      * @param args the command line arguments
      */
@@ -1122,7 +1214,10 @@ getData();
     String Time;
 //     String anup;
     Statement statement;
-   
+    ArrayList<String> DrOpds = new ArrayList();
+    ArrayList<String> DrFees = new ArrayList();
+
+            
 
 
 

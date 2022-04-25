@@ -5,8 +5,21 @@
  */
 package multispecility_hospital_solapur.DATA_TABLES;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import multispecility_hospital_solapur.use.GetConnection;
+
 /**
  *
  * @author heman
  */
-
+public class DATAGET {
+    
+    //   
+    
+         
+        
+    
+}

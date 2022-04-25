@@ -1,0 +1,253 @@
+result.getString("SR"),
+result.getString("ID"),
+result.getString("FNAME"),
+result.getString("MNAME"),
+result.getString("LNAME"),
+result.getString("AGE"),
+result.getString("GENDER"),
+result.getString("DOB"),
+result.getString("MSTATUS"),
+result.getString("UPHOTO"),
+result.getString("USERNAME"),
+result.getString("PASSWORD"),
+result.getString("SPECIALIZATION"),
+result.getString("EDUCATION"),
+result.getString("JOBEXP"),
+result.getString("DATEOFJOIN"),
+result.getString("LKNOWN"),
+result.getString("DOCUMENT"),
+result.getString("EMAIL"),
+result.getString("CONTACT1"),
+result.getString("CONTACT2"),
+result.getString("AADHAAR"),
+result.getString("PAN"),
+result.getString("ADDRESS"),
+result.getString("CITY"),
+result.getString("DISTRICT"),
+result.getString("STATE"),
+result.getString("COUNTRY"),
+result.getString("PIN"),
+result.getString("DATE"),
+result.getString("TIME")
+
+
+
+RECEPTIONISTLIST
+
+
+
+result.getString("SR"),
+result.getString("ID"),
+result.getString("FNAME"),
+result.getString("MNAME"),
+result.getString("LNAME"),
+result.getString("AGE"),
+result.getString("GENDER"),
+result.getString("DOB"),
+result.getString("MSTATUS"),
+result.getString("UPHOTO"),
+result.getString("USERNAME"),
+result.getString("PASSWORD"),
+result.getString("SPECIALIZATION"),
+result.getString("EDUCATION"),
+
+result.getString("FEE"),
+result.getString("OPDNO"),
+result.getString("JOBEXP"),
+result.getString("DATEOFJOIN"),
+result.getString("LKNOWN"),
+result.getString("DOCUMENT"),
+result.getString("EMAIL"),
+result.getString("CONTACT1"),
+result.getString("CONTACT2"),
+result.getString("ECONTACT"),
+result.getString("AADHAAR"),
+result.getString("PAN"),
+result.getString("ADDRESS"),
+result.getString("CITY"),
+result.getString("DISTRICT"),
+result.getString("STATE"),
+result.getString("COUNTRY"),
+result.getString("PIN"),
+result.getString("DATE"),
+result.getString("TIME")
+
+
+
+
+
+
+
+String admit = "CREATE TABLE " + DRDB +".ADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DRNAME VARCHAR(200) NOT NULL," +"WARDNAME VARCHAR(200) NOT NULL," +"BEDNO INT NOT NULL ," +"DATEOFADMIT VARCHAR(20) NOT NULL," +"CFULLNAME  VARCHAR(200) NOT NULL," +"CAGE INT NOT NULL ," +"CGENDER VARCHAR(50) NOT NULL ," +"CCONTACT BIGINT NOT NULL," +"CRELATIONTOPATIENT  VARCHAR(200) NOT NULL," +"CAADHAARNO BIGINT NOT NULL UNIQUE," +"CADDRESS  VARCHAR(200) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+String admit = "CREATE TABLE " + DRDB +".NONADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"SYMPTOMS VARCHAR(255) NOT NULL," +"MEDICINES VARCHAR(255) NOT NULL," +"TREATMENT VARCHAR(255) NOT NULL," +"REPORTS VARCHAR(255) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+
+
+
+
+
+    try {
+      statement.execute(query);
+      String DRDB = Lname + Did;
+      System.out.println(DRDB);
+      String databaseCreate = "CREATE DATABASE IF NOT EXISTS " + DRDB;
+     String admit = "CREATE TABLE " + DRDB +".ADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DRNAME VARCHAR(200) NOT NULL," +"WARDNAME VARCHAR(200) NOT NULL," +"BEDNO INT NOT NULL ," +"DATEOFADMIT VARCHAR(20) NOT NULL," +"CFULLNAME  VARCHAR(200) NOT NULL," +"CAGE INT NOT NULL ," +"CGENDER VARCHAR(50) NOT NULL ," +"CCONTACT BIGINT NOT NULL," +"CRELATIONTOPATIENT  VARCHAR(200) NOT NULL," +"CAADHAARNO BIGINT NOT NULL UNIQUE," +"CADDRESS  VARCHAR(200) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+     String admit = "CREATE TABLE " + DRDB +".NONADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"SYMPTOMS VARCHAR(255) NOT NULL," +"MEDICINES VARCHAR(255) NOT NULL," +"TREATMENT VARCHAR(255) NOT NULL," +"REPORTS VARCHAR(255) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+
+      statement.execute(databaseCreate);
+      statement.execute(admit);
+      statement.execute(nonAdmit);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+
+    clearFields();
+    getAllUsers();
+
+
+
+
+
+
+
+
+
+VALIDATIO FOR 10 CAHR
+----------------------------------------------
+
+String p = PID.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<10){
+                   PID.setEditable(true);
+               }else{
+                   PID.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   PID.setEditable(true);
+               }else{
+                   PID.setEditable(false);
+               }
+           }
+
+
+
+
+   public OPD(String dr) {
+                 initComponents();
+       drname.setText(dr);
+       
+
+    }
+
+
+  String dr = username;
+                     new OPD(dr).setVisible(true);
+                      this.setVisible(false);
+
+
+
+  OPD S = new  OPD();
+                     S.setVisible(true);    
+                     new OPD(dr).setVisible(true);
+                      this.setVisible(false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+ String admit = "CREATE TABLE " + DbName +".ADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"PID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DRNAME VARCHAR(200) NOT NULL," +"WARDNAME VARCHAR(200) NOT NULL," +"BEDNO INT NOT NULL ," +"DATEOFADMIT VARCHAR(20) NOT NULL," +"CFULLNAME  VARCHAR(200) NOT NULL," +"CAGE INT NOT NULL ," +"CGENDER VARCHAR(50) NOT NULL ," +"CCONTACT BIGINT NOT NULL," +"CRELATIONTOPATIENT  VARCHAR(200) NOT NULL," +"CAADHAARNO BIGINT NOT NULL UNIQUE," +"CADDRESS  VARCHAR(200) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+String nonAdmit = "CREATE TABLE " + DbName +".NONADMIT(" +
+ "SR INT NULL AUTO_INCREMENT PRIMARY KEY
+ +"PID INT NOT NULL UNIQUE
+ +"FNAME VARCHAR(100) NOT NULL 
+ +"MNAME VARCHAR(100) NOT NULL 
+ +"LNAME VARCHAR(100) NOT NULL 
+ +"AGE INT NOT NULL 
+ +"GENDER VARCHAR(50) NOT NULL 
+ +"DRNAME VARCHAR(200) NOT NULL
+ +"SYMPTOMS VARCHAR(255) NOT NULL
+ +"MEDICINES VARCHAR(255) NOT NULL
+ +"TREATMENT VARCHAR(255) NOT NULL
+ +"REPORTS VARCHAR(255) NOT NULL
+ +"DATE  VARCHAR(50) NOT NULL
+ +"TIME  VARCHAR(50) NOT NULL" +")";
+
+   STRNIG     '" + Fname + "',
+
+   INT            " + Pid + ",
+
+
+query = ("INSERT INTO VHSHOSPITAL.APPOINTMENTS (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DRNAME,SYMPTOMS,MEDICINES,TREATMENT,REPORTS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','" + Drname + "','" + Symptoms + "','" + Medicines + "','" + Trement + "','" + Reports + "','" + Date + "','" + Time + "')");
+query = ("INSERT INTO VHSHOSPITAL.APPOINTMENTS (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DRNAME,SYMPTOMS,MEDICINES,TREATMENT,REPORTS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','" + Drname + "','" + Symptoms + "','" + Medicines + "','" + Trement + "','" + Reports + "','" + Date + "','" + Time + "')");
+
+
+
+
+
+
+
+
+
+
+
+
+
+       int Sr = 0;
+        getData(); 
+  String DbName = "doc_"+USERNAME.getText();
+
+          if(admitStatus.getSelectedItem().toString().equals("NO")){
+  
+           try {
+            String query = "SELECT SR FROM " + DbName +" ";
+            
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                Sr = Integer.parseInt(result.getString("SR"));
+            }
+            System.out.println(Sr);
+           
+            query = ("INSERT INTO " + DbName +".NONADMIT(SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DRNAME,SYMPTOMS,MEDICINES,TREATMENT,REPORTS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','" + Drname + "','" + Symptoms + "','" + Medicines + "','" + Trement + "','" + Reports + "','" + Date + "','" + Time + "')");
+
+            System.out.println(query);
+            statement.execute(query);
+            clearFields();
+        } catch (Exception e) {
+            System.out.println("nahi jal  beeeee");
+            System.out.println(e);
+        }
+
+        }else{
+         try {
+            String query = "SELECT SR FROM " + DbName +" ";
+            
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                Sr = Integer.parseInt(result.getString("SR"));
+            }
+            System.out.println(Sr);
+           
+            query = ("INSERT INTO " + DbName +".ADMIT (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,SYMPTOMS,MEDICINES,TREATMENT,TEST,DATEOFADMIT,WARDNAME,BEDNO,CFULLNAME,CAGE,CGENDER,EMAIL,CONTACT,RTOPATIENT,ADDRESS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','" + Symptoms + "'," + Cage + ",'" + Cgender + "','" + Email + "'," + Contact + ",'" + Rtopatient + "','" + CAddress + "','" + Date + "','" + Time + "')");
+
+            System.out.println(query);
+            statement.execute(query);
+            clearFields();
+        } catch (Exception e) {
+            System.out.println("nahi jal");
+            System.out.println(e);
+        }
+
+        }
+        
+        
+ 

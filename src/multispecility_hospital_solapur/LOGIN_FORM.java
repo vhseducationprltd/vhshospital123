@@ -7,14 +7,11 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import multispecility_hospital_solapur.LOGIN.ADMIN;
-import multispecility_hospital_solapur.LOGIN.DOCTORS;
-import multispecility_hospital_solapur.LOGIN.RECPTIONIST;
+import multispecility_hospital_solapur.ADMIN.ADMIN;
+import multispecility_hospital_solapur.DOCTOR.OPD;
+import multispecility_hospital_solapur.DOCTOR.WARD;
 import multispecility_hospital_solapur.use.GetConnection;
 public class LOGIN_FORM extends javax.swing.JFrame {
 
@@ -303,54 +300,7 @@ void showTime(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
- try{
-//            Class.forName("com.mysql.jdbc.Driver");  
-//            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/log","root","");   
-//            
-//            Statement stat = con.createStatement();   
-//            
-            String username =  edtUsername.getText();  
-            String password =  edtPassword.getText();
-//                
-//            Statement stm =  con.createStatement();
-            Statement stm = new GetConnection().Connect_mysql();
-            
-            String sql1 = "select * from LOG.ADMIN WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs1 = stm.executeQuery(sql1);
-            if(rs1.next()){ 
-               this.dispose();
-                ADMIN log = new  ADMIN();
-                     log.setVisible(true);                        
-                     this.setVisible(false);
-                
-            }
-            String sql2 = "select * from LOG.DR WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs2 = stm.executeQuery(sql2);
-            if(rs2.next()){ 
-                this.dispose();
-                DOCTORS S = new  DOCTORS();
-                     S.setVisible(true);                        
-                     this.setVisible(false);
-                     
-           }
-            String sql3 = "select * from LOG.RE WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs3 = stm.executeQuery(sql3);
-            
-             if(rs3.next()){ 
-                this.dispose();
-                RECPTIONIST D = new  RECPTIONIST();
-                     D.setVisible(true);                        
-                     this.setVisible(false);
-            }else{
-               
-                JOptionPane.showMessageDialog(rootPane, "WRONG USERNAME ");
-                edtUsername.setText("");   
-                edtPassword.setText("");
-           } 
-        }catch(Exception e){
-            System.out.println("hiiii");
-            System.out.println(e.getMessage());
-        } 
+         authenticate(); 
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void edtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUsernameActionPerformed
@@ -362,7 +312,9 @@ void showTime(){
     }//GEN-LAST:event_edtUsernameKeyPressed
 
     private void edtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtPasswordKeyPressed
-     // TODO add your handling code here:
+      if(evt.getKeyCode()==10){
+        authenticate();
+      }
     }//GEN-LAST:event_edtPasswordKeyPressed
 
     /**
@@ -421,4 +373,57 @@ void showTime(){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
+    private void authenticate() {
+         try{
+      
+            String username =  edtUsername.getText();  
+            String password =  edtPassword.getText();
+            Statement stm = new GetConnection().Connect_mysql();
+            
+            String sql1 = "select * from VHSHOSPITAL.ADMIN WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs1 = stm.executeQuery(sql1);
+            if(rs1.next()){ 
+               this.dispose();
+                ADMIN log = new  ADMIN(); 
+                log.setVisible(true);                        
+                this.setVisible(false);
+            }
+            String sql2 = "select * from VHSHOSPITAL.DOCTORS WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet result = stm.executeQuery(sql2);
+            if(result.next()){ 
+                this.dispose(); 
+                new OPD(result).setVisible(true);
+                this.setVisible(false);
+           }
+            String sql3 = "select * from VHSHOSPITAL.NURSES WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs3 = stm.executeQuery(sql3);
+            
+             if(rs3.next()){ 
+                this.dispose();
+                WARD D = new  WARD();
+                     D.setVisible(true);                        
+                     this.setVisible(false);
+            }
+             String sql4 = "select * from VHSHOSPITAL.RECEPTIONISTS WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
+            ResultSet rs4 = stm.executeQuery(sql4);
+            
+             if(rs4.next()){ 
+                this.dispose();
+                NEW_PATIENTS D = new  NEW_PATIENTS();
+                     D.setVisible(true);                        
+                     this.setVisible(false);
+            }else{
+                 
+                edtUsername.setText("");   
+                edtPassword.setText("");
+           } 
+        }catch(Exception e){
+            
+            JOptionPane.showMessageDialog(rootPane,"PLEASE LOGIN CURRECT USER");
+
+            System.out.println("hiiii");
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -139,7 +139,7 @@ public class LOGIN extends javax.swing.JFrame {
             ResultSet rs1 = stm.executeQuery(sql1);
             if(rs1.next()){ 
                this.dispose();
-                ADMIN log = new  ADMIN();
+                NNNNNN log = new  NNNNNN();
                      log.setVisible(true);                        
                      this.setVisible(false);
                 

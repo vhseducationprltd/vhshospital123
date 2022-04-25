@@ -52,6 +52,8 @@
                           <Component id="txt_search" min="-2" pref="182" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="404" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="250" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -65,6 +67,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txt_search" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="23" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="863" max="-2" attributes="0"/>
@@ -139,6 +142,14 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Imprint MT Shadow" size="18" style="3"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="PATIENTS    DETAILS"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

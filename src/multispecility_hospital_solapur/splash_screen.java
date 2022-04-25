@@ -1,6 +1,8 @@
 
 package multispecility_hospital_solapur;
 
+import java.awt.Color;
+import javax.swing.UIManager;
 import java.sql.Statement;
 import multispecility_hospital_solapur.use.GetConnection;
 
@@ -13,52 +15,33 @@ public class splash_screen extends javax.swing.JFrame {
         
         Statement stat = new GetConnection().Connect_mysql();
         String databaseCreate = "CREATE DATABASE IF NOT EXISTS VHSHOSPITAL";
-        String adminCreate = "CREATE TABLE VHSHOSPITAL.ADMIN(SR INT NULL PRIMARY KEY AUTO_INCREMENT , USERNAME VARCHAR(255) NOT NULL , PASSWORD VARCHAR(255) NOT NULL );";
-        String addAdmin = "INSERT INTO VHSHOSPITAL.ADMIN(USERNAME , PASSWORD ) VALUES('vhsHospital' , 'VhsHospital@xvideos');";
         
-        String receptionistCreate = "CREATE TABLE VHSHOSPITAL.RECEPTIONISTS(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DOB VARCHAR(50) NOT NULL ," +"MSTATUS VARCHAR(50) NOT NULL ," +"UPHOTO VARCHAR(255) NOT NULL ," +"USERNAME VARCHAR(100) NOT NULL UNIQUE," +"PASSWORD VARCHAR(100) NOT NULL," +"SPECIALIZATION VARCHAR(200) NOT NULL," +"EDUCATION VARCHAR(200) NOT NULL," +"JOBEXP  VARCHAR(200) NOT NULL," +"DATEOFJOIN  VARCHAR(200) NOT NULL," +"LKNOWN  VARCHAR(200) NOT NULL," +"DOCUMENT  VARCHAR(200) NOT NULL," +"EMAIL  VARCHAR(200) NOT NULL," +"CONTACT1 BIGINT NOT NULL," +"CONTACT2  BIGINT NOT NULL," +"AADHAAR BIGINT NOT NULL UNIQUE," +"PAN BIGINT NOT NULL UNIQUE," +"ADDRESS  VARCHAR(200) NOT NULL," +"CITY  VARCHAR(200) NOT NULL," +"DISTRICT  VARCHAR(200) NOT NULL," +"STATE  VARCHAR(200) NOT NULL," +"COUNTRY  VARCHAR(200) NOT NULL," +"PIN  INT NOT NULL ," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";     
-        String appointmentCreate = "CREATE TABLE VHSHOSPITAL.APPOINTMENTS(" +"SR INT NULL PRIMARY KEY," +"PID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ,"+"DOB VARCHAR(100) NOT NULL ,"  +"MSTATUS VARCHAR(50) NOT NULL," +"CONTACT1 BIGINT NOT NULL ," +"CONTACT2 BIGINT NOT NULL," +"AADHAARNO BIGINT NOT NULL," +"PANNO VARCHAR(50) NOT NULL," +"DRNAME VARCHAR(50) NOT NULL," +"FEE INT NOT NULL ," +"OPDNO  INT NOT NULL," +"SYMPTOMS VARCHAR(255) NOT NULL," +"ADDRESS VARCHAR(255) NOT NULL," +"CITY VARCHAR(50) NOT NULL," +"DISTRICT VARCHAR(50) NOT NULL," +"STATE VARCHAR(50) NOT NULL," +"COUNTRY VARCHAR(50) NOT NULL," +"PINCODE VARCHAR(50) NOT NULL," +"DATE VARCHAR(50) NOT NULL," +"TIME VARCHAR(50) NOT NULL" +")";     
         
-        String doctorCreate = "CREATE TABLE VHSHOSPITAL.DOCTORS(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL UNIQUE ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DOB VARCHAR(50) NOT NULL ," +"MSTATUS VARCHAR(50) NOT NULL ," +"UPHOTO VARCHAR(255) NOT NULL ," +"USERNAME VARCHAR(100) NOT NULL UNIQUE," +"PASSWORD VARCHAR(100) NOT NULL," +"SPECIALIZATION VARCHAR(200) NOT NULL," +"EDUCATION VARCHAR(200) NOT NULL," +"FEE INT NOT NULL," +"OPDNO INT NOT NULL UNIQUE," +"JOBEXP  VARCHAR(200) NOT NULL," +"DATEOFJOIN  VARCHAR(200) NOT NULL," +"LKNOWN  VARCHAR(200) NOT NULL," +"DOCUMENT  VARCHAR(200) NOT NULL," +"EMAIL  VARCHAR(200) NOT NULL," +"CONTACT1 BIGINT NOT NULL," +"CONTACT2  BIGINT NOT NULL," +"ECONTACT  BIGINT NOT NULL," +"AADHAAR BIGINT NOT NULL UNIQUE," +"PAN VARCHAR(20) NOT NULL UNIQUE," +"ADDRESS  VARCHAR(200) NOT NULL," +"CITY  VARCHAR(200) NOT NULL," +"DISTRICT  VARCHAR(200) NOT NULL," +"STATE  VARCHAR(200) NOT NULL," +"COUNTRY  VARCHAR(200) NOT NULL," +"PIN  INT NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
-        String nurseCreate = "CREATE TABLE VHSHOSPITAL.NURSES(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL UNIQUE ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DOB VARCHAR(50) NOT NULL ," +"MSTATUS VARCHAR(50) NOT NULL ," +"UPHOTO VARCHAR(255) NOT NULL ," +"USERNAME VARCHAR(100) NOT NULL UNIQUE," +"PASSWORD VARCHAR(100) NOT NULL," +"SPECIALIZATION VARCHAR(200) NOT NULL," +"EDUCATION VARCHAR(200) NOT NULL," +"JOBEXP  VARCHAR(200) NOT NULL," +"DATEOFJOIN  VARCHAR(200) NOT NULL," +"LKNOWN  VARCHAR(200) NOT NULL," +"DOCUMENT  VARCHAR(200) NOT NULL," +"EMAIL  VARCHAR(200) NOT NULL," +"CONTACT1 BIGINT NOT NULL," +"CONTACT2  BIGINT NOT NULL," +"AADHAAR BIGINT NOT NULL UNIQUE, " +"PAN VARCHAR(20) NOT NULL UNIQUE," +"ADDRESS  VARCHAR(200) NOT NULL," +"CITY  VARCHAR(200) NOT NULL," +"DISTRICT  VARCHAR(200) NOT NULL," +"STATE  VARCHAR(200) NOT NULL," +"COUNTRY  VARCHAR(200) NOT NULL," +"PIN  INT NOT NULL ," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";     
+        String adminCreate = "CREATE TABLE IF NOT EXISTS  VHSHOSPITAL.ADMIN(SR INT NULL PRIMARY KEY AUTO_INCREMENT , USERNAME VARCHAR(255) NOT NULL UNIQUE, PASSWORD VARCHAR(255) NOT NULL );";
+        String addAdmin = "INSERT INTO VHSHOSPITAL.ADMIN(USERNAME , PASSWORD ) VALUES('VHS' , 'VHS');";
+        
+        String receptionistCreate = "CREATE TABLE IF NOT EXISTS VHSHOSPITAL.RECEPTIONISTS(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DOB VARCHAR(50) NOT NULL ," +"MSTATUS VARCHAR(50) NOT NULL ," +"UPHOTO VARCHAR(255) NOT NULL ," +"USERNAME VARCHAR(100) NOT NULL UNIQUE," +"PASSWORD VARCHAR(100) NOT NULL," +"SPECIALIZATION VARCHAR(200) NOT NULL," +"EDUCATION VARCHAR(200) NOT NULL," +"JOBEXP  VARCHAR(200) NOT NULL," +"DATEOFJOIN  VARCHAR(200) NOT NULL," +"LKNOWN  VARCHAR(200) NOT NULL," +"DOCUMENT  VARCHAR(200) NOT NULL," +"EMAIL  VARCHAR(200) NOT NULL," +"CONTACT1 BIGINT NOT NULL," +"CONTACT2  BIGINT NOT NULL," +"AADHAAR BIGINT NOT NULL UNIQUE," +"PAN BIGINT NOT NULL UNIQUE," +"ADDRESS  VARCHAR(200) NOT NULL," +"CITY  VARCHAR(200) NOT NULL," +"DISTRICT  VARCHAR(200) NOT NULL," +"STATE  VARCHAR(200) NOT NULL," +"COUNTRY  VARCHAR(200) NOT NULL," +"PIN  INT NOT NULL ," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";     
+        String appointmentCreate = "CREATE TABLE IF NOT EXISTS VHSHOSPITAL.APPOINTMENTS(" +"SR INT NULL PRIMARY KEY," +"PID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ,"+"DOB VARCHAR(100) NOT NULL ,"  +"MSTATUS VARCHAR(50) NOT NULL," +"CONTACT1 BIGINT NOT NULL ," +"CONTACT2 BIGINT NOT NULL," +"AADHAARNO BIGINT NOT NULL," +"PANNO VARCHAR(50) NOT NULL," +"DRNAME VARCHAR(50) NOT NULL," +"FEE INT NOT NULL ," +"OPDNO  INT NOT NULL," +"SYMPTOMS VARCHAR(255) NOT NULL," +"ADDRESS VARCHAR(255) NOT NULL," +"CITY VARCHAR(50) NOT NULL," +"DISTRICT VARCHAR(50) NOT NULL," +"STATE VARCHAR(50) NOT NULL," +"COUNTRY VARCHAR(50) NOT NULL," +"PINCODE VARCHAR(50) NOT NULL," +"DATE VARCHAR(50) NOT NULL," +"TIME VARCHAR(50) NOT NULL" +")";     
+        
+        String doctorCreate = "CREATE TABLE IF NOT EXISTS VHSHOSPITAL.DOCTORS(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL UNIQUE ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DOB VARCHAR(50) NOT NULL ," +"MSTATUS VARCHAR(50) NOT NULL ," +"UPHOTO VARCHAR(255) NOT NULL ," +"USERNAME VARCHAR(100) NOT NULL UNIQUE," +"PASSWORD VARCHAR(100) NOT NULL," +"SPECIALIZATION VARCHAR(200) NOT NULL," +"EDUCATION VARCHAR(200) NOT NULL," +"FEE INT NOT NULL," +"OPDNO INT NOT NULL UNIQUE," +"JOBEXP  VARCHAR(200) NOT NULL," +"DATEOFJOIN  VARCHAR(200) NOT NULL," +"LKNOWN  VARCHAR(200) NOT NULL," +"DOCUMENT  VARCHAR(200) NOT NULL," +"EMAIL  VARCHAR(200) NOT NULL," +"CONTACT1 BIGINT NOT NULL," +"CONTACT2  BIGINT NOT NULL," +"ECONTACT  BIGINT NOT NULL," +"AADHAAR BIGINT NOT NULL UNIQUE," +"PAN VARCHAR(20) NOT NULL UNIQUE," +"ADDRESS  VARCHAR(200) NOT NULL," +"CITY  VARCHAR(200) NOT NULL," +"DISTRICT  VARCHAR(200) NOT NULL," +"STATE  VARCHAR(200) NOT NULL," +"COUNTRY  VARCHAR(200) NOT NULL," +"PIN  INT NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+        String nurseCreate = "CREATE TABLE IF NOT EXISTS VHSHOSPITAL.NURSES(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL UNIQUE ," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DOB VARCHAR(50) NOT NULL ," +"MSTATUS VARCHAR(50) NOT NULL ," +"UPHOTO VARCHAR(255) NOT NULL ," +"USERNAME VARCHAR(100) NOT NULL UNIQUE," +"PASSWORD VARCHAR(100) NOT NULL," +"SPECIALIZATION VARCHAR(200) NOT NULL," +"EDUCATION VARCHAR(200) NOT NULL," +"JOBEXP  VARCHAR(200) NOT NULL," +"DATEOFJOIN  VARCHAR(200) NOT NULL," +"LKNOWN  VARCHAR(200) NOT NULL," +"DOCUMENT  VARCHAR(200) NOT NULL," +"EMAIL  VARCHAR(200) NOT NULL," +"CONTACT1 BIGINT NOT NULL," +"CONTACT2  BIGINT NOT NULL," +"AADHAAR BIGINT NOT NULL UNIQUE, " +"PAN VARCHAR(20) NOT NULL UNIQUE," +"ADDRESS  VARCHAR(200) NOT NULL," +"CITY  VARCHAR(200) NOT NULL," +"DISTRICT  VARCHAR(200) NOT NULL," +"STATE  VARCHAR(200) NOT NULL," +"COUNTRY  VARCHAR(200) NOT NULL," +"PIN  INT NOT NULL ," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";     
         
        try{
             try{
-                boolean res = stat.execute(databaseCreate);
-                System.out.println(res);
-            }catch(Exception e){
-                System.out.println("Error in  : databaseCreate : " +e );
-            }
-            
-            try{
+                stat.execute(databaseCreate);                
                 stat.execute(adminCreate);
-            }catch(Exception e){
-                System.out.println("Error in  : adminCreate : " +e );
-            }
-            try{
+                 
+                stat.execute(receptionistCreate);
+             
+                stat.execute(doctorCreate);                
+            
+                stat.execute(nurseCreate);
+                
+                stat.execute(appointmentCreate); 
+                
                 stat.execute(addAdmin);
             }catch(Exception e){
-                System.out.println("Error in  : addAdmin : " +e );
-            } 
-            try{
-                stat.execute(receptionistCreate);
-            }catch(Exception e){
-                System.out.println("Error in  : receptionistCreate : " +e );
-            }
-            try{
-                stat.execute(doctorCreate);                
-            }catch(Exception e){
-                System.out.println("Error in  : doctorCreate : " +e );
-            }
-            try{
-                stat.execute(nurseCreate); 
-            }catch(Exception e){
-                System.out.println("Error in  : nurseCreate : " +e );
-            }
-            try{
-                stat.execute(appointmentCreate); 
-            }catch(Exception e){
-                System.out.println("Error in  : appointmentCreate : " +e );
+                System.out.println("Error : " +e );
             }
           
        }catch(Exception e){
@@ -83,7 +66,6 @@ public class splash_screen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 460));
 
         jPanel1.setBackground(new java.awt.Color(191, 191, 222));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -110,8 +92,6 @@ public class splash_screen extends javax.swing.JFrame {
         LoadingLable.setForeground(new java.awt.Color(0, 0, 0));
         LoadingLable.setText("Loading ...!");
         jPanel1.add(LoadingLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
-
-        LoadingBar.setForeground(new java.awt.Color(255, 51, 0));
         jPanel1.add(LoadingBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 810, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,7 +143,7 @@ public class splash_screen extends javax.swing.JFrame {
        
         try{
             for(int i=0;i<101;i++){
-            Thread.sleep(100);
+            Thread.sleep(10);
             fs.LoadingValue.setText(i +"%");
             if(i==10){
                 fs.LoadingLable.setText("Starting Modules...");

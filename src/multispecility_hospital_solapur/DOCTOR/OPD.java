@@ -6,30 +6,36 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import multispecility_hospital_solapur.LOGIN_FORM;
+import multispecility_hospital_solapur.use.GetConnection;
 
 
 public class OPD extends javax.swing.JFrame {
 
-  
-    public OPD() {
-        initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH); 
-             jPanel5.setVisible(true);
+   
+       public OPD(ResultSet result) {
+                 initComponents();
+                  statement = new GetConnection().Connect_mysql(); 
+                   showDate();
+             showTime();
+                  setExtendedState(JFrame.MAXIMIZED_BOTH); 
+             try{
+                 drname.setText(result.getString("FNAME")+" "+result.getString("LNAME") );
+                 DbName="doc_"+result.getString("ID");
+                 System.out.println(DbName);
+             }catch(Exception e){}
+              jPanel5.setVisible(true);
              admitYesPanel.setVisible(false); 
              admitYesPanel.setVisible(false); 
              admitYesPanel2.setVisible(false);
-
-
-
-        showDate();
-        showTime();
+       
 
     }
-
      void showDate(){
         Date d = new Date();
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
@@ -49,34 +55,61 @@ public class OPD extends javax.swing.JFrame {
     }
      
      
-     void getData() {
-      
-
+     void getDataNoAdmit() {
         Pid = Integer.parseInt(PID.getText());
-        Fname = FNAME.getText();
-        Mname = MNAME.getText();
-        Lname = LNAME.getText();
-        Age = Integer.parseInt(AGE.getText());
-        Gender = GENDER.getText();
+        
+        String[] name = FULLNAME.getText().split(":")[1].trim().split(" "); 
+        System.out.println(name);
+        Fname = name[0];
+        Mname = name[1];
+        Lname = name[2];
+         
+        Age = Integer.parseInt(AGE.getText().split(":")[1].trim());
+        Gender = GENDER.getText().split(":")[1];
 
         Symptoms = SYMPTOMS.getText();
         Medicines = MEDICINES.getText();
         Treatment = TREATMENT.getText();
-        Test = TEST.getText();
+        Reports = REPORTS.getText();
+         
+        Drname = drname.getText();  
 
-//        Dateofadmit = DATEOFADMIT.getText();
-//        Wardname = WARDNAME.getText();
+        Date = DATE.getText();
+        Time = TIME.getText();
+
+    }    
+       void getDataAdmit() {
+        Pid = Integer.parseInt(PID.getText());
+        
+        String name = FULLNAME.getText().split(":")[1].trim();
+        Fname = name.split(" ")[0];
+        Mname = name.split(" ")[1];
+        Lname = name.split(" ")[2];
+         
+        Age = Integer.parseInt(AGE.getText().split(":")[1].trim());
+        Gender = GENDER.getText();
+        Caddhar = Long.parseLong(CAADHAAR.getText());
+        Symptoms = SYMPTOMS.getText();
+        Medicines = MEDICINES.getText();
+        Treatment = TREATMENT.getText();
+        Reports = REPORTS.getText();
+        
         Bedno = Integer.parseInt(BEDNO.getText());
+        Wardname = WARDNAME.getItemAt(WARDNAME.getSelectedIndex());
 
         Cfullname= CFULLNAME.getText();
         Cage = Integer.parseInt(CAGE.getText());
+        System.out.println( CGENDER.getItemAt(CGENDER.getSelectedIndex()));
         Cgender = CGENDER.getItemAt(CGENDER.getSelectedIndex()); 
-        Email = EMAIL.getText();
-        Contact = Integer.parseInt(CONTACT.getText());
+        String date2 =
+      ((JTextField) DATEOFADMIT.getDateEditor().getUiComponent()).getText();
+    Dateofadmit = LocalDate.parse(date2).toString();
+        Drname = drname.getText();  
+         
+        Contact = Long.parseLong(CONTACT.getText());
 
         Rtopatient = RTOPATIENT.getText();
-        Address = ADDRESS.getText();
-
+        CAddress = CADDRESS.getText(); 
 
         Date = DATE.getText();
         Time = TIME.getText();
@@ -84,38 +117,29 @@ public class OPD extends javax.swing.JFrame {
     }    
      
      private void clearFields() {
-         
-      PID.setText("");
-      FNAME.setText("");
-      MNAME.setText("");
-      LNAME.setText("");
-      GENDER.setText("");
+         PID.setText(""); 
+         GENDER.setText("");
       
-      SYMPTOMS.setText("");
-      MEDICINES.setText("");
-      TREATMENT.setText("");
-      TEST.setText("");
+         SYMPTOMS.setText("");
+         MEDICINES.setText("");
+         TREATMENT.setText("");
+         REPORTS.setText("");
+             //      DATEOFADMIT.setText("");
+             //      WARDNAME.setText("");
+         BEDNO.setText("");
       
-//      DATEOFADMIT.setText("");
-//      WARDNAME.setText("");
-      BEDNO.setText("");
+         CFULLNAME.setText("");
+         CAGE.setText("");
+             //      CGENDER.setText("");
+         CAADHAAR.setText("");
+         CONTACT.setText("");
       
-      CFULLNAME.setText("");
-      CAGE.setText("");
-//      CGENDER.setText("");
-      EMAIL.setText("");
-      CONTACT.setText("");
-      
-      RTOPATIENT.setText("");
-      ADDRESS.setText("");
+         RTOPATIENT.setText("");
+         CADDRESS.setText("");
      
      
      }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -134,9 +158,6 @@ public class OPD extends javax.swing.JFrame {
         UPDATE = new javax.swing.JButton();
         DELETE = new javax.swing.JButton();
         LOGOUT = new javax.swing.JButton();
-        FNAME = new javax.swing.JLabel();
-        MNAME = new javax.swing.JLabel();
-        LNAME = new javax.swing.JLabel();
         GENDER = new javax.swing.JLabel();
         AGE = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -151,7 +172,7 @@ public class OPD extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         admitYesPanel = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
-        EMAIL = new javax.swing.JTextField();
+        CAADHAAR = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         CFULLNAME = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -163,7 +184,7 @@ public class OPD extends javax.swing.JFrame {
         RTOPATIENT = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        ADDRESS = new javax.swing.JTextField();
+        CADDRESS = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel5 = new javax.swing.JPanel();
@@ -172,17 +193,18 @@ public class OPD extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        TEST = new javax.swing.JTextArea();
+        REPORTS = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TREATMENT = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         MEDICINES = new javax.swing.JTextArea();
+        FULLNAME = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         TIME = new javax.swing.JLabel();
         DATE = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        drname = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
 
@@ -231,9 +253,24 @@ public class OPD extends javax.swing.JFrame {
         jLabel5.setText("PID");
 
         PID.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        PID.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                PIDMouseMoved(evt);
+            }
+        });
+        PID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PIDMouseClicked(evt);
+            }
+        });
         PID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PIDActionPerformed(evt);
+            }
+        });
+        PID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PIDKeyPressed(evt);
             }
         });
 
@@ -288,15 +325,11 @@ public class OPD extends javax.swing.JFrame {
             }
         });
 
-        FNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        MNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        LNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
         GENDER.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        GENDER.setText("GENDER : ");
 
         AGE.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        AGE.setText("AGE : ");
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel12.setText("ADMIT STATUS");
@@ -309,6 +342,7 @@ public class OPD extends javax.swing.JFrame {
             }
         });
 
+        DATEOFADMIT.setDateFormatString("yyyy-MM-dd");
         DATEOFADMIT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -372,12 +406,12 @@ public class OPD extends javax.swing.JFrame {
         jPanel4.setMinimumSize(new java.awt.Dimension(1000, 500));
 
         jLabel29.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel29.setText("EMAIL");
+        jLabel29.setText("AADHAAR NO");
 
-        EMAIL.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        EMAIL.addActionListener(new java.awt.event.ActionListener() {
+        CAADHAAR.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        CAADHAAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EMAILActionPerformed(evt);
+                CAADHAARActionPerformed(evt);
             }
         });
 
@@ -430,10 +464,10 @@ public class OPD extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel25.setText("ADDRESS");
 
-        ADDRESS.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        ADDRESS.addActionListener(new java.awt.event.ActionListener() {
+        CADDRESS.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        CADDRESS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADDRESSActionPerformed(evt);
+                CADDRESSActionPerformed(evt);
             }
         });
 
@@ -464,7 +498,7 @@ public class OPD extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(admitYesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel29)
-                            .addComponent(EMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CAADHAAR, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(admitYesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel30)
@@ -476,7 +510,7 @@ public class OPD extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addGroup(admitYesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel25)
-                            .addComponent(ADDRESS, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(CADDRESS, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(admitYesPanelLayout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -509,7 +543,7 @@ public class OPD extends javax.swing.JFrame {
                             .addComponent(jLabel30))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(admitYesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(EMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CAADHAAR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CONTACT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(admitYesPanelLayout.createSequentialGroup()
                         .addComponent(jLabel16)
@@ -525,7 +559,7 @@ public class OPD extends javax.swing.JFrame {
                         .addComponent(RTOPATIENT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(admitYesPanelLayout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(ADDRESS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(CADDRESS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -557,10 +591,10 @@ public class OPD extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel9.setText("MEDICINES");
 
-        TEST.setColumns(20);
-        TEST.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        TEST.setRows(5);
-        jScrollPane4.setViewportView(TEST);
+        REPORTS.setColumns(20);
+        REPORTS.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        REPORTS.setRows(5);
+        jScrollPane4.setViewportView(REPORTS);
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel10.setText("TREATMENT");
@@ -571,7 +605,7 @@ public class OPD extends javax.swing.JFrame {
         jScrollPane3.setViewportView(TREATMENT);
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel11.setText("TEST");
+        jLabel11.setText("REPORTS");
 
         MEDICINES.setColumns(20);
         MEDICINES.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -597,11 +631,9 @@ public class OPD extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(401, 401, 401))
-                    .addComponent(jScrollPane4))
-                .addContainerGap())
+                    .addComponent(jLabel11)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -628,6 +660,9 @@ public class OPD extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        FULLNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        FULLNAME.setText("NAME : ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -639,17 +674,13 @@ public class OPD extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(224, 224, 224)
-                        .addComponent(FNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(MNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87)
+                        .addComponent(FULLNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AGE, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AGE, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(GENDER, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105))
+                        .addComponent(GENDER, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -670,10 +701,10 @@ public class OPD extends javax.swing.JFrame {
                 .addComponent(VIEW)
                 .addGap(44, 44, 44))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -681,27 +712,23 @@ public class OPD extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(AGE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(FNAME, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(MNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(FULLNAME))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(LNAME, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GENDER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(admitStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(admitYesPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(34, 34, 34)
+                    .addComponent(admitYesPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -727,8 +754,8 @@ public class OPD extends javax.swing.JFrame {
         DATE.setFont(new java.awt.Font("Dialog", 3, 16)); // NOI18N
         DATE.setText("DATE");
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel8.setText("DR NAME");
+        drname.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        drname.setText("DR NAME");
 
         jLabel18.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel18.setText("DATE :");
@@ -741,44 +768,48 @@ public class OPD extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(268, 268, 268)
                 .addComponent(jLabel3)
-                .addGap(25, 25, 25))
+                .addGap(63, 63, 63))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(drname, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(544, 544, 544)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18)
                     .addComponent(jLabel19))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TIME)
-                    .addComponent(DATE))
-                .addGap(44, 44, 44))
+                    .addComponent(DATE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(TIME)))
+                .addGap(49, 49, 49))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(drname))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -797,7 +828,9 @@ public class OPD extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1940, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -807,9 +840,9 @@ public class OPD extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDRESSActionPerformed
+    private void CADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CADDRESSActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADDRESSActionPerformed
+    }//GEN-LAST:event_CADDRESSActionPerformed
 
     private void RTOPATIENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RTOPATIENTActionPerformed
         // TODO add your handling code here:
@@ -827,9 +860,9 @@ public class OPD extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CFULLNAMEActionPerformed
 
-    private void EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EMAILActionPerformed
+    private void CAADHAARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CAADHAARActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EMAILActionPerformed
+    }//GEN-LAST:event_CAADHAARActionPerformed
 
     private void BEDNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BEDNOActionPerformed
         // TODO add your handling code here:
@@ -837,7 +870,7 @@ public class OPD extends javax.swing.JFrame {
 
     private void admitStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_admitStatusActionPerformed
         if(admitStatus.getSelectedItem().toString().equals("NO")){
-
+  
             jPanel5.setVisible(true);
             admitYesPanel.setVisible(false);
             admitYesPanel2.setVisible(false);
@@ -874,10 +907,10 @@ public class OPD extends javax.swing.JFrame {
     }//GEN-LAST:event_DELETEActionPerformed
 
     private void UPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEActionPerformed
-        getData();
+        getDataNoAdmit();
         try {
 
-            String query = " UPDATE APPOINTMENT SET " + "SYMPTOMS=" + "'" + Symptoms + "'," + "MEDICINES=" + "'" + Medicines + "'," + "TREATMENT=" + "'" + Treatment + "'," + "TEST=" + "'" + Test + "'," + "DATEOFADMIT=" + "'" + Dateofadmit + "'," + "WARDNAME=" + "'" + Wardname + "'," + "BEDNO=" + Bedno + "," + "CFULLNAME=" + "'" + Cfullname + "'," + "CAGE=" + Cage + "," + "CGENDER=" + "'" + Cgender + "'," + "EMAIL=" + "'" + Email + "'," + "CONTACT=" + "'" + Contact + "'," + "RTOPATIENT=" + "'" + Rtopatient + "'," + "ADDRESS=" + "'" + Address + "' WHERE PID=" + Pid;
+            String query = " UPDATE APPOINTMENT SET " + "SYMPTOMS=" + "'" + Symptoms + "'," + "MEDICINES=" + "'" + Medicines + "'," + "TREATMENT=" + "'" + Treatment + "'," + "REPORT=" + "'" + Reports + "'," + "DATEOFADMIT=" + "'" + Dateofadmit + "'," + "WARDNAME=" + "'" + Wardname + "'," + "BEDNO=" + Bedno + "," + "CFULLNAME=" + "'" + Cfullname + "'," + "CAGE=" + Cage + "," + "CGENDER=" + "'" + Cgender + "'," + "EMAIL=" + "'" + Email + "'," + "CONTACT=" + "'" + Contact + "'," + "RTOPATIENT=" + "'" + Rtopatient + "'," + "ADDRESS=" + "'" + CAddress + "' WHERE PID=" + Pid;
 
             statement.execute(query);
             clearFields();
@@ -887,26 +920,56 @@ public class OPD extends javax.swing.JFrame {
     }//GEN-LAST:event_UPDATEActionPerformed
 
     private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
-
-        int Sr = 0;
-        getData();
-        try {
-            String query = "SELECT SR FROM OPD";
-
+         int Sr = 0; 
+          
+          if(admitStatus.getSelectedItem().toString().equals("NO")){
+              getDataNoAdmit();
+           try {
+               System.out.println(DbName);   
+            String query = "SELECT COUNT(SR) AS SR FROM " + DbName +".NONADMIT ";
+            
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 Sr = Integer.parseInt(result.getString("SR"));
             }
             System.out.println(Sr);
-
-            query = ("INSERT INTO OPD (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,SYMPTOMS,MEDICINES,TREATMENT,TEST,DATEOFADMIT,WARDNAME,BEDNO,CFULLNAME,CAGE,CGENDER,EMAIL,CONTACT,RTOPATIENT,ADDRESS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','" + Symptoms + "'," + Cage + ",'" + Cgender + "','" + Email + "'," + Contact + ",'" + Rtopatient + "','" + Address + "','" + Date + "','" + Time + "')");
+           
+            query = ("INSERT INTO " + DbName +".NONADMIT(SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DRNAME,SYMPTOMS,MEDICINES,TREATMENT,REPORTS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','" + Drname + "','" + Symptoms + "','" + Medicines + "','" + Treatment + "','" + Reports + "','" + Date + "','" + Time + "')");
 
             System.out.println(query);
             statement.execute(query);
             clearFields();
         } catch (Exception e) {
+            System.out.println("nahi jal  beeeee");
+            System.out.println(e);
+        }
+
+        }else{
+              getDataAdmit();
+         try {
+            String query = "SELECT COUNT(SR) AS SR FROM " + DbName +".ADMIT";
+            
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                Sr = Integer.parseInt(result.getString("SR"));
+            }
+            System.out.println(Sr);
+           //
+            query = ("INSERT INTO " + DbName +".ADMIT (SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DRNAME,WARDNAME,BEDNO,DATEOFADMIT,CFULLNAME,CAGE,CGENDER,CCONTACT,CRELATIONTOPATIENT,CAADHAARNO,CADDRESS,DATE,TIME)VALUES(" + (Sr + 1) + "," + Pid + ",'" + Fname + "','" + Mname + "','" + Lname + "'," + Age + ",'" + Gender + "','"+Drname + "','" + Wardname+ "'," +Bedno  + ",'" +Dateofadmit+ "','"+Cfullname+ "'," + Cage + ",'" + Cgender + "'," + Contact + ",'" + Rtopatient + "'," +Caddhar  + ",'" + CAddress + "','" + Date + "','" + Time + "')");
+
+            System.out.println(query);
+            statement.execute(query);
+            clearFields();
+            
+            String patienttable = "P_"+Pid; 
+            String createTable = "CREATE TABLE IF NOT EXISTS " + DbName +"."+patienttable+"(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"ID INT NOT NULL ,"+"SYMPTOMS VARCHAR(255) NOT NULL ," +"MEDICINES VARCHAR(255) NOT NULL ," +"TREATMENT VARCHAR(255) NOT NULL ," +"TEST VARCHAR(255) NOT NULL ," +"TESTREPORTS VARCHAR(255) NOT NULL ," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";     
+            System.out.println(createTable);
+            statement.execute(createTable);
+        } catch (Exception e) {
             System.out.println("nahi jal");
             System.out.println(e);
+        }
+
         }
     }//GEN-LAST:event_SUBMITActionPerformed
 
@@ -921,6 +984,38 @@ public class OPD extends javax.swing.JFrame {
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void PIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PIDKeyPressed
+        System.out.println("inside the event..") ;
+       
+        if(evt.getKeyCode()==10){ 
+             try{ 
+                 Pid = Integer.parseInt(PID.getText());
+        
+                 ResultSet result = statement.executeQuery("SELECT * FROM VHSHOSPITAL.APPOINTMENTS WHERE PID="+PID.getText());
+                 while(result.next()){ 
+                    String F=result.getString("FNAME");
+                    String L=result.getString("MNAME");
+                    String M=result.getString("LNAME");
+                     String FF= F+" "+ M +" " +L;
+                     FULLNAME.setText("NAME : "+FF); 
+                     AGE.setText("AGE : " + result.getString("AGE"));
+                     GENDER.setText("GENDER :" + result.getString("GENDER"));
+                 }
+             }catch(Exception e){
+                 System.out.println(e);
+             }
+             
+         }
+    }//GEN-LAST:event_PIDKeyPressed
+
+    private void PIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PIDMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PIDMouseClicked
+
+    private void PIDMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PIDMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PIDMouseMoved
 
     /**
      * @param args the command line arguments
@@ -948,18 +1043,13 @@ public class OPD extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(OPD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OPD().setVisible(true);
-            }
-        });
+ 
     }
 
     
      int Sr;
     int Pid;
+    String Drname;
     String Fname; 
     String Mname;
     String Lname;
@@ -968,7 +1058,7 @@ public class OPD extends javax.swing.JFrame {
     String Symptoms;
     String Medicines;
     String Treatment;
-    String Test;
+    String Reports;
     String Dateofadmit;
     String Wardname;
     int Bedno;
@@ -976,16 +1066,21 @@ public class OPD extends javax.swing.JFrame {
     int Cage;
     String Cgender;
     String Email;
-    int Contact;
+    Long Contact;
     String Rtopatient;
-    String Address;
+    String CAddress;
     String Date;
     String Time;
     Statement statement;
+    String PtableName;
+     String DbName="";
+    ResultSet drInfo;
+    Long Caddhar;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ADDRESS;
     private javax.swing.JLabel AGE;
     private javax.swing.JTextField BEDNO;
+    private javax.swing.JTextField CAADHAAR;
+    private javax.swing.JTextField CADDRESS;
     private javax.swing.JTextField CAGE;
     private javax.swing.JTextField CFULLNAME;
     private javax.swing.JComboBox<String> CGENDER;
@@ -993,18 +1088,15 @@ public class OPD extends javax.swing.JFrame {
     private javax.swing.JLabel DATE;
     private com.toedter.calendar.JDateChooser DATEOFADMIT;
     private javax.swing.JButton DELETE;
-    private javax.swing.JTextField EMAIL;
-    private javax.swing.JLabel FNAME;
+    private javax.swing.JLabel FULLNAME;
     private javax.swing.JLabel GENDER;
-    private javax.swing.JLabel LNAME;
     private javax.swing.JButton LOGOUT;
     private javax.swing.JTextArea MEDICINES;
-    private javax.swing.JLabel MNAME;
     private javax.swing.JTextField PID;
+    private javax.swing.JTextArea REPORTS;
     private javax.swing.JTextField RTOPATIENT;
     private javax.swing.JButton SUBMIT;
     private javax.swing.JTextArea SYMPTOMS;
-    private javax.swing.JTextArea TEST;
     private javax.swing.JLabel TIME;
     private javax.swing.JTextArea TREATMENT;
     private javax.swing.JButton UPDATE;
@@ -1013,6 +1105,7 @@ public class OPD extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> admitStatus;
     private javax.swing.JPanel admitYesPanel;
     private javax.swing.JPanel admitYesPanel2;
+    private javax.swing.JLabel drname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1036,7 +1129,6 @@ public class OPD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

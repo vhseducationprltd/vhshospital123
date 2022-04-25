@@ -1,94 +1,335 @@
-
 package multispecility_hospital_solapur.ADMIN;
 
-
-import java.io.File;
-import javax.swing.JFileChooser;
-import multispecility_hospital_solapur.LOGIN_FORM;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import multispecility_hospital_solapur.LOGIN_FORM;
 import multispecility_hospital_solapur.use.GetConnection;
 import multispecility_hospital_solapur.use.getTotalUsers;
 
-
-
 public class ADMIN extends javax.swing.JFrame {
 
-    public ADMIN() {
-        initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        this.getAllUsers();
-        showDate();
-        statement = new GetConnection().Connect_mysql();
-        showTime();
-    }
-
-  void showDate(){ 
-        Date d = new Date();
-        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-        DATE.setText(s.format (d));   
-        RDATE.setText(s.format (d));     
-        RDATE1.setText(s.format (d)); 
-        DDATE.setText(s.format (d));  
-    }
-  public void getAllUsers(){
-        //        Doctors
-        String total = new getTotalUsers().getTotalDoctors();
-        int tempTotal = 1+ Integer.parseInt(total);
-        DID.setText(Integer.toString(tempTotal));  
-        TDOCTORS.setText(total);
-        
-        //     RESEPTIONISTS   
-        total = new getTotalUsers().getTotalReceptionists();
-        tempTotal = 1+ Integer.parseInt(total);
-        RID.setText(Integer.toString(tempTotal));        
-        TRESEPTIONISTS.setText(total);
-        //        NURSES
-        total = new getTotalUsers().getTotalNurses();
-        tempTotal = 1+ Integer.parseInt(total);
-        NID.setText(Integer.toString(tempTotal));      
-        TNURSES.setText(total);
-        
-         //        PATIENTS
-        total = new getTotalUsers().getTotalPatients();
-        tempTotal = 1+ Integer.parseInt(total);
-//        PID.setText(Integer.toString(tempTotal));      
-        TPATIENTS.setText(total);
+  public ADMIN() {
+    initComponents();
+    setExtendedState(JFrame.MAXIMIZED_BOTH);
+    getdata();
+    this.getAllUsers();
+    showDate();
+    statement = new GetConnection().Connect_mysql();
+    showTime();
   }
-    
-void showTime(){
-     new Timer(0, new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Date d = new Date();
-                SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss a");
-                TIME.setText(s.format(d));   
-                RTIME.setText(s.format(d));        
-                RTIME1.setText(s.format(d)); 
-                DTIME.setText(s.format(d));  
-            }
-            
-        }).start();
+
+  public void getdata() {
+    //     DOCTORSLIST
+    try {
+      DefaultTableModel table = (DefaultTableModel) DOCTORSLIST3.getModel();
+      System.out.println("Inside the pati");
+      String query = "SELECT * FROM VHSHOSPITAL.DOCTORS";
+      Statement statement = new GetConnection().Connect_mysql();
+      ResultSet result = statement.executeQuery(query);
+
+      while (result.next()) {
+        String Data[] = {
+          result.getString("SR"),
+          result.getString("ID"),
+          result.getString("FNAME"),
+          result.getString("MNAME"),
+          result.getString("LNAME"),
+          result.getString("AGE"),
+          result.getString("GENDER"),
+          result.getString("DOB"),
+          result.getString("MSTATUS"),
+          result.getString("UPHOTO"),
+          result.getString("USERNAME"),
+          result.getString("PASSWORD"),
+          result.getString("SPECIALIZATION"),
+          result.getString("EDUCATION"),
+          result.getString("FEE"),
+          result.getString("OPDNO"),
+          result.getString("JOBEXP"),
+          result.getString("DATEOFJOIN"),
+          result.getString("LKNOWN"),
+          result.getString("DOCUMENT"),
+          result.getString("EMAIL"),
+          result.getString("CONTACT1"),
+          result.getString("CONTACT2"),
+          result.getString("ECONTACT"),
+          result.getString("AADHAAR"),
+          result.getString("PAN"),
+          result.getString("ADDRESS"),
+          result.getString("CITY"),
+          result.getString("DISTRICT"),
+          result.getString("STATE"),
+          result.getString("COUNTRY"),
+          result.getString("PIN"),
+          result.getString("DATE"),
+          result.getString("TIME"),
+        };
+
+        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
+
+        table.addRow(Data);
+      }
+    } catch (Exception e) {}
+
+    //     nurse
+    try {
+      DefaultTableModel table = (DefaultTableModel) NURSELIST.getModel();
+      System.out.println("Inside the pati");
+      String query = "SELECT * FROM VHSHOSPITAL.DOCTORS";
+      Statement statement = new GetConnection().Connect_mysql();
+      ResultSet result = statement.executeQuery(query);
+
+      while (result.next()) {
+        String Data[] = {
+          result.getString("SR"),
+          result.getString("ID"),
+          result.getString("FNAME"),
+          result.getString("MNAME"),
+          result.getString("LNAME"),
+          result.getString("AGE"),
+          result.getString("GENDER"),
+          result.getString("DOB"),
+          result.getString("MSTATUS"),
+          result.getString("UPHOTO"),
+          result.getString("USERNAME"),
+          result.getString("PASSWORD"),
+          result.getString("SPECIALIZATION"),
+          result.getString("EDUCATION"),
+          result.getString("JOBEXP"),
+          result.getString("DATEOFJOIN"),
+          result.getString("LKNOWN"),
+          result.getString("DOCUMENT"),
+          result.getString("EMAIL"),
+          result.getString("CONTACT1"),
+          result.getString("CONTACT2"),
+          result.getString("AADHAAR"),
+          result.getString("PAN"),
+          result.getString("ADDRESS"),
+          result.getString("CITY"),
+          result.getString("DISTRICT"),
+          result.getString("STATE"),
+          result.getString("COUNTRY"),
+          result.getString("PIN"),
+          result.getString("DATE"),
+          result.getString("TIME"),
+        };
+        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
+
+        table.addRow(Data);
+      }
+    } catch (Exception e) {}
+
+    try {
+      DefaultTableModel table = (DefaultTableModel) RECEPTIONISTLISH.getModel();
+      System.out.println("Inside the pati");
+      String query = "SELECT * FROM VHSHOSPITAL.RECEPTIONISTS";
+      Statement statement = new GetConnection().Connect_mysql();
+      ResultSet result = statement.executeQuery(query);
+
+      while (result.next()) {
+        String Data[] = {
+          result.getString("SR"),
+          result.getString("ID"),
+          result.getString("FNAME"),
+          result.getString("MNAME"),
+          result.getString("LNAME"),
+          result.getString("AGE"),
+          result.getString("GENDER"),
+          result.getString("DOB"),
+          result.getString("MSTATUS"),
+          result.getString("UPHOTO"),
+          result.getString("USERNAME"),
+          result.getString("PASSWORD"),
+          result.getString("SPECIALIZATION"),
+          result.getString("EDUCATION"),
+          result.getString("JOBEXP"),
+          result.getString("DATEOFJOIN"),
+          result.getString("LKNOWN"),
+          result.getString("DOCUMENT"),
+          result.getString("EMAIL"),
+          result.getString("CONTACT1"),
+          result.getString("CONTACT2"),
+          result.getString("AADHAAR"),
+          result.getString("PAN"),
+          result.getString("ADDRESS"),
+          result.getString("CITY"),
+          result.getString("DISTRICT"),
+          result.getString("STATE"),
+          result.getString("COUNTRY"),
+          result.getString("PIN"),
+          result.getString("DATE"),
+          result.getString("TIME"),
+        };
+        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
+
+        table.addRow(Data);
+      }
+    } catch (Exception e) {}
+
+    try {
+      DefaultTableModel table = (DefaultTableModel) PATIENTSDATA4.getModel();
+      System.out.println("Inside the pati");
+      String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS";
+      Statement statement = new GetConnection().Connect_mysql();
+      ResultSet result = statement.executeQuery(query);
+
+      while (result.next()) {
+        String Data[] = {
+          result.getString("SR"),
+          result.getString("PID"),
+          result.getString("FNAME"),
+          result.getString("MNAME"),
+          result.getString("LNAME"),
+          result.getString("AGE"),
+          result.getString("GENDER"),
+          result.getString("DOB"),
+          result.getString("MSTATUS"),
+          result.getString("CONTACT1"),
+          result.getString("CONTACT2"),
+          result.getString("AADHAARNO"),
+          result.getString("PANNO"),
+          result.getString("DRNAME"),
+          result.getString("FEE"),
+          result.getString("OPDNO"),
+          result.getString("SYMPTOMS"),
+          result.getString("ADDRESS"),
+          result.getString("CITY"),
+          result.getString("DISTRICT"),
+          result.getString("STATE"),
+          result.getString("COUNTRY"),
+          result.getString("PINCODE"),
+          result.getString("TIME"),
+          result.getString("DATE"),
+        };
+
+        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
+
+        table.addRow(Data);
+      }
+    } catch (Exception e) {}
+  }
+
+  public void search(String str) {
+    DefaultTableModel model = (DefaultTableModel) DOCTORSLIST3.getModel();
+    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+    DOCTORSLIST3.setRowSorter(trs);
+    trs.setRowFilter(RowFilter.regexFilter(str));
+  }
+
+//  public void search1(String str) {
+//    DefaultTableModel model = (DefaultTableModel) NURSELIST.getModel();
+//    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+//    NURSELIST.setRowSorter(trs);
+//    trs.setRowFilter(RowFilter.regexFilter(str));
+//  }
+//
+//  public void search2(String str) {
+//    DefaultTableModel model = (DefaultTableModel) RECEPTIONISTLISH.getModel();
+//    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+//    RECEPTIONISTLISH.setRowSorter(trs);
+//    trs.setRowFilter(RowFilter.regexFilter(str));
+//  }
+//
+//  public void search3(String str) {
+//    DefaultTableModel model = (DefaultTableModel) PATIENTSDATA4.getModel();
+//    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+//    PATIENTSDATA4.setRowSorter(trs);
+//    trs.setRowFilter(RowFilter.regexFilter(str));
+//  }
+
+  
+  
+      void dd(){
+           try{
+                String start = ((JTextField)ADMITDATE.getDateEditor().getUiComponent()).getText(); 
+                String end = ((JTextField)DISCHARGEDATE.getDateEditor().getUiComponent()).getText();
+        
+                LocalDate fday = LocalDate.parse(start);
+                LocalDate tday = LocalDate.parse(end);
+        
+                Long day_gap = ChronoUnit.DAYS.between(fday,tday);
+                NOOFDAAYS.setText(String.valueOf(day_gap));
+        
+            }catch(Exception e){}
+
     }
 
-  void getData3(){
-//    Sr = Integer.parseInt(SR.getText());
+  void showDate() {
+    Date d = new Date();
+    SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+    DATE.setText(s.format(d));
+    RDATE.setText(s.format(d));
+    RDATE1.setText(s.format(d));
+    DDATE.setText(s.format(d));
+  }
+
+  public void getAllUsers() {
+    //        Doctors
+    String total = new getTotalUsers().getTotalDoctors();
+    int tempTotal = 1 + Integer.parseInt(total);
+    DID.setText(Integer.toString(tempTotal));
+    TDOCTORS.setText(total);
+
+    //     RESEPTIONISTS
+    total = new getTotalUsers().getTotalReceptionists();
+    tempTotal = 1 + Integer.parseInt(total);
+    RID.setText(Integer.toString(tempTotal));
+    TRESEPTIONISTS.setText(total);
+    //        NURSES
+    total = new getTotalUsers().getTotalNurses();
+    tempTotal = 1 + Integer.parseInt(total);
+    NID.setText(Integer.toString(tempTotal));
+    TNURSES.setText(total);
+
+    //        PATIENTS
+    total = new getTotalUsers().getTotalPatients();
+    tempTotal = 1 + Integer.parseInt(total);
+    //        PID.setText(Integer.toString(tempTotal));
+    TPATIENTS.setText(total);
+  }
+
+  void showTime() {
+    new Timer(
+      0,
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          Date d = new Date();
+          SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss a");
+          TIME.setText(s.format(d));
+          RTIME.setText(s.format(d));
+          RTIME1.setText(s.format(d));
+          DTIME.setText(s.format(d));
+        }
+      }
+    )
+      .start();
+  }
+
+  void getData3() {
+    //    Sr = Integer.parseInt(SR.getText());
     Rid = Integer.parseInt(NID.getText());
     Fname = NFNAME.getText();
     Mname = NMNAME.getText();
     Lname = NLNAME.getText();
     Age = Integer.parseInt(NAGE.getText());
     Gender = NGENDER.getItemAt(NGENDER.getSelectedIndex());
-    String date = ((JTextField)NDOB.getDateEditor().getUiComponent()).getText(); 
+    String date =
+      ((JTextField) NDOB.getDateEditor().getUiComponent()).getText();
     Dob = LocalDate.parse(date).toString();
     Mstatus = NMSTATUS.getItemAt(NMSTATUS.getSelectedIndex());
     Userphoto = NUSERPHOTO.getText();
@@ -109,22 +350,16 @@ void showTime(){
     District = NDISTRICT.getText();
     State = NSTATE.getText();
     Country = NCOUNTRY.getText();
-    String date2 = ((JTextField)NDATEOFJOINING.getDateEditor().getUiComponent()).getText(); 
+    String date2 =
+      ((JTextField) NDATEOFJOINING.getDateEditor().getUiComponent()).getText();
     Dateofjoin = LocalDate.parse(date2).toString();
     Pincode = Long.parseLong(NPINCODE.getText());
     Date = DATE.getText();
     Time = TIME.getText();
- }
+  }
 
-
-
-
-  void getData2(){
-//    Sr = Integer.parseInt(SR.getText());
-   
-
-
-
+  void getData2() {
+    //    Sr = Integer.parseInt(SR.getText());
 
     Rid = Integer.parseInt(RID.getText());
     Fname = RFNAME.getText();
@@ -132,7 +367,8 @@ void showTime(){
     Lname = RLNAME.getText();
     Age = Integer.parseInt(RAGE.getText());
     Gender = RGENDER.getItemAt(RGENDER.getSelectedIndex());
-    String date = ((JTextField)RDOB.getDateEditor().getUiComponent()).getText(); 
+    String date =
+      ((JTextField) RDOB.getDateEditor().getUiComponent()).getText();
     Dob = LocalDate.parse(date).toString();
     Mstatus = RMSTATUS.getItemAt(RMSTATUS.getSelectedIndex());
     Userphoto = RUSERPHOTO.getText();
@@ -153,25 +389,23 @@ void showTime(){
     District = RDISTRICT.getText();
     State = RSTATE.getText();
     Country = RCOUNTRY.getText();
-    String date2 = ((JTextField)RDATEOFJOINING.getDateEditor().getUiComponent()).getText(); 
+    String date2 =
+      ((JTextField) RDATEOFJOINING.getDateEditor().getUiComponent()).getText();
     Dateofjoin = LocalDate.parse(date2).toString();
     Pincode = Long.parseLong(RPINCODE.getText());
     Date = DATE.getText();
     Time = TIME.getText();
-   
+  }
 
-
- }
-   
-void getData(){
-//    Sr = Integer.parseInt(SR.getText());
+  void getData() {
+    //    Sr = Integer.parseInt(SR.getText());
     Did = Integer.parseInt(DID.getText());
     Fname = FNAME.getText();
     Mname = MNAME.getText();
     Lname = LNAME.getText();
     Age = Integer.parseInt(AGE.getText());
-    Gender = GENDER.getItemAt(GENDER.getSelectedIndex()); 
-    String date = ((JTextField)DOB.getDateEditor().getUiComponent()).getText(); 
+    Gender = GENDER.getItemAt(GENDER.getSelectedIndex());
+    String date = ((JTextField) DOB.getDateEditor().getUiComponent()).getText();
     Dob = LocalDate.parse(date).toString();
     Mstatus = MSTATUS.getItemAt(MSTATUS.getSelectedIndex());
     Education = EDUCATION.getText();
@@ -189,164 +423,164 @@ void getData(){
     Fee = Integer.parseInt(FEE.getText());
     Opd = Integer.parseInt(OPD_NO.getText());
     Contact2 = Long.parseLong(CONTACT2.getText());
-    Cperson = Long.parseLong(EMERGANCY_CONTACT.getText());
+    EContact = Long.parseLong(EMERGANCY_CONTACT.getText());
     photo = USERPHOTO.getText();
     Document = DOCUMENT.getText();
     Aadhaarno = Long.parseLong(AADHAARNO.getText());
     Panno = PANNO.getText();
     Time = TIME.getText();
     Date = DATE.getText();
-    String date2 = ((JTextField)DATEOFJOINING.getDateEditor().getUiComponent()).getText(); 
-    DateJoin = LocalDate.parse(date2).toString(); 
+    String date2 =
+      ((JTextField) DATEOFJOINING.getDateEditor().getUiComponent()).getText();
+    DateJoin = LocalDate.parse(date2).toString();
     Userid = USERNAME.getText();
     Password = PASSWORD.getText();
     Cpassword = CPASSWORD.getText();
-}
+  }
 
-void clearFields(){
-        DID.setText("");
-        FNAME.setText("");
-        MNAME.setText("");
-        LNAME.setText("");
-        AGE.setText(""); 
-        DOB.setDate(null);
-        CONTACT1.setText("");
-        CONTACT2.setText("");
-        AADHAARNO.setText("");
-        PANNO.setText("");
-        FEE.setText("");
-        OPD_NO.setText(""); 
-        ADDRESS.setText("");
-        CITY.setText("");
-        DISTRICT.setText("");
-        STATE.setText("");
-        COUNTRY.setText("");
-        EDUCATION.setText("");        
-        USERPHOTO.setText("");
-        EMERGANCY_CONTACT.setText("");
-        JOB_EXPERIENCE.setText("");
-        DOCUMENT.setText("");
-        EMAIL.setText("");
-        SPECIALIZATION.setText("");
-        MSTATUS.setSelectedIndex(0);
-        PINCODE.setText(""); 
-        USERNAME.setText("");
-        PASSWORD.setText("");
-        GENDER.setSelectedIndex(0);      
-        LKNOWN.setText("");  
-        GENDER.setSelectedIndex(0);
-        DATEOFJOINING.setDate(null);
-        CPASSWORD.setText("");
-        // 
-        RID.setText("");
-        RFNAME.setText("");
-        RMNAME.setText("");
-        RLNAME.setText("");
-        RAGE.setText(""); 
-        RDOB.setDate(null);
-        RCONTACT1.setText("");
-        RCONTACT2.setText("");
-        RAADHAARNO.setText("");
-        RPANNO.setText(""); 
-        RADDRESS.setText("");
-        RCITY.setText("");
-        RDISTRICT.setText("");
-        RSTATE.setText("");
-        RCOUNTRY.setText("");
-        REDUCATION.setText("");  
-      
-        RUSERPHOTO.setText(""); 
-        RJOB_EXPERIENCE.setText("");
-        RDOCUMENT.setText("");
-        REMAIL.setText("");
-        RSPECIALIZATION.setText("");
-        RMSTATUS.setSelectedIndex(0);
-        RPINCODE.setText(""); 
-        RUSERNAME.setText("");
-        RPASSWORD.setText("");
-        RGENDER.setSelectedIndex(0);      
-        RLKNOWN.setText("");  
-        RGENDER.setSelectedIndex(0);
-        RDATEOFJOINING.setDate(null);
-        RCPASSWORD.setText("");
+  void clearFields() {
+    DID.setText("");
+    FNAME.setText("");
+    MNAME.setText("");
+    LNAME.setText("");
+    AGE.setText("");
+    DOB.setDate(null);
+    CONTACT1.setText("");
+    CONTACT2.setText("");
+    AADHAARNO.setText("");
+    PANNO.setText("");
+    FEE.setText("");
+    OPD_NO.setText("");
+    ADDRESS.setText("");
+    CITY.setText("");
+    DISTRICT.setText("");
+    STATE.setText("");
+    COUNTRY.setText("");
+    EDUCATION.setText("");
+    USERPHOTO.setText("");
+    EMERGANCY_CONTACT.setText("");
+    JOB_EXPERIENCE.setText("");
+    DOCUMENT.setText("");
+    EMAIL.setText("");
+    SPECIALIZATION.setText("");
+    MSTATUS.setSelectedIndex(0);
+    PINCODE.setText("");
+    USERNAME.setText("");
+    PASSWORD.setText("");
+    GENDER.setSelectedIndex(0);
+    LKNOWN.setText("");
+    GENDER.setSelectedIndex(0);
+    DATEOFJOINING.setDate(null);
+    CPASSWORD.setText("");
+    //
+    RID.setText("");
+    RFNAME.setText("");
+    RMNAME.setText("");
+    RLNAME.setText("");
+    RAGE.setText("");
+    RDOB.setDate(null);
+    RCONTACT1.setText("");
+    RCONTACT2.setText("");
+    RAADHAARNO.setText("");
+    RPANNO.setText("");
+    RADDRESS.setText("");
+    RCITY.setText("");
+    RDISTRICT.setText("");
+    RSTATE.setText("");
+    RCOUNTRY.setText("");
+    REDUCATION.setText("");
 
-        // 
-        NID.setText("");
-        NFNAME.setText("");
-        NMNAME.setText("");
-        NLNAME.setText("");
-        NAGE.setText(""); 
-        NDOB.setDate(null);
-        NCONTACT1.setText("");
-        NCONTACT2.setText("");
-        NAADHAARNO.setText("");
-        NPANNO.setText(""); 
-        NADDRESS.setText("");
-        NCITY.setText("");
-        NDISTRICT.setText("");
-        NSTATE.setText("");
-        NCOUNTRY.setText("");
-        NEDUCATION.setText("");        
-        NUSERPHOTO.setText(""); 
-        NJOB_EXPERIENCE.setText("");
-        NDOCUMENT.setText("");
-        NEMAIL.setText("");
-        NSPECIALIZATION.setText("");
-        NMSTATUS.setSelectedIndex(0);
-        NPINCODE.setText(""); 
-        NUSERNAME.setText("");
-        NPASSWORD.setText("");
-        NGENDER.setSelectedIndex(0);      
-        NLKNOWN.setText("");  
-        NGENDER.setSelectedIndex(0);
-        NDATEOFJOINING.setDate(null);
-        NCPASSWORD.setText("");
-        
-        
-}
+    RUSERPHOTO.setText("");
+    RJOB_EXPERIENCE.setText("");
+    RDOCUMENT.setText("");
+    REMAIL.setText("");
+    RSPECIALIZATION.setText("");
+    RMSTATUS.setSelectedIndex(0);
+    RPINCODE.setText("");
+    RUSERNAME.setText("");
+    RPASSWORD.setText("");
+    RGENDER.setSelectedIndex(0);
+    RLKNOWN.setText("");
+    RGENDER.setSelectedIndex(0);
+    RDATEOFJOINING.setDate(null);
+    RCPASSWORD.setText("");
 
-int Sr;
-int Did;
-String Fname;
-String Mname;
-String Lname;
-int Age;
-int Opd;
-int Fee;
-int Rid;
-String Userphoto;
-String Username;
-String Specialization;
-String Dateofjoin;
-String Gender;
-String Dob;
-String Mstatus;
-String Education;
-String Specilization;
-String Jobexperience;
-String Lknown;
-String Address;
-String City;
-String District;
-String State;
-String Country;
-Long Pincode;
-String Email;
-Long Contact1;
-Long Contact2;
-Long Cperson;
-String photo;
-String Document;
-Long Aadhaarno;
-String Panno;
-String Time;
-String Date;
-String DateJoin;
-String Userid;
-String Password;
-String Cpassword; 
-    Statement statement ;
-    @SuppressWarnings("unchecked")
+    //
+    NID.setText("");
+    NFNAME.setText("");
+    NMNAME.setText("");
+    NLNAME.setText("");
+    NAGE.setText("");
+    NDOB.setDate(null);
+    NCONTACT1.setText("");
+    NCONTACT2.setText("");
+    NAADHAARNO.setText("");
+    NPANNO.setText("");
+    NADDRESS.setText("");
+    NCITY.setText("");
+    NDISTRICT.setText("");
+    NSTATE.setText("");
+    NCOUNTRY.setText("");
+    NEDUCATION.setText("");
+    NUSERPHOTO.setText("");
+    NJOB_EXPERIENCE.setText("");
+    NDOCUMENT.setText("");
+    NEMAIL.setText("");
+    NSPECIALIZATION.setText("");
+    NMSTATUS.setSelectedIndex(0);
+    NPINCODE.setText("");
+    NUSERNAME.setText("");
+    NPASSWORD.setText("");
+    NGENDER.setSelectedIndex(0);
+    NLKNOWN.setText("");
+    NGENDER.setSelectedIndex(0);
+    NDATEOFJOINING.setDate(null);
+    NCPASSWORD.setText("");
+  }
+
+  int Sr;
+  int Did;
+  String Fname;
+  String Mname;
+  String Lname;
+  int Age;
+  int Opd;
+  int Fee;
+  int Rid;
+  String Userphoto;
+  String Username;
+  String Specialization;
+  String Dateofjoin;
+  String Gender;
+  String Dob;
+  String Mstatus;
+  String Education;
+  String Specilization;
+  String Jobexperience;
+  String Lknown;
+  String Address;
+  String City;
+  String District;
+  String State;
+  String Country;
+  Long Pincode;
+  String Email;
+  Long Contact1;
+  Long Contact2;
+  Long EContact;
+  String photo;
+  String Document;
+  Long Aadhaarno;
+  String Panno;
+  String Time;
+  String Date;
+  String DateJoin;
+  String Userid;
+  String Password;
+  String Cpassword;
+  Statement statement;
+
+  @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -357,7 +591,7 @@ String Cpassword;
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        DASHBOARD0 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
@@ -384,7 +618,7 @@ String Cpassword;
         TRESEPTIONISTS = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        DOCTORS_1 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jPanel27 = new javax.swing.JPanel();
@@ -460,12 +694,13 @@ String Cpassword;
         FEE = new javax.swing.JTextField();
         jLabel124 = new javax.swing.JLabel();
         EMERGANCY_CONTACT = new javax.swing.JTextField();
+        ERR = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         TIME = new javax.swing.JLabel();
         DATE = new javax.swing.JLabel();
         TIME1 = new javax.swing.JLabel();
         TIME2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        RECEPTIONIST_2 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jLabel53 = new javax.swing.JLabel();
@@ -540,10 +775,11 @@ String Cpassword;
         jLabel85 = new javax.swing.JLabel();
         RDATE = new javax.swing.JLabel();
         RTIME = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        RDATE2 = new javax.swing.JLabel();
+        RDATE3 = new javax.swing.JLabel();
+        NURSE_3 = new javax.swing.JPanel();
         jPanel33 = new javax.swing.JPanel();
         jLabel86 = new javax.swing.JLabel();
-        SeparatorLine2 = new javax.swing.JSeparator();
         jPanel34 = new javax.swing.JPanel();
         jLabel87 = new javax.swing.JLabel();
         jLabel88 = new javax.swing.JLabel();
@@ -614,6 +850,8 @@ String Cpassword;
         jLabel118 = new javax.swing.JLabel();
         RDATE1 = new javax.swing.JLabel();
         RTIME1 = new javax.swing.JLabel();
+        RDATE4 = new javax.swing.JLabel();
+        RTIME2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -621,7 +859,7 @@ String Cpassword;
         jPanel39 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel10 = new javax.swing.JPanel();
+        DISCHARGE_FORM = new javax.swing.JPanel();
         jPanel36 = new javax.swing.JPanel();
         jLabel125 = new javax.swing.JLabel();
         jPanel37 = new javax.swing.JPanel();
@@ -630,59 +868,68 @@ String Cpassword;
         jLabel128 = new javax.swing.JLabel();
         jPanel38 = new javax.swing.JPanel();
         jLabel129 = new javax.swing.JLabel();
-        RID2 = new javax.swing.JTextField();
+        PID = new javax.swing.JTextField();
         RSUBMIT2 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        RID6 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jLabel18 = new javax.swing.JLabel();
+        OTAMOUNT = new javax.swing.JTextField();
+        DISCHARGEDATE = new com.toedter.calendar.JDateChooser();
+        ADMITDATE = new com.toedter.calendar.JDateChooser();
+        FULLNAME = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel131 = new javax.swing.JLabel();
-        jLabel132 = new javax.swing.JLabel();
+        NOOFDAAYS = new javax.swing.JLabel();
         WARDNAME = new javax.swing.JComboBox<>();
         jLabel133 = new javax.swing.JLabel();
         jLabel134 = new javax.swing.JLabel();
         jLabel135 = new javax.swing.JLabel();
         jLabel136 = new javax.swing.JLabel();
-        admitStatus = new javax.swing.JComboBox<>();
+        PATIENT_STATUS = new javax.swing.JComboBox<>();
         jLabel137 = new javax.swing.JLabel();
         jLabel138 = new javax.swing.JLabel();
-        RID8 = new javax.swing.JTextField();
-        jLabel130 = new javax.swing.JLabel();
-        jLabel139 = new javax.swing.JLabel();
+        EXTRA_AMOUNT = new javax.swing.JTextField();
         jLabel140 = new javax.swing.JLabel();
+        jLabel139 = new javax.swing.JLabel();
+        DRNAME = new javax.swing.JLabel();
+        jLabel130 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TREATMENT = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        MEDICINES = new javax.swing.JTextArea();
+        jLabel143 = new javax.swing.JLabel();
+        NEXT_VISIT_DATE = new com.toedter.calendar.JDateChooser();
+        jLabel144 = new javax.swing.JLabel();
         DDATE = new javax.swing.JLabel();
         DTIME = new javax.swing.JLabel();
         jLabel141 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        DOCTORLIST = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jPanel25 = new javax.swing.JPanel();
-        txt_search = new javax.swing.JTextField();
-        search = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        PATIENTSDATA = new javax.swing.JTable();
-        jPanel12 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jPanel41 = new javax.swing.JPanel();
+        jPanel47 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        DOCTORSLIST3 = new javax.swing.JTable();
+        PATIENTS1 = new javax.swing.JLabel();
+        txt_search1 = new javax.swing.JTextField();
+        search1 = new javax.swing.JButton();
+        NURSEEE = new javax.swing.JPanel();
+        jPanel44 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        NURSELIST = new javax.swing.JTable();
         txt_search2 = new javax.swing.JTextField();
         search2 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        PATIENTSDATA2 = new javax.swing.JTable();
-        jPanel13 = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        jPanel42 = new javax.swing.JPanel();
-        txt_search3 = new javax.swing.JTextField();
-        search3 = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        PATIENTSDATA3 = new javax.swing.JTable();
-        jPanel14 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        RECEPTIONISTDARA = new javax.swing.JPanel();
+        jPanel45 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        RECEPTIONISTLISH = new javax.swing.JTable();
+        txt_search5 = new javax.swing.JTextField();
+        search5 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        PATIENTSD = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        searchPatientsField = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jPanel43 = new javax.swing.JPanel();
-        txt_search4 = new javax.swing.JTextField();
-        search4 = new javax.swing.JButton();
-        jScrollPane10 = new javax.swing.JScrollPane();
         PATIENTSDATA4 = new javax.swing.JTable();
+        PATIENTS = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
@@ -728,12 +975,17 @@ String Cpassword;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(218, 218, 238));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1953, 905));
+        DASHBOARD0.setBackground(new java.awt.Color(218, 218, 238));
+        DASHBOARD0.setPreferredSize(new java.awt.Dimension(1953, 905));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Hnet.com-image.png"))); // NOI18N
 
         jPanel20.setBackground(new java.awt.Color(180, 180, 246));
+        jPanel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel20MouseClicked(evt);
+            }
+        });
 
         TDOCTORS.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
         TDOCTORS.setText("00");
@@ -810,6 +1062,11 @@ String Cpassword;
         );
 
         jPanel22.setBackground(new java.awt.Color(180, 180, 246));
+        jPanel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel22MouseClicked(evt);
+            }
+        });
 
         TNURSES.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
         TNURSES.setText("00");
@@ -924,6 +1181,11 @@ String Cpassword;
         );
 
         jPanel40.setBackground(new java.awt.Color(180, 180, 246));
+        jPanel40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel40MouseClicked(evt);
+            }
+        });
 
         TRESEPTIONISTS.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
         TRESEPTIONISTS.setText("00");
@@ -967,7 +1229,7 @@ String Cpassword;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                 .addGap(127, 127, 127)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1002,24 +1264,24 @@ String Cpassword;
                 .addContainerGap(312, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout DASHBOARD0Layout = new javax.swing.GroupLayout(DASHBOARD0);
+        DASHBOARD0.setLayout(DASHBOARD0Layout);
+        DASHBOARD0Layout.setHorizontalGroup(
+            DASHBOARD0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DASHBOARD0Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        DASHBOARD0Layout.setVerticalGroup(
+            DASHBOARD0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DASHBOARD0Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab1", jPanel1);
+        jTabbedPane1.addTab("tab1", DASHBOARD0);
 
         jPanel26.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -1126,6 +1388,11 @@ String Cpassword;
 
         DOB.setDateFormatString("yyyy-MM-dd");
         DOB.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        DOB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DOBMouseClicked(evt);
+            }
+        });
 
         jLabel31.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel31.setText("MARIATAL STATUS");
@@ -1424,6 +1691,10 @@ String Cpassword;
             }
         });
 
+        ERR.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        ERR.setForeground(new java.awt.Color(204, 0, 51));
+        ERR.setText("   ");
+
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
@@ -1440,11 +1711,13 @@ String Cpassword;
                 .addGap(50, 50, 50))
             .addGroup(jPanel28Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel28Layout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(DID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ERR)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1587,7 +1860,9 @@ String Cpassword;
                 .addContainerGap()
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(DID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(DID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ERR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel28Layout.createSequentialGroup()
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1750,10 +2025,10 @@ String Cpassword;
         DATE.setText("TIME");
 
         TIME1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        TIME1.setText("TIME");
+        TIME1.setText("TIME  :");
 
         TIME2.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        TIME2.setText("DATE");
+        TIME2.setText("DATE  :");
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -1774,19 +2049,21 @@ String Cpassword;
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(606, 606, 606)
-                        .addComponent(TIME2)
-                        .addGap(31, 31, 31)
-                        .addComponent(DATE)
-                        .addGap(11, 11, 11)))
+                        .addGap(727, 727, 727)))
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addGap(50, 50, 50))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
-                        .addComponent(TIME1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TIME)
+                        .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel26Layout.createSequentialGroup()
+                                .addComponent(TIME2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(DATE))
+                            .addGroup(jPanel26Layout.createSequentialGroup()
+                                .addComponent(TIME1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TIME)))
                         .addGap(91, 91, 91))))
         );
         jPanel26Layout.setVerticalGroup(
@@ -1803,35 +2080,37 @@ String Cpassword;
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TIME)
-                    .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TIME1)
-                        .addComponent(TIME2)
-                        .addComponent(DATE))
-                    .addComponent(jLabel46))
-                .addGap(12, 12, 12)
+                    .addComponent(TIME1)
+                    .addComponent(jLabel46)
+                    .addGroup(jPanel26Layout.createSequentialGroup()
+                        .addComponent(TIME)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DATE)
+                            .addComponent(TIME2))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout DOCTORS_1Layout = new javax.swing.GroupLayout(DOCTORS_1);
+        DOCTORS_1.setLayout(DOCTORS_1Layout);
+        DOCTORS_1Layout.setHorizontalGroup(
+            DOCTORS_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DOCTORS_1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        DOCTORS_1Layout.setVerticalGroup(
+            DOCTORS_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DOCTORS_1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel2);
+        jTabbedPane1.addTab("tab2", DOCTORS_1);
 
         jPanel30.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -1885,6 +2164,11 @@ String Cpassword;
         RID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RIDActionPerformed(evt);
+            }
+        });
+        RID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                RIDKeyPressed(evt);
             }
         });
 
@@ -2021,6 +2305,7 @@ String Cpassword;
             }
         });
 
+        RDELETE.setBackground(new java.awt.Color(255, 0, 0));
         RDELETE.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         RDELETE.setText("DELETE");
         RDELETE.setMargin(new java.awt.Insets(7, 24, 7, 24));
@@ -2503,22 +2788,34 @@ String Cpassword;
         RTIME.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         RTIME.setText("TIME");
 
+        RDATE2.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        RDATE2.setText("DATE  :");
+
+        RDATE3.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        RDATE3.setText("TIME  :");
+
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
         jPanel30Layout.setHorizontalGroup(
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel30Layout.createSequentialGroup()
-                .addComponent(jPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel30Layout.createSequentialGroup()
+                        .addComponent(jPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel30Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(771, 771, 771)
+                        .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RDATE2)
+                            .addComponent(RDATE3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(RDATE)
+                            .addComponent(RTIME))
+                        .addGap(68, 68, 68)))
                 .addComponent(SeparatorLine1))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel30Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(RDATE)
-                .addGap(27, 27, 27)
-                .addComponent(RTIME)
-                .addGap(98, 98, 98))
             .addGroup(jPanel30Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2536,20 +2833,20 @@ String Cpassword;
                     .addComponent(jPanel31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel56, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel30Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(RTIME)
-                            .addComponent(RDATE)))
-                    .addGroup(jPanel30Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel85)))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel85)
+                    .addComponent(RDATE)
+                    .addComponent(RDATE2))
                 .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel30Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(SeparatorLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel30Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RTIME)
+                            .addComponent(RDATE3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(126, Short.MAX_VALUE))
@@ -2571,37 +2868,31 @@ String Cpassword;
                 .addGap(0, 37, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout RECEPTIONIST_2Layout = new javax.swing.GroupLayout(RECEPTIONIST_2);
+        RECEPTIONIST_2.setLayout(RECEPTIONIST_2Layout);
+        RECEPTIONIST_2Layout.setHorizontalGroup(
+            RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 2045, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(RECEPTIONIST_2Layout.createSequentialGroup()
                     .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 18, Short.MAX_VALUE)))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        RECEPTIONIST_2Layout.setVerticalGroup(
+            RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1043, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap(25, Short.MAX_VALUE)
+            .addGroup(RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RECEPTIONIST_2Layout.createSequentialGroup()
+                    .addContainerGap(14, Short.MAX_VALUE)
                     .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(25, Short.MAX_VALUE)))
+                    .addContainerGap(13, Short.MAX_VALUE)))
         );
 
-        jTabbedPane1.addTab("tab3", jPanel3);
+        jTabbedPane1.addTab("tab3", RECEPTIONIST_2);
 
         jPanel33.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel86.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/logo_1.png"))); // NOI18N
-
-        SeparatorLine2.setBackground(new java.awt.Color(0, 0, 0));
-        SeparatorLine2.setForeground(new java.awt.Color(0, 0, 0));
-        SeparatorLine2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        SeparatorLine2.setDoubleBuffered(true);
-        SeparatorLine2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
 
         jPanel34.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -2645,6 +2936,11 @@ String Cpassword;
         NID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NIDActionPerformed(evt);
+            }
+        });
+        NID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NIDKeyPressed(evt);
             }
         });
 
@@ -2781,6 +3077,7 @@ String Cpassword;
             }
         });
 
+        RDELETE1.setBackground(new java.awt.Color(255, 0, 0));
         RDELETE1.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         RDELETE1.setText("DELETE");
         RDELETE1.setMargin(new java.awt.Insets(7, 24, 7, 24));
@@ -3251,7 +3548,7 @@ String Cpassword;
                     .addComponent(RUPDATE1)
                     .addComponent(RDELETE1)
                     .addComponent(NSUBMIT))
-                .addGap(47, 47, 47))
+                .addGap(21, 21, 21))
         );
 
         jLabel118.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
@@ -3263,22 +3560,16 @@ String Cpassword;
         RTIME1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         RTIME1.setText("TIME");
 
+        RDATE4.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        RDATE4.setText("DATE");
+
+        RTIME2.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        RTIME2.setText("TIME");
+
         javax.swing.GroupLayout jPanel33Layout = new javax.swing.GroupLayout(jPanel33);
         jPanel33.setLayout(jPanel33Layout);
         jPanel33Layout.setHorizontalGroup(
             jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel33Layout.createSequentialGroup()
-                .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SeparatorLine2))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel33Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel118, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(RDATE1)
-                .addGap(27, 27, 27)
-                .addComponent(RTIME1)
-                .addGap(98, 98, 98))
             .addGroup(jPanel33Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel86, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3287,6 +3578,22 @@ String Cpassword;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel89)
                 .addGap(50, 50, 50))
+            .addGroup(jPanel33Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel33Layout.createSequentialGroup()
+                        .addComponent(jLabel118, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(794, 794, 794)
+                        .addComponent(RDATE4))
+                    .addComponent(RTIME2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(RDATE1)
+                    .addComponent(RTIME1))
+                .addGap(70, 70, 70))
+            .addGroup(jPanel33Layout.createSequentialGroup()
+                .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, 1926, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel33Layout.setVerticalGroup(
             jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3296,42 +3603,42 @@ String Cpassword;
                     .addComponent(jPanel34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel86, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel89, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel33Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(RTIME1)
-                            .addComponent(RDATE1)))
+                .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel33Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jLabel118)))
-                .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel33Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(SeparatorLine2, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel33Layout.createSequentialGroup()
+                        .addComponent(jLabel118)
+                        .addGap(32, 32, 32))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel33Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RDATE1)
+                            .addComponent(RDATE4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RTIME1)
+                            .addComponent(RTIME2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(126, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout NURSE_3Layout = new javax.swing.GroupLayout(NURSE_3);
+        NURSE_3.setLayout(NURSE_3Layout);
+        NURSE_3Layout.setHorizontalGroup(
+            NURSE_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NURSE_3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(123, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        NURSE_3Layout.setVerticalGroup(
+            NURSE_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NURSE_3Layout.createSequentialGroup()
                 .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 87, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab4", jPanel4);
+        jTabbedPane1.addTab("tab4", NURSE_3);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -3419,6 +3726,7 @@ String Cpassword;
         jTabbedPane1.addTab("tab8", jPanel8);
 
         jPanel36.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel36.setPreferredSize(new java.awt.Dimension(1939, 800));
 
         jLabel125.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/logo_1.png"))); // NOI18N
 
@@ -3457,13 +3765,20 @@ String Cpassword;
 
         jLabel128.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/logo_2.png"))); // NOI18N
 
+        jPanel38.setPreferredSize(new java.awt.Dimension(1939, 500));
+
         jLabel129.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel129.setText("PID");
 
-        RID2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        RID2.addActionListener(new java.awt.event.ActionListener() {
+        PID.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        PID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RID2ActionPerformed(evt);
+                PIDActionPerformed(evt);
+            }
+        });
+        PID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PIDKeyPressed(evt);
             }
         });
 
@@ -3480,25 +3795,34 @@ String Cpassword;
         jLabel17.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel17.setText("ADMIT DATE");
 
-        RID6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        RID6.setText("0");
-        RID6.addActionListener(new java.awt.event.ActionListener() {
+        OTAMOUNT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        OTAMOUNT.setText("0");
+        OTAMOUNT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RID6ActionPerformed(evt);
+                OTAMOUNTActionPerformed(evt);
             }
         });
 
-        jLabel18.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel18.setText("FIRST NAME");
+        DISCHARGEDATE.setDateFormatString("yyyy-MM-dd");
+        DISCHARGEDATE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                DISCHARGEDATEKeyPressed(evt);
+            }
+        });
+
+        ADMITDATE.setDateFormatString("yyyy-MM-dd");
+
+        FULLNAME.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        FULLNAME.setText("FULL NAME");
 
         jLabel19.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel19.setText("DISCHARGE DATE");
 
         jLabel131.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel131.setText("NO OF DAYS ADMIT");
+        jLabel131.setText("NO OF DAYS TO STAY");
 
-        jLabel132.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel132.setText("NO OF DAYS ADMIT");
+        NOOFDAAYS.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        NOOFDAAYS.setText("NO OF DAYS ADMIT");
 
         WARDNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         WARDNAME.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICU", "IPD", "MRI", "MICU", "NICU", "OPD", "NICU", "OT", "HCU", "ICCU" }));
@@ -3515,83 +3839,111 @@ String Cpassword;
         jLabel136.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel136.setText("PATIENT  STATUS");
 
-        admitStatus.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        admitStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIVE", "DEATH" }));
-        admitStatus.addActionListener(new java.awt.event.ActionListener() {
+        PATIENT_STATUS.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        PATIENT_STATUS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIVE", "DEATH" }));
+        PATIENT_STATUS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                admitStatusActionPerformed(evt);
+                PATIENT_STATUSActionPerformed(evt);
             }
         });
 
         jLabel137.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel137.setText("BED AMOUNT");
+        jLabel137.setText("WARD CHARGES");
 
         jLabel138.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel138.setText("EXTRA AMOUNT");
 
-        RID8.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        RID8.setText("0");
-        RID8.addActionListener(new java.awt.event.ActionListener() {
+        EXTRA_AMOUNT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        EXTRA_AMOUNT.setText("0");
+        EXTRA_AMOUNT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RID8ActionPerformed(evt);
+                EXTRA_AMOUNTActionPerformed(evt);
             }
         });
 
-        jLabel130.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel130.setText("MIDDLE NAME");
-
-        jLabel139.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel139.setText("LAST NAME");
-
         jLabel140.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel140.setText("FULL NAME");
+
+        jLabel139.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        jLabel139.setText("DR NAME");
+
+        DRNAME.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        DRNAME.setText("DR NAME");
+
+        jLabel130.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        jLabel130.setText("TREATMENT");
+
+        TREATMENT.setColumns(20);
+        TREATMENT.setRows(5);
+        jScrollPane2.setViewportView(TREATMENT);
+
+        MEDICINES.setColumns(20);
+        MEDICINES.setRows(5);
+        jScrollPane3.setViewportView(MEDICINES);
+
+        jLabel143.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        jLabel143.setText("MEDICINES");
+
+        NEXT_VISIT_DATE.setDateFormatString("yyyy-MM-dd");
+
+        jLabel144.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        jLabel144.setText("NEXT VISIT");
 
         javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
         jPanel38.setLayout(jPanel38Layout);
         jPanel38Layout.setHorizontalGroup(
             jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel38Layout.createSequentialGroup()
+                .addGap(849, 849, 849)
+                .addComponent(jLabel129)
+                .addGap(18, 18, 18)
+                .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(817, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel38Layout.createSequentialGroup()
-                        .addGap(849, 849, 849)
-                        .addComponent(jLabel129)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
                         .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel138, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel134, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel137, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel133, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel131, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19)
-                            .addComponent(jLabel136)
+                            .addComponent(jLabel140)
                             .addComponent(jLabel17)
-                            .addComponent(jLabel140))
-                        .addGap(30, 30, 30)))
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel38Layout.createSequentialGroup()
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel130, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel139, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 591, Short.MAX_VALUE))
-                    .addGroup(jPanel38Layout.createSequentialGroup()
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel131)
+                            .addComponent(jLabel139)
+                            .addComponent(jLabel134, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel138, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel136)
+                            .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel137, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel133, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)))
+                        .addGap(55, 55, 55)
                         .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(RID2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel135)
-                            .addComponent(RSUBMIT2)
-                            .addComponent(jLabel132, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(DISCHARGEDATE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ADMITDATE, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(NOOFDAAYS, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FULLNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel38Layout.createSequentialGroup()
+                        .addGap(251, 251, 251)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(WARDNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(admitStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RID6, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RID8, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(PATIENT_STATUS, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(OTAMOUNT, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel135, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(RSUBMIT2)
+                                .addComponent(EXTRA_AMOUNT, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(DRNAME, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel130)
+                    .addComponent(jLabel143)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
+                        .addComponent(jLabel144, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(NEXT_VISIT_DATE, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel38Layout.setVerticalGroup(
             jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3599,48 +3951,68 @@ String Cpassword;
                 .addContainerGap()
                 .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel129, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RID2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel130)
-                    .addComponent(jLabel139)
-                    .addComponent(jLabel140))
-                .addGap(18, 18, 18)
+                    .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanel38Layout.createSequentialGroup()
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel38Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(FULLNAME))
+                            .addGroup(jPanel38Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel140)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ADMITDATE, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(DISCHARGEDATE, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NOOFDAAYS)
+                            .addComponent(jLabel131))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DRNAME)
+                            .addComponent(jLabel139))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(WARDNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel133))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel135)
+                            .addComponent(jLabel137))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel134)
+                            .addComponent(OTAMOUNT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel138)
+                            .addComponent(EXTRA_AMOUNT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel136)
+                            .addComponent(PATIENT_STATUS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel38Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel130)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel143)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel132)
-                    .addComponent(jLabel131))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(WARDNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel133))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel135)
-                    .addComponent(jLabel137))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel134)
-                    .addComponent(RID6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel138)
-                    .addComponent(RID8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel136)
-                    .addComponent(admitStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(NEXT_VISIT_DATE, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel144, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(RSUBMIT2)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         DDATE.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
@@ -3691,254 +4063,235 @@ String Cpassword;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DDATE))
                     .addComponent(jLabel141, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(725, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel38, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout DISCHARGE_FORMLayout = new javax.swing.GroupLayout(DISCHARGE_FORM);
+        DISCHARGE_FORM.setLayout(DISCHARGE_FORMLayout);
+        DISCHARGE_FORMLayout.setHorizontalGroup(
+            DISCHARGE_FORMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DISCHARGE_FORMLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(123, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        DISCHARGE_FORMLayout.setVerticalGroup(
+            DISCHARGE_FORMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DISCHARGE_FORMLayout.createSequentialGroup()
+                .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, 968, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 75, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab9", jPanel10);
+        jTabbedPane1.addTab("tab9", DISCHARGE_FORM);
 
-        txt_search.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        txt_search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_searchActionPerformed(evt);
-            }
-        });
-
-        search.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        search.setText("Search Patients");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-        });
-
-        PATIENTSDATA.setModel(new javax.swing.table.DefaultTableModel(
+        DOCTORSLIST3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "SR", "PID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DATE OF BIRTH", "MSTATUS", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "DR NAME", "OPD NO", "FEE", "SYSMPTOMS", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PINCODE", "DATE", "TIME"
+                "SR", "ID", "FNAME ", "MNAME ", "LNAME ", "AGE ", "GENDER ", "DOB ", "MSTATUS ", "UPHOTO ", "USERNAME", "PASSWORD ", "SPECIALIZATION ", "EDUCATION ", "FEE ", "OPDNO ", "JOBEXP ", "DATEOFJOIN ", "LKNOWN ", "DOCUMENT", "EMAILS", "CONTACT1", "CONTACT1", "ECONTACT", "AADHARNO", "PAN NO", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PIN", "DATE", "TIME"
             }
         ));
-        PATIENTSDATA.setGridColor(new java.awt.Color(145, 178, 224));
-        jScrollPane2.setViewportView(PATIENTSDATA);
+        DOCTORSLIST3.setShowHorizontalLines(false);
+        jScrollPane8.setViewportView(DOCTORSLIST3);
 
-        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
-        jPanel25.setLayout(jPanel25Layout);
-        jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addGroup(jPanel25Layout.createSequentialGroup()
-                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search)
-                        .addGap(1602, 1602, 1602))))
+        PATIENTS1.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
+        PATIENTS1.setText("DOCTORS   DETAILS");
+
+        search1.setText("FIND DOCTORS");
+        search1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel47Layout = new javax.swing.GroupLayout(jPanel47);
+        jPanel47.setLayout(jPanel47Layout);
+        jPanel47Layout.setHorizontalGroup(
+            jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel47Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(txt_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addComponent(search1)
+                .addGap(385, 385, 385)
+                .addComponent(PATIENTS1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel47Layout.createSequentialGroup()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1927, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanel47Layout.setVerticalGroup(
+            jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel47Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PATIENTS1)
+                    .addComponent(txt_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search1))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
 
-        jScrollPane5.setViewportView(jPanel25);
+        jScrollPane5.setViewportView(jPanel47);
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout DOCTORLISTLayout = new javax.swing.GroupLayout(DOCTORLIST);
+        DOCTORLIST.setLayout(DOCTORLISTLayout);
+        DOCTORLISTLayout.setHorizontalGroup(
+            DOCTORLISTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DOCTORLISTLayout.createSequentialGroup()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1957, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 88, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        DOCTORLISTLayout.setVerticalGroup(
+            DOCTORLISTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DOCTORLISTLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab10", jPanel11);
+        jTabbedPane1.addTab("tab10", DOCTORLIST);
+
+        NURSELIST.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "SR", "ID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DOB", "MSTATUS", "USERPHOTO", "USERNAME", "PASSWORD", "SPECIALIZATION", "EDUCATION", "JOB EXPERIENCE", "DATE OF JOINING", "L KNOWN", "DOCUMENT", "EMAIL", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PIN CODE", "DATE", "TIME"
+            }
+        ));
+        jScrollPane4.setViewportView(NURSELIST);
 
         txt_search2.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        txt_search2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_search2ActionPerformed(evt);
-            }
-        });
 
         search2.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         search2.setText("Search Patients");
-        search2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search2ActionPerformed(evt);
-            }
-        });
 
-        PATIENTSDATA2.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel2.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
+        jLabel2.setText("NURSE LIST");
+
+        javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
+        jPanel44.setLayout(jPanel44Layout);
+        jPanel44Layout.setHorizontalGroup(
+            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel44Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txt_search2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(search2)
+                .addGap(386, 386, 386)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel44Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1933, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 96, Short.MAX_VALUE))
+        );
+        jPanel44Layout.setVerticalGroup(
+            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel44Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_search2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search2)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout NURSEEELayout = new javax.swing.GroupLayout(NURSEEE);
+        NURSEEE.setLayout(NURSEEELayout);
+        NURSEEELayout.setHorizontalGroup(
+            NURSEEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NURSEEELayout.createSequentialGroup()
+                .addComponent(jPanel44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
+        );
+        NURSEEELayout.setVerticalGroup(
+            NURSEEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NURSEEELayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jPanel44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab11", NURSEEE);
+
+        RECEPTIONISTLISH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "SR", "PID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DATE OF BIRTH", "MSTATUS", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "DR NAME", "OPD NO", "FEE", "SYSMPTOMS", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PINCODE", "DATE", "TIME"
+                "SR", "ID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DOB", "MSTATUS", "USER PHOTO", "USERNAME", "PASSWORD", "SPECIALIZATION", "EDUCATION", "JOB EXPERIENCE", "DATE OF JOIN", "L KNOWN", "DOCUMENT", "EMAIL", "CONTACT1", "CONTACT2", "ADDHAAR NO", "PAN NO", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PIN CODE", "DATE", "TIME"
             }
         ));
-        PATIENTSDATA2.setGridColor(new java.awt.Color(145, 178, 224));
-        jScrollPane3.setViewportView(PATIENTSDATA2);
+        jScrollPane7.setViewportView(RECEPTIONISTLISH);
 
-        javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
-        jPanel41.setLayout(jPanel41Layout);
-        jPanel41Layout.setHorizontalGroup(
-            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel41Layout.createSequentialGroup()
+        txt_search5.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+
+        search5.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        search5.setText("Search Patients");
+
+        jLabel14.setText("receptionistlist");
+
+        javax.swing.GroupLayout jPanel45Layout = new javax.swing.GroupLayout(jPanel45);
+        jPanel45.setLayout(jPanel45Layout);
+        jPanel45Layout.setHorizontalGroup(
+            jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel45Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addGroup(jPanel41Layout.createSequentialGroup()
-                        .addComponent(txt_search2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search2)
-                        .addGap(1602, 1602, 1602))))
+                .addComponent(txt_search5, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(search5)
+                .addGap(386, 386, 386)
+                .addComponent(jLabel14)
+                .addContainerGap(1120, Short.MAX_VALUE))
+            .addGroup(jPanel45Layout.createSequentialGroup()
+                .addComponent(jScrollPane7)
+                .addContainerGap())
         );
-        jPanel41Layout.setVerticalGroup(
-            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel41Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_search2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search2))
+        jPanel45Layout.setVerticalGroup(
+            jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel45Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_search5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search5)
+                    .addComponent(jLabel14))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jScrollPane7.setViewportView(jPanel41);
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 1957, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 88, Short.MAX_VALUE))
+        javax.swing.GroupLayout RECEPTIONISTDARALayout = new javax.swing.GroupLayout(RECEPTIONISTDARA);
+        RECEPTIONISTDARA.setLayout(RECEPTIONISTDARALayout);
+        RECEPTIONISTDARALayout.setHorizontalGroup(
+            RECEPTIONISTDARALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RECEPTIONISTDARALayout.createSequentialGroup()
+                .addComponent(jPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 73, Short.MAX_VALUE))
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+        RECEPTIONISTDARALayout.setVerticalGroup(
+            RECEPTIONISTDARALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RECEPTIONISTDARALayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab11", jPanel12);
+        jTabbedPane1.addTab("tab12", RECEPTIONISTDARA);
 
-        txt_search3.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        txt_search3.addActionListener(new java.awt.event.ActionListener() {
+        searchPatientsField.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+
+        jButton4.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        jButton4.setText("Search Patients");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_search3ActionPerformed(evt);
-            }
-        });
-
-        search3.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        search3.setText("Search Patients");
-        search3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search3ActionPerformed(evt);
-            }
-        });
-
-        PATIENTSDATA3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "SR", "PID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DATE OF BIRTH", "MSTATUS", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "DR NAME", "OPD NO", "FEE", "SYSMPTOMS", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PINCODE", "DATE", "TIME"
-            }
-        ));
-        PATIENTSDATA3.setGridColor(new java.awt.Color(145, 178, 224));
-        jScrollPane6.setViewportView(PATIENTSDATA3);
-
-        javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
-        jPanel42.setLayout(jPanel42Layout);
-        jPanel42Layout.setHorizontalGroup(
-            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel42Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane6)
-                    .addGroup(jPanel42Layout.createSequentialGroup()
-                        .addComponent(txt_search3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search3)
-                        .addGap(1602, 1602, 1602))))
-        );
-        jPanel42Layout.setVerticalGroup(
-            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel42Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_search3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search3))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jScrollPane8.setViewportView(jPanel42);
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1957, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 88, Short.MAX_VALUE))
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("tab12", jPanel13);
-
-        txt_search4.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        txt_search4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_search4ActionPerformed(evt);
-            }
-        });
-
-        search4.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        search4.setText("Search Patients");
-        search4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search4ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -3951,52 +4304,57 @@ String Cpassword;
             }
         ));
         PATIENTSDATA4.setGridColor(new java.awt.Color(145, 178, 224));
-        jScrollPane10.setViewportView(PATIENTSDATA4);
+        jScrollPane9.setViewportView(PATIENTSDATA4);
 
-        javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
-        jPanel43.setLayout(jPanel43Layout);
-        jPanel43Layout.setHorizontalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel43Layout.createSequentialGroup()
+        PATIENTS.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
+        PATIENTS.setText("PATIENTS    DETAILS");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane10)
-                    .addGroup(jPanel43Layout.createSequentialGroup()
-                        .addComponent(txt_search4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1919, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(searchPatientsField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search4)
-                        .addGap(1602, 1602, 1602))))
+                        .addComponent(jButton4)
+                        .addGap(405, 405, 405)
+                        .addComponent(PATIENTS, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
-        jPanel43Layout.setVerticalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel43Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_search4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search4))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton4)
+                        .addComponent(searchPatientsField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PATIENTS, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jScrollPane9.setViewportView(jPanel43);
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1957, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout PATIENTSDLayout = new javax.swing.GroupLayout(PATIENTSD);
+        PATIENTSD.setLayout(PATIENTSDLayout);
+        PATIENTSDLayout.setHorizontalGroup(
+            PATIENTSDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PATIENTSDLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 102, Short.MAX_VALUE))
+        );
+        PATIENTSDLayout.setVerticalGroup(
+            PATIENTSDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PATIENTSDLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 88, Short.MAX_VALUE))
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
-        );
 
-        jTabbedPane1.addTab("tab13", jPanel14);
+        jTabbedPane1.addTab("tab13", PATIENTSD);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -4115,6 +4473,7 @@ String Cpassword;
         jMenu2.setFont(new java.awt.Font("Imprint MT Shadow", 0, 18)); // NOI18N
         jMenu2.setMargin(new java.awt.Insets(5, 10, 5, 10));
 
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jMenuItem4.setText("DOCTORS");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -4196,790 +4555,1143 @@ String Cpassword;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+  private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    jTabbedPane1.setSelectedIndex(1);
+  }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
-       jTabbedPane1.setSelectedIndex(0);
-    }//GEN-LAST:event_jMenu5ActionPerformed
+  private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+    jTabbedPane1.setSelectedIndex(0);
+  }//GEN-LAST:event_jMenu5ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       jTabbedPane1.setSelectedIndex(2);
+  private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    jTabbedPane1.setSelectedIndex(2);
+  }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+  private void DIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DIDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_DIDActionPerformed
 
-    private void DIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DIDActionPerformed
+  private void FNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_FNAMEActionPerformed
 
-    private void FNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FNAMEActionPerformed
+  private void MNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_MNAMEActionPerformed
 
-    private void MNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MNAMEActionPerformed
+  private void LNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_LNAMEActionPerformed
 
-    private void LNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LNAMEActionPerformed
+  private void AGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_AGEActionPerformed
 
-    private void AGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AGEActionPerformed
+  private void USERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USERNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_USERNAMEActionPerformed
 
-    private void USERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USERNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_USERNAMEActionPerformed
+  private void PASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PASSWORDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_PASSWORDActionPerformed
 
-    private void PASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PASSWORDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PASSWORDActionPerformed
+  private void CPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPASSWORDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_CPASSWORDActionPerformed
 
-    private void CPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPASSWORDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CPASSWORDActionPerformed
-
-    private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_VIEWActionPerformed
-
-    private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
-           getData();    
-           String query ="INSERT INTO VHSHOSPITAL.DOCTORS ( ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,FEE,OPDNO,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,ECONTACT,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES("+
-              Did  +  
-    ",'"+  Fname  +"',"+  
-    "'"+  Mname  +"',"+  
-    "'"+  Lname  +"',"+  
-    ""+  Age  +","+  
-    "'"+  Gender  +"',"+  
-    "'"+  Dob  +"',"+  
-    "'"+  Mstatus  +"',"+  
-    "'"+  photo  +"',"+  
-    "'"+  Userid  +"',"+  
-    "'"+  Password  +"',"+
-    "'"+  Specilization  +"',"+  
-    "'"+  Education  +"',"+  
-    Fee  +","+    
-    Opd  +","+  
-    "'"+  Jobexperience  +"',"+  
-    "'"+  DateJoin  +"',"+  
-    "'"+  Lknown  +"',"+  
-    "'"+  Document  +"',"+  
-    "'"+  Email  +"',"+  
-    ""+  Contact1  +","+  
-    ""+  Contact2  +","+  
-    ""+  Cperson  +","
-    +  Aadhaarno  +","+  
-    "'"+  Panno  +"',"+  
-    "'"+  Address  +"',"+  
-    "'"+  City  +"',"+  
-    "'"+  District  +"',"+  
-    "'"+  State  +"',"+  
-    "'"+  Country  +"',"+
-    Pincode  +","+   
-    "'"+  Date  +"',"+   
-    "'"+  Time  +"'"+  
-    ")";
- 
-     try{
-          statement.execute(query);
-        String DRDB = Lname+Did;
-        System.out.println(DRDB);
-        String databaseCreate = "CREATE DATABASE IF NOT EXISTS " +DRDB;
-        String admit = "CREATE TABLE " +DRDB +".ADMIT(SR INT NULL PRIMARY KEY AUTO_INCREMENT , USERNAME VARCHAR(255) NOT NULL , PASSWORD VARCHAR(255) NOT NULL );";
-        String nonAdmit = "CREATE TABLE " +DRDB +".NONADMIT(SR INT NULL PRIMARY KEY AUTO_INCREMENT , USERNAME VARCHAR(255) NOT NULL , PASSWORD VARCHAR(255) NOT NULL );";
-
-         statement.execute(databaseCreate);         
-         statement.execute(admit);
-         statement.execute(nonAdmit);
-
-        
-     }catch(Exception e){
-     System.out.println(e);
-     }
-     
-           clearFields();
-           getAllUsers();
-    }//GEN-LAST:event_SUBMITActionPerformed
-
-    private void UPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEActionPerformed
-       String query = "UPDATE VHSHOSPITAL.DOCTORS SET " + 
-               "FNAME=" + "'" + Fname + "'," + 
-               "MNAME=" + "'" + Mname + "'," + 
-               "LNAME=" + "'" + Lname + "'," +
-               "AGE=" + Age + "," + 
-               "GENDER=" + "'" + Gender + "'," + 
-               "DOB=" + "'" + Dob + "'," + 
-               "MSTATUS=" + "'" + Mstatus + "'," + 
-               "CONTACT1=" + Contact1 + "," + 
-               "CONTACT2=" + Contact2 + "," +  
-                "ECONTACT=" + Contact2 + "," + 
-               "AADHAAR=" + Aadhaarno + "," + 
-               "PAN=" + "'" + Panno + "'," + 
-               "FEE=" + Fee + "," + 
-               "OPDNO=" + Opd + "," + 
-               "SYMPTOMS=" + "'"  + 
-               "ADDRESS=" + "'" + Address + "'," + 
-               "UPHOTO=" + "'" + photo + "'," +                
-               "USERNAME=" + "'" + Userid + "'," + 
-               "PASSWORD=" + "'" + Password + "'," +
-               "CITY=" + "'" + City + "'," + 
-               "DISTRICT=" + "'" + District + "'," + 
-               "STATE=" + "'" + State + "'," + 
-               "COUNTRY=" + "'" + Country + "'," + 
-               "PIN=" + Pincode +
-               "EDUCATION="+"'"  +Education +"'," +
-               "DATEOFJOIN="+ "'"  +DateJoin +"',"+
-               "JOBEXP="+"'" + Jobexperience + "'," + 
-               
-               " WHERE ID=" + Did;
-       
-       try{
-           statement.execute(query);
-       }catch(Exception e){
-           System.out.println(e);
-       }
-    }//GEN-LAST:event_UPDATEActionPerformed
-
-    private void DELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEActionPerformed
-        try{
-         statement.execute("DELETE FROM  VHSHOSPITAL.DOCTORS WHERE ID=" + DID.getText());
-     }catch(Exception e){
-     System.out.println(e);
-     }
-    }//GEN-LAST:event_DELETEActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        jTabbedPane1.setSelectedIndex(12);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenu5MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenu5MenuKeyPressed
-         jTabbedPane1.setSelectedIndex(0);
-    }//GEN-LAST:event_jMenu5MenuKeyPressed
-
-    private void SPECIALIZATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SPECIALIZATIONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SPECIALIZATIONActionPerformed
-
-    private void JOB_EXPERIENCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOB_EXPERIENCEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JOB_EXPERIENCEActionPerformed
-
-    private void LKNOWNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LKNOWNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LKNOWNActionPerformed
-
-    private void DOCUMENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DOCUMENTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DOCUMENTActionPerformed
-
-    private void EDUCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EDUCATIONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EDUCATIONActionPerformed
-
-    private void DISTRICTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DISTRICTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DISTRICTActionPerformed
-
-    private void COUNTRYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COUNTRYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_COUNTRYActionPerformed
-
-    private void PINCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PINCODEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PINCODEActionPerformed
-
-    private void STATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STATEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_STATEActionPerformed
-
-    private void ADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDRESSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADDRESSActionPerformed
-
-    private void CITYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CITYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CITYActionPerformed
-
-    private void USERPHOTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USERPHOTOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_USERPHOTOActionPerformed
-
-    private void USERPHOTOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_USERPHOTOMouseClicked
-     try {
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            String filename = f.getAbsolutePath();
-            USERPHOTO.setText(filename);
-        } catch (Exception e) {
-            System.out.println("hiii");
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_USERPHOTOMouseClicked
-
-    private void JOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JOB_EXPERIENCEMouseClicked
-     try {
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            String filename = f.getAbsolutePath();
-            JOB_EXPERIENCE.setText(filename);
-        } catch (Exception e) {
-            System.out.println("hiii");
-        }     
-    }//GEN-LAST:event_JOB_EXPERIENCEMouseClicked
-
-    private void EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EMAILActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EMAILActionPerformed
-
-    private void CONTACT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTACT1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CONTACT1ActionPerformed
-
-    private void CONTACT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTACT2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CONTACT2ActionPerformed
-
-    private void AADHAARNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AADHAARNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AADHAARNOActionPerformed
-
-    private void PANNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PANNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PANNOActionPerformed
-
-    private void DOCUMENTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DOCUMENTMouseClicked
-        try {
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            String filename = f.getAbsolutePath();
-            DOCUMENT.setText(filename);
-        } catch (Exception e) {
-            System.out.println("hiii");
-        }
-    }//GEN-LAST:event_DOCUMENTMouseClicked
-
-    private void RIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RIDActionPerformed
-
-    private void RFNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RFNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RFNAMEActionPerformed
-
-    private void RMNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RMNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RMNAMEActionPerformed
-
-    private void RLNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RLNAMEActionPerformed
-
-    private void RAGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RAGEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RAGEActionPerformed
-
-    private void RUSERPHOTOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RUSERPHOTOMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RUSERPHOTOMouseClicked
-
-    private void RUSERPHOTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUSERPHOTOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RUSERPHOTOActionPerformed
-
-    private void RUSERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUSERNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RUSERNAMEActionPerformed
-
-    private void RPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RPASSWORDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RPASSWORDActionPerformed
-
-    private void RCPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCPASSWORDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RCPASSWORDActionPerformed
-
-    private void RVIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RVIEWActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RVIEWActionPerformed
-
-    private void RSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSUBMITActionPerformed
-
-          getData2();    
-        String query = "INSERT INTO VHSHOSPITAL.RECEPTIONISTS (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "','" + Dob + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
+  private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
+    
+      jTabbedPane1.setSelectedIndex(9);
       
- 
-     try{
-         statement.execute(query); 
-     }catch(Exception e){
-     System.out.println(e);
-     }
-     
-           clearFields();
-           getAllUsers();
+      
+  }//GEN-LAST:event_VIEWActionPerformed
 
-    }//GEN-LAST:event_RSUBMITActionPerformed
-
-    private void RUPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RUPDATEActionPerformed
-
-    private void RDELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDELETEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RDELETEActionPerformed
-
-    private void RSPECIALIZATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSPECIALIZATIONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RSPECIALIZATIONActionPerformed
-
-    private void RJOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RJOB_EXPERIENCEMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RJOB_EXPERIENCEMouseClicked
-
-    private void RJOB_EXPERIENCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RJOB_EXPERIENCEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RJOB_EXPERIENCEActionPerformed
-
-    private void RLKNOWNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLKNOWNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RLKNOWNActionPerformed
-
-    private void RDOCUMENTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RDOCUMENTMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RDOCUMENTMouseClicked
-
-    private void RDOCUMENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDOCUMENTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RDOCUMENTActionPerformed
-
-    private void REDUCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REDUCATIONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_REDUCATIONActionPerformed
-
-    private void RDISTRICTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDISTRICTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RDISTRICTActionPerformed
-
-    private void RCOUNTRYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCOUNTRYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RCOUNTRYActionPerformed
-
-    private void RPINCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RPINCODEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RPINCODEActionPerformed
-
-    private void RSTATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSTATEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RSTATEActionPerformed
-
-    private void RADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RADDRESSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RADDRESSActionPerformed
-
-    private void RCITYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCITYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RCITYActionPerformed
-
-    private void REMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REMAILActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_REMAILActionPerformed
-
-    private void RCONTACT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCONTACT1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RCONTACT1ActionPerformed
-
-    private void RCONTACT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCONTACT2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RCONTACT2ActionPerformed
-
-    private void RAADHAARNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RAADHAARNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RAADHAARNOActionPerformed
-
-    private void RPANNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RPANNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RPANNOActionPerformed
-
-    private void OPD_NOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OPD_NOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_OPD_NOActionPerformed
-
-    private void FEEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FEEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FEEActionPerformed
-
-    private void EMERGANCY_CONTACTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EMERGANCY_CONTACTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EMERGANCY_CONTACTActionPerformed
-
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-       this.dispose();
-          LOGIN_FORM log = new  LOGIN_FORM();
-                     log.setVisible(true);                        
-                     this.setVisible(false);
-    }//GEN-LAST:event_jMenu4MouseClicked
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       jTabbedPane1.setSelectedIndex(3);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-       jTabbedPane1.setSelectedIndex(14);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-       jTabbedPane1.setSelectedIndex(0);
-    }//GEN-LAST:event_jMenu5MouseClicked
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        jTabbedPane1.setSelectedIndex(13);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void NIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NIDActionPerformed
-
-    private void NFNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NFNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NFNAMEActionPerformed
-
-    private void NMNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NMNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NMNAMEActionPerformed
-
-    private void NLNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NLNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NLNAMEActionPerformed
-
-    private void NAGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NAGEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NAGEActionPerformed
-
-    private void NUSERPHOTOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NUSERPHOTOMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NUSERPHOTOMouseClicked
-
-    private void NUSERPHOTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NUSERPHOTOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NUSERPHOTOActionPerformed
-
-    private void NUSERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NUSERNAMEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NUSERNAMEActionPerformed
-
-    private void NPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NPASSWORDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NPASSWORDActionPerformed
-
-    private void NCPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCPASSWORDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NCPASSWORDActionPerformed
-
-    private void RVIEW1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RVIEW1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RVIEW1ActionPerformed
-
-    private void NSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSUBMITActionPerformed
-        // TODO add your handling code here:
+  private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
+    getData();
+    String query =
+      "INSERT INTO VHSHOSPITAL.DOCTORS ( ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,FEE,OPDNO,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,ECONTACT,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Did + ",'" + Fname + "'," + "'" + Mname + "'," + "'" + Lname + "'," + "" + Age + "," + "'" + Gender + "'," + "'" + Dob + "'," + "'" + Mstatus + "'," + "'" + photo + "'," + "'DR_" + Userid + "'," + "'" + Password + "'," + "'" + Specilization + "'," + "'" + Education + "'," + Fee + "," + Opd + "," + "'" + Jobexperience + "'," + "'" + DateJoin + "'," + "'" + Lknown + "'," + "'" + Document + "'," + "'" + Email + "'," + "" + Contact1 + "," + "" + Contact2 + "," + "" + EContact + "," + Aadhaarno + "," + "'" + Panno + "'," + "'" + Address + "'," + "'" + City + "'," + "'" + District + "'," + "'" + State + "'," + "'" + Country + "'," + Pincode + "," + "'" + Date + "'," + "'" + Time + "'" + ")";
         
-     try{
-         getData3();    
-        String query = "INSERT INTO VHSHOSPITAL.NURSES (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "','" + Dob + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
- 
-         statement.execute(query);
-          clearFields();
-           getAllUsers();
-     }catch(Exception e){
-     System.out.println(e);
-     }
-          
-        
-    }//GEN-LAST:event_NSUBMITActionPerformed
+    try {
+      try{
+          statement.execute(query);
+      }catch(Exception e){
+          if(e.getMessage().contains("Duplicate")){
+               ERR.setText("Dublicate Record..!");
+               System.out.println(e);
+          return;
+          }
+      }
+      ERR.setText("  ");
+      String DbName = "doc"+"_"+DID.getText();
+      System.out.println(DbName);
+      String databaseCreate = "CREATE DATABASE IF NOT EXISTS " + DbName;
+     String admit = "CREATE TABLE IF NOT EXISTS " + DbName +".ADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"PID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"DRNAME VARCHAR(200) NOT NULL," +"WARDNAME VARCHAR(200) NOT NULL," +"BEDNO INT NOT NULL ," +"DATEOFADMIT VARCHAR(20) NOT NULL," +"CFULLNAME  VARCHAR(200) NOT NULL," +"CAGE INT NOT NULL ," +"CGENDER VARCHAR(50) NOT NULL ," +"CCONTACT BIGINT NOT NULL," +"CRELATIONTOPATIENT  VARCHAR(200) NOT NULL," +"CAADHAARNO BIGINT NOT NULL UNIQUE," +"CADDRESS  VARCHAR(200) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
+     String nonAdmit = "CREATE TABLE IF NOT EXISTS " + DbName +".NONADMIT(" +"SR INT NULL AUTO_INCREMENT PRIMARY KEY," +"PID INT NOT NULL UNIQUE," +"FNAME VARCHAR(100) NOT NULL ," +"MNAME VARCHAR(100) NOT NULL ," +"LNAME VARCHAR(100) NOT NULL ," +"AGE INT NOT NULL ," +"GENDER VARCHAR(50) NOT NULL ," +"SYMPTOMS VARCHAR(255) NOT NULL,"+"DRNAME VARCHAR(200) NOT NULL,"  +"MEDICINES VARCHAR(255) NOT NULL," +"TREATMENT VARCHAR(255) NOT NULL," +"REPORTS VARCHAR(255) NOT NULL," +"DATE  VARCHAR(50) NOT NULL," +"TIME  VARCHAR(50) NOT NULL" +")";
 
-    private void RUPDATE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATE1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RUPDATE1ActionPerformed
-
-    private void RDELETE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDELETE1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RDELETE1ActionPerformed
-
-    private void NSPECIALIZATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSPECIALIZATIONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NSPECIALIZATIONActionPerformed
-
-    private void NJOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NJOB_EXPERIENCEMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NJOB_EXPERIENCEMouseClicked
-
-    private void NJOB_EXPERIENCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NJOB_EXPERIENCEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NJOB_EXPERIENCEActionPerformed
-
-    private void NLKNOWNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NLKNOWNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NLKNOWNActionPerformed
-
-    private void NDOCUMENTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NDOCUMENTMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NDOCUMENTMouseClicked
-
-    private void NDOCUMENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NDOCUMENTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NDOCUMENTActionPerformed
-
-    private void NEDUCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NEDUCATIONActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NEDUCATIONActionPerformed
-
-    private void NDISTRICTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NDISTRICTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NDISTRICTActionPerformed
-
-    private void NCOUNTRYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCOUNTRYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NCOUNTRYActionPerformed
-
-    private void NPINCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NPINCODEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NPINCODEActionPerformed
-
-    private void NSTATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSTATEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NSTATEActionPerformed
-
-    private void NADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NADDRESSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NADDRESSActionPerformed
-
-    private void NCITYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCITYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NCITYActionPerformed
-
-    private void NEMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NEMAILActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NEMAILActionPerformed
-
-    private void NCONTACT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCONTACT1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NCONTACT1ActionPerformed
-
-    private void NCONTACT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCONTACT2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NCONTACT2ActionPerformed
-
-    private void NAADHAARNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NAADHAARNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NAADHAARNOActionPerformed
-
-    private void NPANNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NPANNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NPANNOActionPerformed
-
-    private void RID2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RID2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RID2ActionPerformed
-
-    private void RSUBMIT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSUBMIT2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RSUBMIT2ActionPerformed
-
-    private void RID6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RID6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RID6ActionPerformed
-
-    private void admitStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_admitStatusActionPerformed
-        if(admitStatus.getSelectedItem().toString().equals("NO")){
-
-            jPanel5.setVisible(true);
-           
-
-        }else{
-
-            jPanel5.setVisible(false);
-            
-
-        }
-    }//GEN-LAST:event_admitStatusActionPerformed
-
-    private void RID8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RID8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RID8ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-          jTabbedPane1.setSelectedIndex(9);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
-          jTabbedPane1.setSelectedIndex(8);
-    }//GEN-LAST:event_jMenu6MouseClicked
-
-    private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_searchActionPerformed
-
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        String af = txt_search.getText();
-        search(af);
-    }//GEN-LAST:event_searchActionPerformed
-
-    private void txt_search2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_search2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_search2ActionPerformed
-
-    private void search2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search2ActionPerformed
-
-    private void txt_search3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_search3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_search3ActionPerformed
-
-    private void search3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search3ActionPerformed
-
-    private void txt_search4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_search4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_search4ActionPerformed
-
-    private void search4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search4ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        jTabbedPane1.setSelectedIndex(10);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
-    private void DIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DIDKeyPressed
-        if(evt.getKeyCode() ==10){
-            String getQuery = "SELECT * FROM VHSHOSPITAL.DOCTORS WHERE ID =" + DID.getText();
-            try{
-                ResultSet result = statement.executeQuery(getQuery);
-                while(result.next()){
-                    DID.setText(result.getString("ID"));
-                    FNAME.setText(result.getString("FNAME"));
-                    MNAME.setText(result.getString("MNAME"));
-                    LNAME.setText(result.getString("LNAME"));
-                    AGE.setText(Integer.toString(result.getInt("AGE"))); 
-                    DOB.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DOB")));
-                    CONTACT1.setText(result.getString("CONTACT1"));
-                    CONTACT2.setText(result.getString("CONTACT2"));
-                    AADHAARNO.setText(result.getString("AADHAAR"));
-                    PANNO.setText(result.getString("PAN"));
-                    FEE.setText(result.getString("FEE")); 
-                    OPD_NO.setText(result.getString("OPDNO")); 
-                    ADDRESS.setText(result.getString("ADDRESS"));
-                    CITY.setText(result.getString("CITY"));
-                    DISTRICT.setText(result.getString("DISTRICT"));
-                    STATE.setText(result.getString("STATE"));
-                    COUNTRY.setText(result.getString("COUNTRY"));
-                    EDUCATION.setText(result.getString( "EDUCATION" ));      
-                    USERPHOTO.setText(result.getString("UPHOTO"));
-                    EMERGANCY_CONTACT.setText(result.getString("ECONTACT"));
-                    JOB_EXPERIENCE.setText(result.getString("JOBEXP"));
-                    DOCUMENT.setText(result.getString("DOCUMENT"));
-                    EMAIL.setText(result.getString("EMAIL"));
-                    SPECIALIZATION.setText(result.getString("SPECIALIZATION"));
-                     if(result.getString("MSTATUS").equals("YES")){
-                            MSTATUS.setSelectedIndex(1);
-                        }else{
-                            MSTATUS.setSelectedIndex(0);
-                        }
-                    PINCODE.setText(result.getString("PIN")); 
-                    USERNAME.setText(result.getString("USERNAME"));
-                    PASSWORD.setText(result.getString("PASSWORD"));
-                    
-                    DATEOFJOINING.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DATEOFJOIN")));
-
-                    LKNOWN.setText(result.getString("LKNOWN")); 
-                    
-                     switch(result.getString("GENDER")){
-                            case "SELECT":GENDER.setSelectedIndex(0);
-                                         break;
-                            case "MALE":GENDER.setSelectedIndex(1);
-                                         break;
-                            case "FEMALE":GENDER.setSelectedIndex(2);
-                                         break;
-                            default : GENDER.setSelectedIndex(3);
-                        }
-                    CPASSWORD.setText(result.getString("USERNAME"));
-                }
-            }catch(Exception e){
-                System.out.println(e);
-            }
-        }
-    }//GEN-LAST:event_DIDKeyPressed
-
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ADMIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ADMIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ADMIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ADMIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ADMIN().setVisible(true);
-            }
-        });
+      statement.execute(databaseCreate);
+      statement.execute(admit);
+      statement.execute(nonAdmit);
+    } catch (Exception e) {
+      System.out.println(e);
     }
+
+    clearFields();
+    getAllUsers();
+  }//GEN-LAST:event_SUBMITActionPerformed
+
+  private void UPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEActionPerformed
+      getData();
+      String query = "UPDATE VHSHOSPITAL.DOCTORS SET " + "FNA"
+              + "ME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "ECONTACT=" +  EContact+ "," + "AADHAAR=" + Aadhaarno + "," + "PAN=" + "'" + Panno + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opd + "," +  "ADDRESS=" + "'" + Address + "'," + "UPHOTO=" + "'" + photo + "'," + "USERNAME=" + "'" + Userid + "'," + "PASSWORD=" + "'" + Password + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PIN=" + Pincode + ",EDUCATION=" + "'" + Education + "'," + "DATEOFJOIN=" + "'" + DateJoin + "'," + "JOBEXP=" + "'" + Jobexperience + "'" + " WHERE ID=" + Did;
+    System.out.println(query);
+
+    try {
+      statement.execute(query);
+      clearFields();
+          getAllUsers();
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }//GEN-LAST:event_UPDATEActionPerformed
+
+  private void DELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEActionPerformed
+    try {
+        
+      statement.execute("DELETE FROM  VHSHOSPITAL.DOCTORS WHERE ID=" + DID.getText()); 
+       clearFields();
+       getAllUsers();
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+    
+     
+  }//GEN-LAST:event_DELETEActionPerformed
+
+  private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    jTabbedPane1.setSelectedIndex(9);
+  }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+  private void jMenu5MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenu5MenuKeyPressed
+    jTabbedPane1.setSelectedIndex(0);
+  }//GEN-LAST:event_jMenu5MenuKeyPressed
+
+  private void SPECIALIZATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SPECIALIZATIONActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_SPECIALIZATIONActionPerformed
+
+  private void JOB_EXPERIENCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOB_EXPERIENCEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_JOB_EXPERIENCEActionPerformed
+
+  private void LKNOWNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LKNOWNActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_LKNOWNActionPerformed
+
+  private void DOCUMENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DOCUMENTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_DOCUMENTActionPerformed
+
+  private void EDUCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EDUCATIONActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_EDUCATIONActionPerformed
+
+  private void DISTRICTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DISTRICTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_DISTRICTActionPerformed
+
+  private void COUNTRYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COUNTRYActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_COUNTRYActionPerformed
+
+  private void PINCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PINCODEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_PINCODEActionPerformed
+
+  private void STATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STATEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_STATEActionPerformed
+
+  private void ADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDRESSActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_ADDRESSActionPerformed
+
+  private void CITYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CITYActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_CITYActionPerformed
+
+  private void USERPHOTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USERPHOTOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_USERPHOTOActionPerformed
+
+  private void USERPHOTOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_USERPHOTOMouseClicked
+    try {
+      JFileChooser chooser = new JFileChooser();
+      chooser.showOpenDialog(null);
+      File f = chooser.getSelectedFile();
+      String filename = f.getAbsolutePath();
+      USERPHOTO.setText(filename);
+    } catch (Exception e) {
+      System.out.println("hiii");
+    } // TODO add your handling code here:
+  }//GEN-LAST:event_USERPHOTOMouseClicked
+
+  private void JOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JOB_EXPERIENCEMouseClicked
+    try {
+      JFileChooser chooser = new JFileChooser();
+      chooser.showOpenDialog(null);
+      File f = chooser.getSelectedFile();
+      String filename = f.getAbsolutePath();
+      JOB_EXPERIENCE.setText(filename);
+    } catch (Exception e) {
+      System.out.println("hiii");
+    }
+  }//GEN-LAST:event_JOB_EXPERIENCEMouseClicked
+
+  private void EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EMAILActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_EMAILActionPerformed
+
+  private void CONTACT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTACT1ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_CONTACT1ActionPerformed
+
+  private void CONTACT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CONTACT2ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_CONTACT2ActionPerformed
+
+  private void AADHAARNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AADHAARNOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_AADHAARNOActionPerformed
+
+  private void PANNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PANNOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_PANNOActionPerformed
+
+  private void DOCUMENTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DOCUMENTMouseClicked
+    try {
+      JFileChooser chooser = new JFileChooser();
+      chooser.showOpenDialog(null);
+      File f = chooser.getSelectedFile();
+      String filename = f.getAbsolutePath();
+      DOCUMENT.setText(filename);
+    } catch (Exception e) {
+      System.out.println("hiii");
+    }
+  }//GEN-LAST:event_DOCUMENTMouseClicked
+
+  private void RIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RIDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RIDActionPerformed
+
+  private void RFNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RFNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RFNAMEActionPerformed
+
+  private void RMNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RMNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RMNAMEActionPerformed
+
+  private void RLNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RLNAMEActionPerformed
+
+  private void RAGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RAGEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RAGEActionPerformed
+
+  private void RUSERPHOTOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RUSERPHOTOMouseClicked
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RUSERPHOTOMouseClicked
+
+  private void RUSERPHOTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUSERPHOTOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RUSERPHOTOActionPerformed
+
+  private void RUSERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUSERNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RUSERNAMEActionPerformed
+
+  private void RPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RPASSWORDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RPASSWORDActionPerformed
+
+  private void RCPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCPASSWORDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RCPASSWORDActionPerformed
+
+  private void RVIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RVIEWActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RVIEWActionPerformed
+
+  private void RSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSUBMITActionPerformed
+    getData2();
+    String query =
+      "INSERT INTO VHSHOSPITAL.RECEPTIONISTS (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" +
+      Rid +
+      ",'" +
+      Fname +
+      "','" +
+      Mname +
+      "','" +
+      Lname +
+      "','" +
+      Age +
+      "','" +
+      Gender +
+      "','" +
+      Dob +
+      "','" +
+      Mstatus +
+      "','" +
+      Userphoto +
+      "','REC_" +
+      Username +
+      "','" +
+      Password +
+      "','" +
+      Specialization +
+      "','" +
+      Education +
+      "','" +
+      Jobexperience +
+      "','" +
+      Dateofjoin +
+      "','" +
+      Lknown +
+      "','" +
+      Document +
+      "','" +
+      Email +
+      "'," +
+      Contact1 +
+      "," +
+      Contact2 +
+      "," +
+      Aadhaarno +
+      "," +
+      Panno +
+      "," +
+      Address +
+      "," +
+      City +
+      "," +
+      District +
+      "," +
+      State +
+      "," +
+      Country +
+      "," +
+      Pincode +
+      ",'" +
+      Date +
+      "','" +
+      Time +
+      "')";
+
+    try {
+      statement.execute(query);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+
+    clearFields();
+    getAllUsers();
+  }//GEN-LAST:event_RSUBMITActionPerformed
+
+  private void RUPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATEActionPerformed
+       getData2();
+      String query =
+      "UPDATE VHSHOSPITAL.RECEPTIONISTS SET " +
+      "FNAME=" +
+      "'" +
+      Fname +
+      "'," +
+      "MNAME=" +
+      "'" +
+      Mname +
+      "'," +
+      "LNAME=" +
+      "'" +
+      Lname +
+      "'," +
+      "AGE=" +
+      Age +
+      "," +
+      "GENDER=" +
+      "'" +
+      Gender +
+      "'," +
+      "DOB=" +
+      "'" +
+      Dob +
+      "'," +
+      "MSTATUS=" +
+      "'" +
+      Mstatus +
+      "'," +
+      "CONTACT1=" +
+      Contact1 +
+      "," +
+      "CONTACT2=" +
+      Contact2 +
+      "," +
+      "AADHAAR=" +
+      Aadhaarno +
+      "," +
+      "PAN=" +
+      "'" +
+      Panno +
+      "'," +
+      "FEE=" +
+      Fee +
+      "," +
+      "OPDNO=" +
+      Opd +
+      "," + 
+      "ADDRESS=" +
+      "'" +
+      Address +
+      "'," +
+      "UPHOTO=" +
+      "'" +
+      photo +
+      "'," +
+      "USERNAME=" +
+      "'" +
+      Userid +
+      "'," +
+      "PASSWORD=" +
+      "'" +
+      Password +
+      "'," +
+      "CITY=" +
+      "'" +
+      City +
+      "'," +
+      "DISTRICT=" +
+      "'" +
+      District +
+      "'," +
+      "STATE=" +
+      "'" +
+      State +
+      "'," +
+      "COUNTRY=" +
+      "'" +
+      Country +
+      "'," +
+      "PIN=" +
+      Pincode +
+      ",EDUCATION=" +
+      "'" +
+      Education +
+      "'," +
+      "DATEOFJOIN=" +
+      "'" +
+      DateJoin +
+      "'," +
+      "JOBEXP=" +
+      "'" +
+      Jobexperience +
+      "'" +
+      " WHERE ID=" +
+      Did;
+    System.out.println(query);
+
+    try {
+      statement.execute(query);
+      clearFields();
+          getAllUsers();
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }//GEN-LAST:event_RUPDATEActionPerformed
+
+  private void RDELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDELETEActionPerformed
+     try {
+        
+      statement.execute("DELETE FROM  VHSHOSPITAL.RECEPTIONISTS WHERE ID=" + RID.getText()); 
+       clearFields();
+       getAllUsers();
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }//GEN-LAST:event_RDELETEActionPerformed
+
+  private void RSPECIALIZATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSPECIALIZATIONActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RSPECIALIZATIONActionPerformed
+
+  private void RJOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RJOB_EXPERIENCEMouseClicked
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RJOB_EXPERIENCEMouseClicked
+
+  private void RJOB_EXPERIENCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RJOB_EXPERIENCEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RJOB_EXPERIENCEActionPerformed
+
+  private void RLKNOWNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLKNOWNActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RLKNOWNActionPerformed
+
+  private void RDOCUMENTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RDOCUMENTMouseClicked
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RDOCUMENTMouseClicked
+
+  private void RDOCUMENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDOCUMENTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RDOCUMENTActionPerformed
+
+  private void REDUCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REDUCATIONActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_REDUCATIONActionPerformed
+
+  private void RDISTRICTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDISTRICTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RDISTRICTActionPerformed
+
+  private void RCOUNTRYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCOUNTRYActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RCOUNTRYActionPerformed
+
+  private void RPINCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RPINCODEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RPINCODEActionPerformed
+
+  private void RSTATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSTATEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RSTATEActionPerformed
+
+  private void RADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RADDRESSActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RADDRESSActionPerformed
+
+  private void RCITYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCITYActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RCITYActionPerformed
+
+  private void REMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REMAILActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_REMAILActionPerformed
+
+  private void RCONTACT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCONTACT1ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RCONTACT1ActionPerformed
+
+  private void RCONTACT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RCONTACT2ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RCONTACT2ActionPerformed
+
+  private void RAADHAARNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RAADHAARNOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RAADHAARNOActionPerformed
+
+  private void RPANNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RPANNOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RPANNOActionPerformed
+
+  private void OPD_NOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OPD_NOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_OPD_NOActionPerformed
+
+  private void FEEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FEEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_FEEActionPerformed
+
+  private void EMERGANCY_CONTACTActionPerformed(
+    java.awt.event.ActionEvent evt
+  ) {//GEN-FIRST:event_EMERGANCY_CONTACTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_EMERGANCY_CONTACTActionPerformed
+
+  private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+    this.dispose();
+    LOGIN_FORM log = new LOGIN_FORM();
+    log.setVisible(true);
+    this.setVisible(false);
+  }//GEN-LAST:event_jMenu4MouseClicked
+
+  private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    jTabbedPane1.setSelectedIndex(3);
+  }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+  private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    jTabbedPane1.setSelectedIndex(10);
+  }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+  private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+    jTabbedPane1.setSelectedIndex(0);
+  }//GEN-LAST:event_jMenu5MouseClicked
+
+  private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    jTabbedPane1.setSelectedIndex(11);
+  }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+  private void NIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NIDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NIDActionPerformed
+
+  private void NFNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NFNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NFNAMEActionPerformed
+
+  private void NMNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NMNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NMNAMEActionPerformed
+
+  private void NLNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NLNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NLNAMEActionPerformed
+
+  private void NAGEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NAGEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NAGEActionPerformed
+
+  private void NUSERPHOTOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NUSERPHOTOMouseClicked
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NUSERPHOTOMouseClicked
+
+  private void NUSERPHOTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NUSERPHOTOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NUSERPHOTOActionPerformed
+
+  private void NUSERNAMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NUSERNAMEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NUSERNAMEActionPerformed
+
+  private void NPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NPASSWORDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NPASSWORDActionPerformed
+
+  private void NCPASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCPASSWORDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NCPASSWORDActionPerformed
+
+  private void RVIEW1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RVIEW1ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RVIEW1ActionPerformed
+
+  private void NSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSUBMITActionPerformed
+    // TODO add your handling code here:
+
+    try {
+      getData3();
+      String query =
+        "INSERT INTO VHSHOSPITAL.NURSES (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "','" + Dob + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
+   System.out.println(query);
+      statement.execute(query);
+      clearFields();
+      getAllUsers();
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }//GEN-LAST:event_NSUBMITActionPerformed
+
+  private void RUPDATE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATE1ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_RUPDATE1ActionPerformed
+
+  private void RDELETE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDELETE1ActionPerformed
+      try {
+        
+      statement.execute("DELETE FROM  VHSHOSPITAL.NURSES WHERE ID=" + NID.getText()); 
+       clearFields();
+       getAllUsers();
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }//GEN-LAST:event_RDELETE1ActionPerformed
+
+  private void NSPECIALIZATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSPECIALIZATIONActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NSPECIALIZATIONActionPerformed
+
+  private void NJOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NJOB_EXPERIENCEMouseClicked
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NJOB_EXPERIENCEMouseClicked
+
+  private void NJOB_EXPERIENCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NJOB_EXPERIENCEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NJOB_EXPERIENCEActionPerformed
+
+  private void NLKNOWNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NLKNOWNActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NLKNOWNActionPerformed
+
+  private void NDOCUMENTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NDOCUMENTMouseClicked
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NDOCUMENTMouseClicked
+
+  private void NDOCUMENTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NDOCUMENTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NDOCUMENTActionPerformed
+
+  private void NEDUCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NEDUCATIONActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NEDUCATIONActionPerformed
+
+  private void NDISTRICTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NDISTRICTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NDISTRICTActionPerformed
+
+  private void NCOUNTRYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCOUNTRYActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NCOUNTRYActionPerformed
+
+  private void NPINCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NPINCODEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NPINCODEActionPerformed
+
+  private void NSTATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSTATEActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NSTATEActionPerformed
+
+  private void NADDRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NADDRESSActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NADDRESSActionPerformed
+
+  private void NCITYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCITYActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NCITYActionPerformed
+
+  private void NEMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NEMAILActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NEMAILActionPerformed
+
+  private void NCONTACT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCONTACT1ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NCONTACT1ActionPerformed
+
+  private void NCONTACT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NCONTACT2ActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NCONTACT2ActionPerformed
+
+  private void NAADHAARNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NAADHAARNOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NAADHAARNOActionPerformed
+
+  private void NPANNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NPANNOActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_NPANNOActionPerformed
+
+  private void PIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PIDActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_PIDActionPerformed
+
+  private void RSUBMIT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSUBMIT2ActionPerformed
+  }//GEN-LAST:event_RSUBMIT2ActionPerformed
+
+  private void OTAMOUNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OTAMOUNTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_OTAMOUNTActionPerformed
+
+  private void PATIENT_STATUSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PATIENT_STATUSActionPerformed
+    if (PATIENT_STATUS.getSelectedItem().toString().equals("NO")) {
+      jPanel5.setVisible(true);
+    } else {
+      jPanel5.setVisible(false);
+    }
+  }//GEN-LAST:event_PATIENT_STATUSActionPerformed
+
+  private void EXTRA_AMOUNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXTRA_AMOUNTActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_EXTRA_AMOUNTActionPerformed
+
+  private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    jTabbedPane1.setSelectedIndex(12);
+  }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+  private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+    jTabbedPane1.setSelectedIndex(8);
+  }//GEN-LAST:event_jMenu6MouseClicked
+
+  private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {}
+
+  private void DIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DIDKeyPressed
+    if (evt.getKeyCode() == 10) {
+      String getQuery =
+        "SELECT * FROM VHSHOSPITAL.DOCTORS WHERE ID =" + DID.getText();
+      try {
+        ResultSet result = statement.executeQuery(getQuery);
+        while (result.next()) {
+          DID.setText(result.getString("ID"));
+          FNAME.setText(result.getString("FNAME"));
+          MNAME.setText(result.getString("MNAME"));
+          LNAME.setText(result.getString("LNAME"));
+          AGE.setText(Integer.toString(result.getInt("AGE")));
+          DOB.setDate(
+            new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DOB"))
+          );
+          CONTACT1.setText(result.getString("CONTACT1"));
+          CONTACT2.setText(result.getString("CONTACT2"));
+          AADHAARNO.setText(result.getString("AADHAAR"));
+          PANNO.setText(result.getString("PAN"));
+          FEE.setText(result.getString("FEE"));
+          OPD_NO.setText(result.getString("OPDNO"));
+          ADDRESS.setText(result.getString("ADDRESS"));
+          CITY.setText(result.getString("CITY"));
+          DISTRICT.setText(result.getString("DISTRICT"));
+          STATE.setText(result.getString("STATE"));
+          COUNTRY.setText(result.getString("COUNTRY"));
+          EDUCATION.setText(result.getString("EDUCATION"));
+          USERPHOTO.setText(result.getString("UPHOTO"));
+          EMERGANCY_CONTACT.setText(result.getString("ECONTACT"));
+          JOB_EXPERIENCE.setText(result.getString("JOBEXP"));
+          DOCUMENT.setText(result.getString("DOCUMENT"));
+          EMAIL.setText(result.getString("EMAIL"));
+          SPECIALIZATION.setText(result.getString("SPECIALIZATION"));
+          if (result.getString("MSTATUS").equals("YES")) {
+            MSTATUS.setSelectedIndex(1);
+          } else {
+            MSTATUS.setSelectedIndex(0);
+          }
+          PINCODE.setText(result.getString("PIN"));
+          USERNAME.setText(result.getString("USERNAME"));
+          PASSWORD.setText(result.getString("PASSWORD"));
+
+          DATEOFJOINING.setDate(
+            new SimpleDateFormat("yyyy-MM-dd")
+            .parse(result.getString("DATEOFJOIN"))
+          );
+
+          LKNOWN.setText(result.getString("LKNOWN"));
+
+          switch (result.getString("GENDER")) {
+            case "SELECT":
+              GENDER.setSelectedIndex(0);
+              break;
+            case "MALE":
+              GENDER.setSelectedIndex(1);
+              break;
+            case "FEMALE":
+              GENDER.setSelectedIndex(2);
+              break;
+            default:
+              GENDER.setSelectedIndex(3);
+          }
+          CPASSWORD.setText(result.getString("USERNAME"));
+        }
+        
+      } catch (Exception e) {
+          clearFields();
+        System.out.println(e);
+      }
+      
+    }
+  }//GEN-LAST:event_DIDKeyPressed
+
+  private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    //    String af = txt_search7.getText();
+    //    search(af);
+  }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
+     
+jTabbedPane1.setSelectedIndex(9);
+
+    }//GEN-LAST:event_jPanel20MouseClicked
+
+    private void jPanel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel22MouseClicked
+      jTabbedPane1.setSelectedIndex(10);
+    }//GEN-LAST:event_jPanel22MouseClicked
+
+    private void jPanel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel40MouseClicked
+       jTabbedPane1.setSelectedIndex(11);
+    }//GEN-LAST:event_jPanel40MouseClicked
+
+    private void search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search1ActionPerformed
+         String af = txt_search1.getText();
+        search(af);
+    }//GEN-LAST:event_search1ActionPerformed
+
+    private void DOBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DOBMouseClicked
+
+
+
+    }//GEN-LAST:event_DOBMouseClicked
+
+    private void RIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RIDKeyPressed
+        if (evt.getKeyCode() == 10) {
+      String getQuery =
+        "SELECT * FROM VHSHOSPITAL.RECEPTIONISTS WHERE ID =" + RID.getText();
+      try {
+        ResultSet result = statement.executeQuery(getQuery);
+        while (result.next()) {
+          RID.setText(result.getString("ID"));
+          RFNAME.setText(result.getString("FNAME"));
+          RMNAME.setText(result.getString("MNAME"));
+          RLNAME.setText(result.getString("LNAME"));
+          RAGE.setText(Integer.toString(result.getInt("AGE")));
+          RDOB.setDate(
+            new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DOB"))
+          );
+          RCONTACT1.setText(result.getString("CONTACT1"));
+          RCONTACT2.setText(result.getString("CONTACT2"));
+          RAADHAARNO.setText(result.getString("AADHAAR"));
+          RPANNO.setText(result.getString("PAN"));
+          RADDRESS.setText(result.getString("ADDRESS"));
+          RCITY.setText(result.getString("CITY"));
+          RDISTRICT.setText(result.getString("DISTRICT"));
+          RSTATE.setText(result.getString("STATE"));
+          RCOUNTRY.setText(result.getString("COUNTRY"));
+          REDUCATION.setText(result.getString("EDUCATION"));
+          RUSERPHOTO.setText(result.getString("UPHOTO"));
+          RJOB_EXPERIENCE.setText(result.getString("JOBEXP"));
+          RDOCUMENT.setText(result.getString("DOCUMENT"));
+          REMAIL.setText(result.getString("EMAIL"));
+          RSPECIALIZATION.setText(result.getString("SPECIALIZATION"));
+          if (result.getString("MSTATUS").equals("YES")) {
+            RMSTATUS.setSelectedIndex(1);
+          } else {
+            MSTATUS.setSelectedIndex(0);
+          }
+          RPINCODE.setText(result.getString("PIN"));
+          RUSERNAME.setText(result.getString("USERNAME"));
+          RPASSWORD.setText(result.getString("PASSWORD"));
+
+          RDATEOFJOINING.setDate(
+            new SimpleDateFormat("yyyy-MM-dd")
+            .parse(result.getString("DATEOFJOIN"))
+          );
+
+          RLKNOWN.setText(result.getString("LKNOWN"));
+
+          switch (result.getString("GENDER")) {
+            case "SELECT":
+              RGENDER.setSelectedIndex(0);
+              break;
+            case "MALE":
+              RGENDER.setSelectedIndex(1);
+              break;
+            case "FEMALE":
+              RGENDER.setSelectedIndex(2);
+              break;
+            default:
+              RGENDER.setSelectedIndex(3);
+          }
+          RCPASSWORD.setText(result.getString("USERNAME"));
+        }
+      } catch (Exception e) {
+          clearFields();
+        System.out.println(e);
+      }
+    }
+    }//GEN-LAST:event_RIDKeyPressed
+
+    private void NIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NIDKeyPressed
+         if (evt.getKeyCode() == 10) {
+      String getQuery =
+        "SELECT * FROM VHSHOSPITAL.NURSES WHERE ID =" + NID.getText();
+      try {
+        ResultSet result = statement.executeQuery(getQuery);
+        while (result.next()) {
+          NID.setText(result.getString("ID"));
+          NFNAME.setText(result.getString("FNAME"));
+          NMNAME.setText(result.getString("MNAME"));
+          NLNAME.setText(result.getString("LNAME"));
+          NAGE.setText(Integer.toString(result.getInt("AGE")));
+          NDOB.setDate(
+            new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DOB"))
+          );
+          NCONTACT1.setText(result.getString("CONTACT1"));
+          NCONTACT2.setText(result.getString("CONTACT2"));
+          NAADHAARNO.setText(result.getString("AADHAAR"));
+          NPANNO.setText(result.getString("PAN"));
+          NADDRESS.setText(result.getString("ADDRESS"));
+          NCITY.setText(result.getString("CITY"));
+          NDISTRICT.setText(result.getString("DISTRICT"));
+          NSTATE.setText(result.getString("STATE"));
+          NCOUNTRY.setText(result.getString("COUNTRY"));
+          NEDUCATION.setText(result.getString("EDUCATION"));
+          NUSERPHOTO.setText(result.getString("UPHOTO"));
+          NJOB_EXPERIENCE.setText(result.getString("JOBEXP"));
+          NDOCUMENT.setText(result.getString("DOCUMENT"));
+          NEMAIL.setText(result.getString("EMAIL"));
+          NSPECIALIZATION.setText(result.getString("SPECIALIZATION"));
+          if (result.getString("MSTATUS").equals("YES")) {
+            NMSTATUS.setSelectedIndex(1);
+          } else {
+            NMSTATUS.setSelectedIndex(0);
+          }
+          NPINCODE.setText(result.getString("PIN"));
+          NUSERNAME.setText(result.getString("USERNAME"));
+          NPASSWORD.setText(result.getString("PASSWORD"));
+
+          NDATEOFJOINING.setDate(
+            new SimpleDateFormat("yyyy-MM-dd")
+            .parse(result.getString("DATEOFJOIN"))
+          );
+
+          NLKNOWN.setText(result.getString("LKNOWN"));
+
+          switch (result.getString("GENDER")) {
+            case "SELECT":
+              NGENDER.setSelectedIndex(0);
+              break;
+            case "MALE":
+              NGENDER.setSelectedIndex(1);
+              break;
+            case "FEMALE":
+              NGENDER.setSelectedIndex(2);
+              break;
+            default:
+              NGENDER.setSelectedIndex(3);
+          }
+          NCPASSWORD.setText(result.getString("USERNAME"));
+        }
+      } catch (Exception e) {
+          clearFields();
+        System.out.println(e);
+      }
+    }
+    }//GEN-LAST:event_NIDKeyPressed
+
+    private void DISCHARGEDATEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DISCHARGEDATEKeyPressed
+        dd();
+    }//GEN-LAST:event_DISCHARGEDATEKeyPressed
+
+    private void PIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PIDKeyPressed
+        if (evt.getKeyCode() == 10) {
+             String DOCNAME="";
+             int did = 0;
+             String dateofadmit="";
+             String pid=PID.getText();
+             String getQuery = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS WHERE PID =" +pid ; 
+               try{
+                    ResultSet res  =statement.executeQuery("SELECT DRNAME AS DRNAME FROM VHSHOSPITAL.APPOINTMENTS WHERE PID="+pid);
+                    while(res.next()){
+                        DOCNAME=res.getString("DRNAME");
+                    }
+                    String name[]=DOCNAME.split("DR.")[1].split(" ");
+                    res = statement.executeQuery("SELECT ID AS ID FROM VHSHOSPITAL.DOCTORS WHERE FNAME='"+name[0]+"' AND MNAME='"+name[1]+"' AND LNAME='"+name[2]+"'");
+                    while(res.next()){
+                        did =  Integer.parseInt(res.getString("ID"));
+                    }
+                    String dbname="doc_"+did;
+                    
+                    String query="SELECT DATEOFADMIT FROM "+dbname+".ADMIT WHERE PID="+pid;
+         
+                    res = statement.executeQuery(query);
+                    while(res.next()) {
+                        dateofadmit=res.getString("DATEOFADMIT");
+                    }
+                     ADMITDATE.setDate(
+                       new SimpleDateFormat("yyyy-MM-dd").parse(dateofadmit)
+                     );
+               }catch(Exception e){
+                    System.out.println(e);
+               } 
+
+               try {
+                 ResultSet result = statement.executeQuery(getQuery);
+                 while (result.next()) {
+                     String a = result.getString("FNAME");
+                     String b =result.getString("MNAME");    
+                     String c =result.getString("LNAME");
+                     String fullname = a+" "+b+" "+c;
+                     FULLNAME.setText(fullname);
+                     DRNAME.setText(result.getString("DRNAME"));      
+                       DISCHARGEDATE.setDate(
+                     new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("DOB"))
+                   );
+                   }
+        
+              } catch (Exception e) { 
+                  System.out.println(e);
+              }
+          dd();
+
+    
+    }
+    }//GEN-LAST:event_PIDKeyPressed
+
+ 
+  public static void main(String args[]) {
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+     * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+     */
+    try {
+      for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(info.getName())) {
+          javax.swing.UIManager.setLookAndFeel(info.getClassName());
+          break;
+        }
+      }
+    } catch (ClassNotFoundException ex) {
+      java.util.logging.Logger
+        .getLogger(ADMIN.class.getName())
+        .log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+      java.util.logging.Logger
+        .getLogger(ADMIN.class.getName())
+        .log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+      java.util.logging.Logger
+        .getLogger(ADMIN.class.getName())
+        .log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+      java.util.logging.Logger
+        .getLogger(ADMIN.class.getName())
+        .log(java.util.logging.Level.SEVERE, null, ex);
+    }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(
+      new Runnable() {
+        public void run() {
+          new ADMIN().setVisible(true);
+        }
+      }
+    );
+  }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AADHAARNO;
     private javax.swing.JTextField ADDRESS;
+    private com.toedter.calendar.JDateChooser ADMITDATE;
     private javax.swing.JTextField AGE;
     private javax.swing.JTextField CITY;
     private javax.swing.JTextField CONTACT1;
     private javax.swing.JTextField CONTACT2;
     private javax.swing.JTextField COUNTRY;
     private javax.swing.JTextField CPASSWORD;
+    private javax.swing.JPanel DASHBOARD0;
     private javax.swing.JLabel DATE;
     private com.toedter.calendar.JDateChooser DATEOFJOINING;
     private javax.swing.JLabel DDATE;
     private javax.swing.JButton DELETE;
     private javax.swing.JTextField DID;
+    private com.toedter.calendar.JDateChooser DISCHARGEDATE;
+    private javax.swing.JPanel DISCHARGE_FORM;
     private javax.swing.JTextField DISTRICT;
     private com.toedter.calendar.JDateChooser DOB;
+    private javax.swing.JPanel DOCTORLIST;
+    private javax.swing.JTable DOCTORSLIST3;
+    private javax.swing.JPanel DOCTORS_1;
     private javax.swing.JTextField DOCUMENT;
+    private javax.swing.JLabel DRNAME;
     private javax.swing.JLabel DTIME;
     private javax.swing.JTextField EDUCATION;
     private javax.swing.JTextField EMAIL;
     private javax.swing.JTextField EMERGANCY_CONTACT;
+    private javax.swing.JLabel ERR;
+    private javax.swing.JTextField EXTRA_AMOUNT;
     private javax.swing.JTextField FEE;
     private javax.swing.JTextField FNAME;
+    private javax.swing.JLabel FULLNAME;
     private javax.swing.JComboBox<String> GENDER;
     private javax.swing.JTextField JOB_EXPERIENCE;
     private javax.swing.JTextField LKNOWN;
     private javax.swing.JTextField LNAME;
+    private javax.swing.JTextArea MEDICINES;
     private javax.swing.JTextField MNAME;
     private javax.swing.JComboBox<String> MSTATUS;
     private javax.swing.JTextField NAADHAARNO;
@@ -4996,6 +5708,7 @@ String Cpassword;
     private javax.swing.JTextField NDOCUMENT;
     private javax.swing.JTextField NEDUCATION;
     private javax.swing.JTextField NEMAIL;
+    private com.toedter.calendar.JDateChooser NEXT_VISIT_DATE;
     private javax.swing.JTextField NFNAME;
     private javax.swing.JComboBox<String> NGENDER;
     private javax.swing.JTextField NID;
@@ -5004,21 +5717,28 @@ String Cpassword;
     private javax.swing.JTextField NLNAME;
     private javax.swing.JTextField NMNAME;
     private javax.swing.JComboBox<String> NMSTATUS;
+    private javax.swing.JLabel NOOFDAAYS;
     private javax.swing.JTextField NPANNO;
     private javax.swing.JTextField NPASSWORD;
     private javax.swing.JTextField NPINCODE;
     private javax.swing.JTextField NSPECIALIZATION;
     private javax.swing.JTextField NSTATE;
     private javax.swing.JButton NSUBMIT;
+    private javax.swing.JPanel NURSEEE;
+    private javax.swing.JTable NURSELIST;
+    private javax.swing.JPanel NURSE_3;
     private javax.swing.JTextField NUSERNAME;
     private javax.swing.JTextField NUSERPHOTO;
     private javax.swing.JTextField OPD_NO;
+    private javax.swing.JTextField OTAMOUNT;
     private javax.swing.JTextField PANNO;
     private javax.swing.JTextField PASSWORD;
-    private javax.swing.JTable PATIENTSDATA;
-    private javax.swing.JTable PATIENTSDATA2;
-    private javax.swing.JTable PATIENTSDATA3;
+    private javax.swing.JLabel PATIENTS;
+    private javax.swing.JLabel PATIENTS1;
+    private javax.swing.JPanel PATIENTSD;
     private javax.swing.JTable PATIENTSDATA4;
+    private javax.swing.JComboBox<String> PATIENT_STATUS;
+    private javax.swing.JTextField PID;
     private javax.swing.JTextField PINCODE;
     private javax.swing.JTextField RAADHAARNO;
     private javax.swing.JTextField RADDRESS;
@@ -5030,20 +5750,23 @@ String Cpassword;
     private javax.swing.JTextField RCPASSWORD;
     private javax.swing.JLabel RDATE;
     private javax.swing.JLabel RDATE1;
+    private javax.swing.JLabel RDATE2;
+    private javax.swing.JLabel RDATE3;
+    private javax.swing.JLabel RDATE4;
     private com.toedter.calendar.JDateChooser RDATEOFJOINING;
     private javax.swing.JButton RDELETE;
     private javax.swing.JButton RDELETE1;
     private javax.swing.JTextField RDISTRICT;
     private com.toedter.calendar.JDateChooser RDOB;
     private javax.swing.JTextField RDOCUMENT;
+    private javax.swing.JPanel RECEPTIONISTDARA;
+    private javax.swing.JTable RECEPTIONISTLISH;
+    private javax.swing.JPanel RECEPTIONIST_2;
     private javax.swing.JTextField REDUCATION;
     private javax.swing.JTextField REMAIL;
     private javax.swing.JTextField RFNAME;
     private javax.swing.JComboBox<String> RGENDER;
     private javax.swing.JTextField RID;
-    private javax.swing.JTextField RID2;
-    private javax.swing.JTextField RID6;
-    private javax.swing.JTextField RID8;
     private javax.swing.JTextField RJOB_EXPERIENCE;
     private javax.swing.JTextField RLKNOWN;
     private javax.swing.JTextField RLNAME;
@@ -5058,6 +5781,7 @@ String Cpassword;
     private javax.swing.JButton RSUBMIT2;
     private javax.swing.JLabel RTIME;
     private javax.swing.JLabel RTIME1;
+    private javax.swing.JLabel RTIME2;
     private javax.swing.JButton RUPDATE;
     private javax.swing.JButton RUPDATE1;
     private javax.swing.JTextField RUSERNAME;
@@ -5068,7 +5792,6 @@ String Cpassword;
     private javax.swing.JTextField STATE;
     private javax.swing.JButton SUBMIT;
     private javax.swing.JSeparator SeparatorLine1;
-    private javax.swing.JSeparator SeparatorLine2;
     private javax.swing.JLabel TADMIT;
     private javax.swing.JLabel TDEATH;
     private javax.swing.JLabel TDOCTORS;
@@ -5077,15 +5800,14 @@ String Cpassword;
     private javax.swing.JLabel TIME2;
     private javax.swing.JLabel TNURSES;
     private javax.swing.JLabel TPATIENTS;
+    private javax.swing.JTextArea TREATMENT;
     private javax.swing.JLabel TRESEPTIONISTS;
     private javax.swing.JButton UPDATE;
     private javax.swing.JTextField USERNAME;
     private javax.swing.JTextField USERPHOTO;
     private javax.swing.JButton VIEW;
     private javax.swing.JComboBox<String> WARDNAME;
-    private javax.swing.JComboBox<String> admitStatus;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
@@ -5123,7 +5845,6 @@ String Cpassword;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel130;
     private javax.swing.JLabel jLabel131;
-    private javax.swing.JLabel jLabel132;
     private javax.swing.JLabel jLabel133;
     private javax.swing.JLabel jLabel134;
     private javax.swing.JLabel jLabel135;
@@ -5131,13 +5852,16 @@ String Cpassword;
     private javax.swing.JLabel jLabel137;
     private javax.swing.JLabel jLabel138;
     private javax.swing.JLabel jLabel139;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel140;
     private javax.swing.JLabel jLabel141;
+    private javax.swing.JLabel jLabel143;
+    private javax.swing.JLabel jLabel144;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -5245,29 +5969,20 @@ String Cpassword;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
-    private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel32;
@@ -5280,36 +5995,31 @@ String Cpassword;
     private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel40;
-    private javax.swing.JPanel jPanel41;
-    private javax.swing.JPanel jPanel42;
-    private javax.swing.JPanel jPanel43;
+    private javax.swing.JPanel jPanel44;
+    private javax.swing.JPanel jPanel45;
+    private javax.swing.JPanel jPanel47;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton search;
+    private javax.swing.JButton search1;
     private javax.swing.JButton search2;
-    private javax.swing.JButton search3;
-    private javax.swing.JButton search4;
-    private javax.swing.JTextField txt_search;
+    private javax.swing.JButton search5;
+    private javax.swing.JTextField searchPatientsField;
+    private javax.swing.JTextField txt_search1;
     private javax.swing.JTextField txt_search2;
-    private javax.swing.JTextField txt_search3;
-    private javax.swing.JTextField txt_search4;
+    private javax.swing.JTextField txt_search5;
     // End of variables declaration//GEN-END:variables
 
-    private void search(String af) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

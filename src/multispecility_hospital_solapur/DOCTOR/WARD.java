@@ -1,14 +1,18 @@
 
 package multispecility_hospital_solapur.DOCTOR;
 
+import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import multispecility_hospital_solapur.LOGIN_FORM;
+import multispecility_hospital_solapur.use.GetConnection;
 
 /**
  *
@@ -21,6 +25,7 @@ public class WARD extends javax.swing.JFrame {
      */
     public WARD() {
         initComponents();
+        statement= new GetConnection().Connect_mysql();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,8 +47,6 @@ public class WARD extends javax.swing.JFrame {
         DELETE = new javax.swing.JButton();
         LOGOUT = new javax.swing.JButton();
         FNAME = new javax.swing.JLabel();
-        MNAME = new javax.swing.JLabel();
-        LNAME = new javax.swing.JLabel();
         GENDER = new javax.swing.JLabel();
         AGE = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -119,6 +122,11 @@ public class WARD extends javax.swing.JFrame {
                 PIDActionPerformed(evt);
             }
         });
+        PID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PIDKeyPressed(evt);
+            }
+        });
 
         VIEW.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         VIEW.setText("VIEW");
@@ -172,10 +180,6 @@ public class WARD extends javax.swing.JFrame {
 
         FNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        MNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        LNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
         GENDER.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         AGE.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -183,6 +187,11 @@ public class WARD extends javax.swing.JFrame {
         SYMPTOMS.setColumns(20);
         SYMPTOMS.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         SYMPTOMS.setRows(5);
+        SYMPTOMS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                SYMPTOMSKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(SYMPTOMS);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -254,7 +263,7 @@ public class WARD extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane4))))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -297,12 +306,8 @@ public class WARD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(224, 224, 224)
-                .addComponent(FNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(LNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 469, Short.MAX_VALUE)
+                .addComponent(FNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(AGE, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(GENDER, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -333,11 +338,8 @@ public class WARD extends javax.swing.JFrame {
                     .addComponent(FNAME, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(MNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(LNAME, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GENDER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -463,10 +465,35 @@ public class WARD extends javax.swing.JFrame {
     }//GEN-LAST:event_UPDATEActionPerformed
 
     private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
+           getData();
+           String DBNAME=""; 
+           String NAME=""; 
 
+           try{
+               DBNAME ="dr_"+ statement.executeQuery("SELECT ID AS ID FROM VHSHOSPITAL.DOCTORS WHERE PID="+Pid).getString("ID");
+               
+               String query= "INSERT INTO "+DBNAME+".P_"+Pid+"(ID,SYMPTOMS,MEDICINES,TREATMENT,TEST,TESTREPORTS,DATE,TIME)VALUES("+Pid+",'"+Symptoms+"','"+Medicines+"','"+Treatments+"','"+Reports+"','"+Date+"','"+Time+"')";
+               System.out.println(query);
+//               statement.execute(query);+654
+//                       ''
+           }catch(Exception e){
+                System.out.println(e);
+           }
+//         String query = "INSERT INTO "++"SR,ID,SYMPTOMS,MEDICINES,TREATMENT,TEST,TESTREPORTS,DATE,TIME)VALUES(";
      
     }//GEN-LAST:event_SUBMITActionPerformed
+  void getData() {
+        Pid = PID.getText();
+        Symptoms = SYMPTOMS.getText();
+        Medicines = MEDICINES.getText();
+        Treatments = TREATMENT.getText();
+        Tests = TEST.getText();
+        Reports = REPORTS.getText();
+ 
+        Date = DATE.getText();
+        Time = TIME.getText();
 
+    }    
     private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_VIEWActionPerformed
@@ -490,6 +517,37 @@ public class WARD extends javax.swing.JFrame {
             System.out.println("hiii");
         }        // TODO add your handling code here:  
     }//GEN-LAST:event_REPORTSMouseClicked
+
+    private void PIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PIDKeyPressed
+             
+        if(evt.getKeyCode()==10){
+                 System.out.println("Hlellw");
+             try{
+                 ResultSet result = statement.executeQuery("SELECT * FROM VHSHOSPITAL.APPOINTMENTS WHERE PID="+PID.getText());
+                 while(result.next()){ 
+                    String F=result.getString("FNAME");
+                    String L=result.getString("MNAME");
+                    String M=result.getString("LNAME");
+                     String FF= F+" "+ M +" " +L;
+                     FNAME.setText("NAME : "+FF);
+                     AGE.setText("AGE : " + result.getString("AGE"));
+                     GENDER.setText("GENDER :" + result.getString("GENDER"));
+                 }
+             }catch(Exception e){
+                 System.out.println(e);
+             }
+             
+         }
+    }//GEN-LAST:event_PIDKeyPressed
+
+    private void SYMPTOMSKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SYMPTOMSKeyPressed
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_SYMPTOMSKeyPressed
 
      void showDate(){
         Date d = new Date();
@@ -542,17 +600,24 @@ public class WARD extends javax.swing.JFrame {
             }
         });
     }
-
+      Statement statement;
+    String PtableName;
+    String Symptoms;
+    String Tests;
+    String Treatments;
+    String Medicines;
+    String Date;
+    String Time;
+    String Pid; 
+    String Reports;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AGE;
     private javax.swing.JLabel DATE;
     private javax.swing.JButton DELETE;
     private javax.swing.JLabel FNAME;
     private javax.swing.JLabel GENDER;
-    private javax.swing.JLabel LNAME;
     private javax.swing.JButton LOGOUT;
     private javax.swing.JTextArea MEDICINES;
-    private javax.swing.JLabel MNAME;
     private javax.swing.JTextField PID;
     private javax.swing.JTextArea REPORTS;
     private javax.swing.JButton SUBMIT;
@@ -587,7 +652,5 @@ public class WARD extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     // End of variables declaration//GEN-END:variables
 
-    private void getData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
 }
