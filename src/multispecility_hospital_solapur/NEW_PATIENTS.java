@@ -1,6 +1,6 @@
 
 package multispecility_hospital_solapur;
-
+import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -24,7 +24,6 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
 
     
     public NEW_PATIENTS() {
-//        int total = new getTotalUsers().getTotalAdmitPatients();
         
         initComponents();  
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -81,6 +80,20 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         //        PATIENTS
         String total = new getTotalUsers().getTotalPatients();
         int tempTotal = 1+ Integer.parseInt(total);
+        String totall = "";
+
+   try{ 
+            ResultSet ress = statement.executeQuery("SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.NURSES;");
+        while(ress.next()){
+            totall = ress.getString("max"); 
+            totall = Integer.toString((Integer.parseInt(totall)+1));
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+   if(totall==null){
+            totall="1";
+        }
         PID.setText(Integer.toString(tempTotal)); 
 
        
@@ -89,7 +102,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
      void getData() {
       
         Pid = Integer.parseInt(PID.getText());
-        Fname = FNAME.getText();
+        Fname = FNAME.getText().toUpperCase();
         Mname = MNAME.getText();
         Lname = LNAME.getText();
         Age = Integer.parseInt(AGE.getText());
@@ -115,31 +128,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         Pincode = Long.parseLong(PINCODE.getText());
         Date = DATE.getText();
         Time = TIME.getText();
-//       System.out.println(Pid 
-//       +"\n"+Fname 
-//       +"\n"+Mname 
-//       +"\n"+Lname 
-//       +"\n"+Age 
-//       +"\n"+Dob 
-//       +"\n"+Gender 
-//       +"\n"+Mstatus 
-//       +"\n"+Contact1 
-//       +"\n"+Contact2 
-//       +"\n"+Symptoms 
-//       +"\n"+Aadhaarno 
-//       +"\n"+Panno 
-//       +"\n"+Drname 
-//       +"\n"+Opdno 
-//       +"\n"+Fee 
-//       +"\n"+Address 
-//       +"\n"+City 
-//       +"\n"+District 
-//       +"\n"+State 
-//       +"\n"+Country 
-//       +"\n"+Pincode 
-//       +"\n"+Date 
-//       +"\n"+Time 
-//       );
+
     }    
 
      private void clearFields() { 
@@ -300,6 +289,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 FNAMEActionPerformed(evt);
             }
         });
+        FNAME.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                FNAMEKeyTyped(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel10.setText("MIDDLE NAME");
@@ -308,6 +302,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         MNAME.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MNAMEActionPerformed(evt);
+            }
+        });
+        MNAME.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                MNAMEKeyTyped(evt);
             }
         });
 
@@ -320,6 +319,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 LNAMEActionPerformed(evt);
             }
         });
+        LNAME.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                LNAMEKeyTyped(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel12.setText("AGE");
@@ -328,6 +332,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         AGE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AGEActionPerformed(evt);
+            }
+        });
+        AGE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                AGEKeyTyped(evt);
             }
         });
 
@@ -403,6 +412,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 PANNOActionPerformed(evt);
             }
         });
+        PANNO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PANNOKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel7.setText("SYMPTOMS");
@@ -467,6 +481,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 CITYActionPerformed(evt);
             }
         });
+        CITY.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CITYKeyTyped(evt);
+            }
+        });
 
         jLabel25.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel25.setText("DISTRICT");
@@ -477,6 +496,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 DISTRICTActionPerformed(evt);
             }
         });
+        DISTRICT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DISTRICTKeyTyped(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel26.setText("COUNTRY");
@@ -485,6 +509,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         COUNTRY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 COUNTRYActionPerformed(evt);
+            }
+        });
+        COUNTRY.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                COUNTRYKeyTyped(evt);
             }
         });
 
@@ -510,6 +539,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         STATE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 STATEActionPerformed(evt);
+            }
+        });
+        STATE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                STATEKeyTyped(evt);
             }
         });
 
@@ -635,10 +669,9 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                                                     .addComponent(AADHAARNO, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                             .addGap(18, 18, 18)
                                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(PANNO)
-                                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                                    .addComponent(jLabel19)
-                                                    .addGap(0, 0, Short.MAX_VALUE))))
+                                                .addComponent(jLabel19)
+                                                .addComponent(PANNO, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1115,32 +1148,97 @@ getData();
     }//GEN-LAST:event_DRNAMEItemStateChanged
 
     private void CONTACT1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CONTACT1KeyTyped
-        char c = evt.getKeyChar();
-        if(!Character.isDigit(c)){
+     
+        char b = evt.getKeyChar();
+        if(!Character.isDigit(b)){
             evt.consume();
         }
+        
+        String p = CONTACT1.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<10){
+                   CONTACT1.setEditable(true);
+               }else{
+                   CONTACT1.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   CONTACT1.setEditable(true);
+               }else{
+                   CONTACT1.setEditable(true);
+               }
+           }
     }//GEN-LAST:event_CONTACT1KeyTyped
 
     private void CONTACT2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CONTACT2KeyTyped
-        char c = evt.getKeyChar();
-        if(!Character.isDigit(c)){
+         char b = evt.getKeyChar();
+        if(!Character.isDigit(b)){
             evt.consume();
         }
+        String p = CONTACT2.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<10){
+                   CONTACT2.setEditable(true);
+               }else{
+                   CONTACT2.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   CONTACT2.setEditable(true);
+               }else{
+                   CONTACT2.setEditable(true);
+               }
+           }
     }//GEN-LAST:event_CONTACT2KeyTyped
 
     private void AADHAARNOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AADHAARNOKeyTyped
-        char c = evt.getKeyChar();
-        if(!Character.isDigit(c)){
+          char b = evt.getKeyChar();
+        if(!Character.isDigit(b)){
             evt.consume();
         }
+        String p = AADHAARNO.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<12){
+                   AADHAARNO.setEditable(true);
+               }else{
+                   AADHAARNO.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   AADHAARNO.setEditable(true);
+               }else{
+                   AADHAARNO.setEditable(true);
+               }
+           }
     }//GEN-LAST:event_AADHAARNOKeyTyped
 
     private void PINCODEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PINCODEKeyTyped
-       
-        char c = evt.getKeyChar();
-        if(!Character.isDigit(c)){
-           evt.consume();
+       char b = evt.getKeyChar();
+        if(!Character.isDigit(b)){
+            evt.consume();
         }
+       String p = PINCODE.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<6){
+                   PINCODE.setEditable(true);
+               }else{
+                   PINCODE.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   PINCODE.setEditable(true);
+               }else{
+                   PINCODE.setEditable(true);
+               }
+           }
     }//GEN-LAST:event_PINCODEKeyTyped
 
     private void OPDNOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_OPDNOKeyTyped
@@ -1150,6 +1248,126 @@ getData();
     private void FEEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FEEKeyTyped
         evt.consume();
     }//GEN-LAST:event_FEEKeyTyped
+
+    private void FNAMEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FNAMEKeyTyped
+
+    char c = evt.getKeyChar();
+    if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        FNAME.setEditable(true);
+    }else{
+                FNAME.setEditable(false);
+
+    }
+        
+        
+    }//GEN-LAST:event_FNAMEKeyTyped
+
+    private void MNAMEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MNAMEKeyTyped
+char c = evt.getKeyChar();
+    if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        MNAME.setEditable(true);
+    }else{
+                MNAME.setEditable(false);
+
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_MNAMEKeyTyped
+
+    private void LNAMEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LNAMEKeyTyped
+char c = evt.getKeyChar();
+    if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        LNAME.setEditable(true);
+    }else{
+                LNAME.setEditable(false);
+
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_LNAMEKeyTyped
+
+    private void CITYKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CITYKeyTyped
+char c = evt.getKeyChar();
+    if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        CITY.setEditable(true);
+    }else{
+                CITY.setEditable(false);
+
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_CITYKeyTyped
+
+    private void DISTRICTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DISTRICTKeyTyped
+char c = evt.getKeyChar();
+    if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        DISTRICT.setEditable(true);
+    }else{
+                DISTRICT.setEditable(false);
+
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_DISTRICTKeyTyped
+
+    private void STATEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_STATEKeyTyped
+      char c = evt.getKeyChar();
+
+           if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        STATE.setEditable(true);
+    }else{
+                STATE.setEditable(false);
+
+    }  
+    }//GEN-LAST:event_STATEKeyTyped
+
+    private void COUNTRYKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_COUNTRYKeyTyped
+       char c = evt.getKeyChar();
+
+           if(Character.isLetter(c) || Character.isWhitespace(c)|| Character.isISOControl(c)){
+        COUNTRY.setEditable(true);
+    }else{
+                COUNTRY.setEditable(false);
+
+    }  
+    }//GEN-LAST:event_COUNTRYKeyTyped
+
+    private void AGEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AGEKeyTyped
+       
+char b = evt.getKeyChar();
+        if(!Character.isDigit(b)){
+            evt.consume();
+        }
+
+        String p = AGE.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<3){
+                   AGE.setEditable(true);
+               }else{
+                   AGE.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   AGE.setEditable(true);
+               }else{
+                   AGE.setEditable(true);
+               }
+           }
+    }//GEN-LAST:event_AGEKeyTyped
+
+    private void PANNOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PANNOKeyTyped
+
+   String p = PANNO.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<10){
+                   PANNO.setEditable(true);
+               }else{
+                   PANNO.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   PANNO.setEditable(true);
+               }else{
+                   PANNO.setEditable(true);
+               }
+           }        // TODO add your handling code here:
+    }//GEN-LAST:event_PANNOKeyTyped
 //
     /**
      * @param args the command line arguments
@@ -1208,11 +1426,9 @@ getData();
     String District; 
     String State ;
     String Country;  
-    Long Pincode ; 
-   
+    Long Pincode ;
     String Date;
     String Time;
-//     String anup;
     Statement statement;
     ArrayList<String> DrOpds = new ArrayList();
     ArrayList<String> DrFees = new ArrayList();

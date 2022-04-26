@@ -1,5 +1,4 @@
 package multispecility_hospital_solapur.ADMIN;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -23,19 +22,21 @@ import multispecility_hospital_solapur.use.getTotalUsers;
 public class ADMIN extends javax.swing.JFrame {
 
   public ADMIN() {
+      
     initComponents();
+    statement = new GetConnection().Connect_mysql();
     setExtendedState(JFrame.MAXIMIZED_BOTH);
     getdata();
     this.getAllUsers();
     showDate();
-    statement = new GetConnection().Connect_mysql();
+    
     showTime();
   }
 
   public void getdata() {
     //     DOCTORSLIST
     try {
-      DefaultTableModel table = (DefaultTableModel) DOCTORSLIST3.getModel();
+      DefaultTableModel table = (DefaultTableModel) DOCTORS_LIST.getModel();
       System.out.println("Inside the pati");
       String query = "SELECT * FROM VHSHOSPITAL.DOCTORS";
       Statement statement = new GetConnection().Connect_mysql();
@@ -78,16 +79,12 @@ public class ADMIN extends javax.swing.JFrame {
           result.getString("DATE"),
           result.getString("TIME"),
         };
-
-        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
-
         table.addRow(Data);
       }
     } catch (Exception e) {}
 
-    //     nurse
     try {
-      DefaultTableModel table = (DefaultTableModel) NURSELIST.getModel();
+      DefaultTableModel table = (DefaultTableModel) NURSE_LIST.getModel();
       System.out.println("Inside the pati");
       String query = "SELECT * FROM VHSHOSPITAL.DOCTORS";
       Statement statement = new GetConnection().Connect_mysql();
@@ -127,14 +124,13 @@ public class ADMIN extends javax.swing.JFrame {
           result.getString("DATE"),
           result.getString("TIME"),
         };
-        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
 
         table.addRow(Data);
       }
     } catch (Exception e) {}
 
     try {
-      DefaultTableModel table = (DefaultTableModel) RECEPTIONISTLISH.getModel();
+      DefaultTableModel table = (DefaultTableModel) RECEPTIONIST_LIST.getModel();
       System.out.println("Inside the pati");
       String query = "SELECT * FROM VHSHOSPITAL.RECEPTIONISTS";
       Statement statement = new GetConnection().Connect_mysql();
@@ -174,14 +170,13 @@ public class ADMIN extends javax.swing.JFrame {
           result.getString("DATE"),
           result.getString("TIME"),
         };
-        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
 
         table.addRow(Data);
       }
     } catch (Exception e) {}
 
     try {
-      DefaultTableModel table = (DefaultTableModel) PATIENTSDATA4.getModel();
+      DefaultTableModel table = (DefaultTableModel) PATIENTS_DATA.getModel();
       System.out.println("Inside the pati");
       String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS";
       Statement statement = new GetConnection().Connect_mysql();
@@ -216,7 +211,6 @@ public class ADMIN extends javax.swing.JFrame {
           result.getString("DATE"),
         };
 
-        //               SR,PID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,CONTACT1,CONTACT2,AADHAARNO,PANNO,DRNAME,FEE,OPDNO,SYMPTOMS,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PINCODE,DATE,TIME
 
         table.addRow(Data);
       }
@@ -224,32 +218,32 @@ public class ADMIN extends javax.swing.JFrame {
   }
 
   public void search(String str) {
-    DefaultTableModel model = (DefaultTableModel) DOCTORSLIST3.getModel();
+    DefaultTableModel model = (DefaultTableModel) DOCTORS_LIST.getModel();
     TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
-    DOCTORSLIST3.setRowSorter(trs);
+    DOCTORS_LIST.setRowSorter(trs);
     trs.setRowFilter(RowFilter.regexFilter(str));
   }
 
-//  public void search1(String str) {
-//    DefaultTableModel model = (DefaultTableModel) NURSELIST.getModel();
-//    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
-//    NURSELIST.setRowSorter(trs);
-//    trs.setRowFilter(RowFilter.regexFilter(str));
-//  }
-//
-//  public void search2(String str) {
-//    DefaultTableModel model = (DefaultTableModel) RECEPTIONISTLISH.getModel();
-//    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
-//    RECEPTIONISTLISH.setRowSorter(trs);
-//    trs.setRowFilter(RowFilter.regexFilter(str));
-//  }
-//
-//  public void search3(String str) {
-//    DefaultTableModel model = (DefaultTableModel) PATIENTSDATA4.getModel();
-//    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
-//    PATIENTSDATA4.setRowSorter(trs);
-//    trs.setRowFilter(RowFilter.regexFilter(str));
-//  }
+ public void search1(String str) {
+   DefaultTableModel model = (DefaultTableModel) NURSE_LIST.getModel();
+   TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+   NURSE_LIST.setRowSorter(trs);
+   trs.setRowFilter(RowFilter.regexFilter(str));
+ }
+
+ public void search2(String str) {
+   DefaultTableModel model = (DefaultTableModel) RECEPTIONIST_LIST.getModel();
+   TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+   RECEPTIONIST_LIST.setRowSorter(trs);
+   trs.setRowFilter(RowFilter.regexFilter(str));
+ }
+
+ public void search3(String str) {
+   DefaultTableModel model = (DefaultTableModel) PATIENTS_DATA.getModel();
+   TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+   PATIENTS_DATA.setRowSorter(trs);
+   trs.setRowFilter(RowFilter.regexFilter(str));
+ }
 
   
   
@@ -279,26 +273,82 @@ public class ADMIN extends javax.swing.JFrame {
 
   public void getAllUsers() {
     //        Doctors
-    String total = new getTotalUsers().getTotalDoctors();
-    int tempTotal = 1 + Integer.parseInt(total);
-    DID.setText(Integer.toString(tempTotal));
+    String total = new getTotalUsers().getTotalDoctors();  
+    String totall="";
+        try{ 
+        ResultSet ress = statement.executeQuery("SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.DOCTORS;");
+        while(ress.next()){
+            totall = ress.getString("max"); 
+            totall = Integer.toString((Integer.parseInt(totall)+1));
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        if(totall==null){
+            totall="1";
+        }
+        
+    DID.setText(totall);
     TDOCTORS.setText(total);
 
     //     RESEPTIONISTS
+    
     total = new getTotalUsers().getTotalReceptionists();
-    tempTotal = 1 + Integer.parseInt(total);
-    RID.setText(Integer.toString(tempTotal));
+    totall = "";
+
+      try{ 
+        ResultSet ress = statement.executeQuery("SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.RECEPTIONISTS;");
+        while(ress.next()){
+            totall = ress.getString("max"); 
+            totall = Integer.toString((Integer.parseInt(totall)+1));
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    if(totall==null){
+            totall="1";
+        }
+        
+    RID.setText(totall);
     TRESEPTIONISTS.setText(total);
     //        NURSES
-    total = new getTotalUsers().getTotalNurses();
-    tempTotal = 1 + Integer.parseInt(total);
-    NID.setText(Integer.toString(tempTotal));
+    total = new getTotalUsers().getTotalNurses(); 
+    totall = "";
+
+   try{ 
+            ResultSet ress = statement.executeQuery("SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.NURSES;");
+        while(ress.next()){
+            totall = ress.getString("max"); 
+            totall = Integer.toString((Integer.parseInt(totall)+1));
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+   if(totall==null){
+            totall="1";
+        }
+        
+    NID.setText(totall);
     TNURSES.setText(total);
 
     //        PATIENTS
-    total = new getTotalUsers().getTotalPatients();
-    tempTotal = 1 + Integer.parseInt(total);
-    //        PID.setText(Integer.toString(tempTotal));
+    total = new getTotalUsers().getTotalPatients(); 
+    totall ="";
+
+    try{ 
+        ResultSet ress = statement.executeQuery("SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.APPOINTMENTS;");
+        while(ress.next()){
+            totall = ress.getString("max"); 
+            totall = Integer.toString((Integer.parseInt(totall)+1));
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        if(totall==null){
+            totall="1";
+        }
+        
+    PID.setText(totall);
     TPATIENTS.setText(total);
   }
 
@@ -618,7 +668,7 @@ public class ADMIN extends javax.swing.JFrame {
         TRESEPTIONISTS = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        DOCTORS_1 = new javax.swing.JPanel();
+        DOCTORS_CREATE = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jPanel27 = new javax.swing.JPanel();
@@ -700,7 +750,7 @@ public class ADMIN extends javax.swing.JFrame {
         DATE = new javax.swing.JLabel();
         TIME1 = new javax.swing.JLabel();
         TIME2 = new javax.swing.JLabel();
-        RECEPTIONIST_2 = new javax.swing.JPanel();
+        RECEPTIONIST_CREATE = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jLabel53 = new javax.swing.JLabel();
@@ -777,7 +827,7 @@ public class ADMIN extends javax.swing.JFrame {
         RTIME = new javax.swing.JLabel();
         RDATE2 = new javax.swing.JLabel();
         RDATE3 = new javax.swing.JLabel();
-        NURSE_3 = new javax.swing.JPanel();
+        NURSE_CREATE = new javax.swing.JPanel();
         jPanel33 = new javax.swing.JPanel();
         jLabel86 = new javax.swing.JLabel();
         jPanel34 = new javax.swing.JPanel();
@@ -905,30 +955,30 @@ public class ADMIN extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         jPanel47 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        DOCTORSLIST3 = new javax.swing.JTable();
+        DOCTORS_LIST = new javax.swing.JTable();
         PATIENTS1 = new javax.swing.JLabel();
         txt_search1 = new javax.swing.JTextField();
         search1 = new javax.swing.JButton();
         NURSEEE = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        NURSELIST = new javax.swing.JTable();
+        NURSE_LIST = new javax.swing.JTable();
         txt_search2 = new javax.swing.JTextField();
         search2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         RECEPTIONISTDARA = new javax.swing.JPanel();
         jPanel45 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        RECEPTIONISTLISH = new javax.swing.JTable();
-        txt_search5 = new javax.swing.JTextField();
-        search5 = new javax.swing.JButton();
+        RECEPTIONIST_LIST = new javax.swing.JTable();
+        txt_search3 = new javax.swing.JTextField();
+        search3 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         PATIENTSD = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        searchPatientsField = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        txt_search4 = new javax.swing.JTextField();
+        search4 = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        PATIENTSDATA4 = new javax.swing.JTable();
+        PATIENTS_DATA = new javax.swing.JTable();
         PATIENTS = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -1335,6 +1385,9 @@ public class ADMIN extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 DIDKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DIDKeyTyped(evt);
+            }
         });
 
         jLabel25.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -1374,6 +1427,11 @@ public class ADMIN extends javax.swing.JFrame {
         AGE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AGEActionPerformed(evt);
+            }
+        });
+        AGE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                AGEKeyTyped(evt);
             }
         });
 
@@ -1624,6 +1682,11 @@ public class ADMIN extends javax.swing.JFrame {
                 CONTACT1ActionPerformed(evt);
             }
         });
+        CONTACT1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CONTACT1KeyTyped(evt);
+            }
+        });
 
         jLabel50.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel50.setText("CONTACT 2");
@@ -1632,6 +1695,11 @@ public class ADMIN extends javax.swing.JFrame {
         CONTACT2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CONTACT2ActionPerformed(evt);
+            }
+        });
+        CONTACT2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CONTACT2KeyTyped(evt);
             }
         });
 
@@ -1670,6 +1738,11 @@ public class ADMIN extends javax.swing.JFrame {
                 OPD_NOActionPerformed(evt);
             }
         });
+        OPD_NO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                OPD_NOKeyTyped(evt);
+            }
+        });
 
         jLabel123.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel123.setText("FEE");
@@ -1678,6 +1751,11 @@ public class ADMIN extends javax.swing.JFrame {
         FEE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FEEActionPerformed(evt);
+            }
+        });
+        FEE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                FEEKeyTyped(evt);
             }
         });
 
@@ -2035,9 +2113,8 @@ public class ADMIN extends javax.swing.JFrame {
         jPanel26Layout.setHorizontalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel26Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
                 .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel26Layout.createSequentialGroup()
@@ -2093,24 +2170,24 @@ public class ADMIN extends javax.swing.JFrame {
                 .addContainerGap(94, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout DOCTORS_1Layout = new javax.swing.GroupLayout(DOCTORS_1);
-        DOCTORS_1.setLayout(DOCTORS_1Layout);
-        DOCTORS_1Layout.setHorizontalGroup(
-            DOCTORS_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DOCTORS_1Layout.createSequentialGroup()
-                .addContainerGap()
+        javax.swing.GroupLayout DOCTORS_CREATELayout = new javax.swing.GroupLayout(DOCTORS_CREATE);
+        DOCTORS_CREATE.setLayout(DOCTORS_CREATELayout);
+        DOCTORS_CREATELayout.setHorizontalGroup(
+            DOCTORS_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DOCTORS_CREATELayout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
-        DOCTORS_1Layout.setVerticalGroup(
-            DOCTORS_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DOCTORS_1Layout.createSequentialGroup()
+        DOCTORS_CREATELayout.setVerticalGroup(
+            DOCTORS_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DOCTORS_CREATELayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", DOCTORS_1);
+        jTabbedPane1.addTab("tab2", DOCTORS_CREATE);
 
         jPanel30.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -2868,27 +2945,27 @@ public class ADMIN extends javax.swing.JFrame {
                 .addGap(0, 37, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout RECEPTIONIST_2Layout = new javax.swing.GroupLayout(RECEPTIONIST_2);
-        RECEPTIONIST_2.setLayout(RECEPTIONIST_2Layout);
-        RECEPTIONIST_2Layout.setHorizontalGroup(
-            RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout RECEPTIONIST_CREATELayout = new javax.swing.GroupLayout(RECEPTIONIST_CREATE);
+        RECEPTIONIST_CREATE.setLayout(RECEPTIONIST_CREATELayout);
+        RECEPTIONIST_CREATELayout.setHorizontalGroup(
+            RECEPTIONIST_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 2045, Short.MAX_VALUE)
-            .addGroup(RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(RECEPTIONIST_2Layout.createSequentialGroup()
+            .addGroup(RECEPTIONIST_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(RECEPTIONIST_CREATELayout.createSequentialGroup()
                     .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 18, Short.MAX_VALUE)))
         );
-        RECEPTIONIST_2Layout.setVerticalGroup(
-            RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        RECEPTIONIST_CREATELayout.setVerticalGroup(
+            RECEPTIONIST_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1043, Short.MAX_VALUE)
-            .addGroup(RECEPTIONIST_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RECEPTIONIST_2Layout.createSequentialGroup()
+            .addGroup(RECEPTIONIST_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RECEPTIONIST_CREATELayout.createSequentialGroup()
                     .addContainerGap(14, Short.MAX_VALUE)
                     .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(13, Short.MAX_VALUE)))
         );
 
-        jTabbedPane1.addTab("tab3", RECEPTIONIST_2);
+        jTabbedPane1.addTab("tab3", RECEPTIONIST_CREATE);
 
         jPanel33.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -3622,23 +3699,23 @@ public class ADMIN extends javax.swing.JFrame {
                 .addContainerGap(126, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout NURSE_3Layout = new javax.swing.GroupLayout(NURSE_3);
-        NURSE_3.setLayout(NURSE_3Layout);
-        NURSE_3Layout.setHorizontalGroup(
-            NURSE_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NURSE_3Layout.createSequentialGroup()
+        javax.swing.GroupLayout NURSE_CREATELayout = new javax.swing.GroupLayout(NURSE_CREATE);
+        NURSE_CREATE.setLayout(NURSE_CREATELayout);
+        NURSE_CREATELayout.setHorizontalGroup(
+            NURSE_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NURSE_CREATELayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, 1922, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(123, Short.MAX_VALUE))
         );
-        NURSE_3Layout.setVerticalGroup(
-            NURSE_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NURSE_3Layout.createSequentialGroup()
+        NURSE_CREATELayout.setVerticalGroup(
+            NURSE_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NURSE_CREATELayout.createSequentialGroup()
                 .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 87, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab4", NURSE_3);
+        jTabbedPane1.addTab("tab4", NURSE_CREATE);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -4086,7 +4163,7 @@ public class ADMIN extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab9", DISCHARGE_FORM);
 
-        DOCTORSLIST3.setModel(new javax.swing.table.DefaultTableModel(
+        DOCTORS_LIST.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4094,8 +4171,8 @@ public class ADMIN extends javax.swing.JFrame {
                 "SR", "ID", "FNAME ", "MNAME ", "LNAME ", "AGE ", "GENDER ", "DOB ", "MSTATUS ", "UPHOTO ", "USERNAME", "PASSWORD ", "SPECIALIZATION ", "EDUCATION ", "FEE ", "OPDNO ", "JOBEXP ", "DATEOFJOIN ", "LKNOWN ", "DOCUMENT", "EMAILS", "CONTACT1", "CONTACT1", "ECONTACT", "AADHARNO", "PAN NO", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PIN", "DATE", "TIME"
             }
         ));
-        DOCTORSLIST3.setShowHorizontalLines(false);
-        jScrollPane8.setViewportView(DOCTORSLIST3);
+        DOCTORS_LIST.setShowHorizontalLines(false);
+        jScrollPane8.setViewportView(DOCTORS_LIST);
 
         PATIENTS1.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
         PATIENTS1.setText("DOCTORS   DETAILS");
@@ -4120,13 +4197,13 @@ public class ADMIN extends javax.swing.JFrame {
                 .addComponent(PATIENTS1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel47Layout.createSequentialGroup()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1927, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1942, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel47Layout.setVerticalGroup(
             jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel47Layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PATIENTS1)
                     .addComponent(txt_search1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4156,7 +4233,7 @@ public class ADMIN extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab10", DOCTORLIST);
 
-        NURSELIST.setModel(new javax.swing.table.DefaultTableModel(
+        NURSE_LIST.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4164,12 +4241,17 @@ public class ADMIN extends javax.swing.JFrame {
                 "SR", "ID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DOB", "MSTATUS", "USERPHOTO", "USERNAME", "PASSWORD", "SPECIALIZATION", "EDUCATION", "JOB EXPERIENCE", "DATE OF JOINING", "L KNOWN", "DOCUMENT", "EMAIL", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PIN CODE", "DATE", "TIME"
             }
         ));
-        jScrollPane4.setViewportView(NURSELIST);
+        jScrollPane4.setViewportView(NURSE_LIST);
 
         txt_search2.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
 
         search2.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         search2.setText("Search Patients");
+        search2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
         jLabel2.setText("NURSE LIST");
@@ -4221,7 +4303,7 @@ public class ADMIN extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab11", NURSEEE);
 
-        RECEPTIONISTLISH.setModel(new javax.swing.table.DefaultTableModel(
+        RECEPTIONIST_LIST.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4229,14 +4311,20 @@ public class ADMIN extends javax.swing.JFrame {
                 "SR", "ID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DOB", "MSTATUS", "USER PHOTO", "USERNAME", "PASSWORD", "SPECIALIZATION", "EDUCATION", "JOB EXPERIENCE", "DATE OF JOIN", "L KNOWN", "DOCUMENT", "EMAIL", "CONTACT1", "CONTACT2", "ADDHAAR NO", "PAN NO", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PIN CODE", "DATE", "TIME"
             }
         ));
-        jScrollPane7.setViewportView(RECEPTIONISTLISH);
+        jScrollPane7.setViewportView(RECEPTIONIST_LIST);
 
-        txt_search5.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        txt_search3.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
 
-        search5.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        search5.setText("Search Patients");
+        search3.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        search3.setText("Search Patients");
+        search3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search3ActionPerformed(evt);
+            }
+        });
 
-        jLabel14.setText("receptionistlist");
+        jLabel14.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
+        jLabel14.setText("RECEPTIONISTS    LIST");
 
         javax.swing.GroupLayout jPanel45Layout = new javax.swing.GroupLayout(jPanel45);
         jPanel45.setLayout(jPanel45Layout);
@@ -4244,14 +4332,14 @@ public class ADMIN extends javax.swing.JFrame {
             jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel45Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txt_search5, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_search3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
-                .addComponent(search5)
+                .addComponent(search3)
                 .addGap(386, 386, 386)
-                .addComponent(jLabel14)
-                .addContainerGap(1120, Short.MAX_VALUE))
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel45Layout.createSequentialGroup()
-                .addComponent(jScrollPane7)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 2132, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel45Layout.setVerticalGroup(
@@ -4259,8 +4347,8 @@ public class ADMIN extends javax.swing.JFrame {
             .addGroup(jPanel45Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_search5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search5)
+                    .addComponent(txt_search3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search3)
                     .addComponent(jLabel14))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE)
@@ -4273,7 +4361,7 @@ public class ADMIN extends javax.swing.JFrame {
             RECEPTIONISTDARALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RECEPTIONISTDARALayout.createSequentialGroup()
                 .addComponent(jPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 73, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         RECEPTIONISTDARALayout.setVerticalGroup(
             RECEPTIONISTDARALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4285,17 +4373,17 @@ public class ADMIN extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab12", RECEPTIONISTDARA);
 
-        searchPatientsField.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        txt_search4.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
 
-        jButton4.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        jButton4.setText("Search Patients");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        search4.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        search4.setText("Search Patients");
+        search4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                search4ActionPerformed(evt);
             }
         });
 
-        PATIENTSDATA4.setModel(new javax.swing.table.DefaultTableModel(
+        PATIENTS_DATA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4303,8 +4391,8 @@ public class ADMIN extends javax.swing.JFrame {
                 "SR", "PID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DATE OF BIRTH", "MSTATUS", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "DR NAME", "OPD NO", "FEE", "SYSMPTOMS", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PINCODE", "DATE", "TIME"
             }
         ));
-        PATIENTSDATA4.setGridColor(new java.awt.Color(145, 178, 224));
-        jScrollPane9.setViewportView(PATIENTSDATA4);
+        PATIENTS_DATA.setGridColor(new java.awt.Color(145, 178, 224));
+        jScrollPane9.setViewportView(PATIENTS_DATA);
 
         PATIENTS.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
         PATIENTS.setText("PATIENTS    DETAILS");
@@ -4314,13 +4402,13 @@ public class ADMIN extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(2, 2, 2)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1919, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(searchPatientsField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_search4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(search4)
                         .addGap(405, 405, 405)
                         .addComponent(PATIENTS, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -4328,11 +4416,11 @@ public class ADMIN extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4)
-                        .addComponent(searchPatientsField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(search4)
+                        .addComponent(txt_search4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(PATIENTS, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4343,9 +4431,7 @@ public class ADMIN extends javax.swing.JFrame {
         PATIENTSD.setLayout(PATIENTSDLayout);
         PATIENTSDLayout.setHorizontalGroup(
             PATIENTSDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PATIENTSDLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 102, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         PATIENTSDLayout.setVerticalGroup(
             PATIENTSDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4641,8 +4727,7 @@ public class ADMIN extends javax.swing.JFrame {
 
   private void UPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEActionPerformed
       getData();
-      String query = "UPDATE VHSHOSPITAL.DOCTORS SET " + "FNA"
-              + "ME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "ECONTACT=" +  EContact+ "," + "AADHAAR=" + Aadhaarno + "," + "PAN=" + "'" + Panno + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opd + "," +  "ADDRESS=" + "'" + Address + "'," + "UPHOTO=" + "'" + photo + "'," + "USERNAME=" + "'" + Userid + "'," + "PASSWORD=" + "'" + Password + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PIN=" + Pincode + ",EDUCATION=" + "'" + Education + "'," + "DATEOFJOIN=" + "'" + DateJoin + "'," + "JOBEXP=" + "'" + Jobexperience + "'" + " WHERE ID=" + Did;
+      String query = "UPDATE VHSHOSPITAL.DOCTORS SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "ECONTACT=" +  EContact+ "," + "AADHAAR=" + Aadhaarno + "," + "PAN=" + "'" + Panno + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opd + "," +  "ADDRESS=" + "'" + Address + "'," + "UPHOTO=" + "'" + photo + "'," + "USERNAME=" + "'" + Userid + "'," + "PASSWORD=" + "'" + Password + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PIN=" + Pincode + ",EDUCATION=" + "'" + Education + "'," + "DATEOFJOIN=" + "'" + DateJoin + "'," + "JOBEXP=" + "'" + Jobexperience + "'" + " WHERE ID=" + Did;
     System.out.println(query);
 
     try {
@@ -4828,67 +4913,7 @@ public class ADMIN extends javax.swing.JFrame {
   private void RSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSUBMITActionPerformed
     getData2();
     String query =
-      "INSERT INTO VHSHOSPITAL.RECEPTIONISTS (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" +
-      Rid +
-      ",'" +
-      Fname +
-      "','" +
-      Mname +
-      "','" +
-      Lname +
-      "','" +
-      Age +
-      "','" +
-      Gender +
-      "','" +
-      Dob +
-      "','" +
-      Mstatus +
-      "','" +
-      Userphoto +
-      "','REC_" +
-      Username +
-      "','" +
-      Password +
-      "','" +
-      Specialization +
-      "','" +
-      Education +
-      "','" +
-      Jobexperience +
-      "','" +
-      Dateofjoin +
-      "','" +
-      Lknown +
-      "','" +
-      Document +
-      "','" +
-      Email +
-      "'," +
-      Contact1 +
-      "," +
-      Contact2 +
-      "," +
-      Aadhaarno +
-      "," +
-      Panno +
-      "," +
-      Address +
-      "," +
-      City +
-      "," +
-      District +
-      "," +
-      State +
-      "," +
-      Country +
-      "," +
-      Pincode +
-      ",'" +
-      Date +
-      "','" +
-      Time +
-      "')";
+      "INSERT INTO VHSHOSPITAL.RECEPTIONISTS (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','REC_" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
 
     try {
       statement.execute(query);
@@ -4902,102 +4927,7 @@ public class ADMIN extends javax.swing.JFrame {
 
   private void RUPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATEActionPerformed
        getData2();
-      String query =
-      "UPDATE VHSHOSPITAL.RECEPTIONISTS SET " +
-      "FNAME=" +
-      "'" +
-      Fname +
-      "'," +
-      "MNAME=" +
-      "'" +
-      Mname +
-      "'," +
-      "LNAME=" +
-      "'" +
-      Lname +
-      "'," +
-      "AGE=" +
-      Age +
-      "," +
-      "GENDER=" +
-      "'" +
-      Gender +
-      "'," +
-      "DOB=" +
-      "'" +
-      Dob +
-      "'," +
-      "MSTATUS=" +
-      "'" +
-      Mstatus +
-      "'," +
-      "CONTACT1=" +
-      Contact1 +
-      "," +
-      "CONTACT2=" +
-      Contact2 +
-      "," +
-      "AADHAAR=" +
-      Aadhaarno +
-      "," +
-      "PAN=" +
-      "'" +
-      Panno +
-      "'," +
-      "FEE=" +
-      Fee +
-      "," +
-      "OPDNO=" +
-      Opd +
-      "," + 
-      "ADDRESS=" +
-      "'" +
-      Address +
-      "'," +
-      "UPHOTO=" +
-      "'" +
-      photo +
-      "'," +
-      "USERNAME=" +
-      "'" +
-      Userid +
-      "'," +
-      "PASSWORD=" +
-      "'" +
-      Password +
-      "'," +
-      "CITY=" +
-      "'" +
-      City +
-      "'," +
-      "DISTRICT=" +
-      "'" +
-      District +
-      "'," +
-      "STATE=" +
-      "'" +
-      State +
-      "'," +
-      "COUNTRY=" +
-      "'" +
-      Country +
-      "'," +
-      "PIN=" +
-      Pincode +
-      ",EDUCATION=" +
-      "'" +
-      Education +
-      "'," +
-      "DATEOFJOIN=" +
-      "'" +
-      DateJoin +
-      "'," +
-      "JOBEXP=" +
-      "'" +
-      Jobexperience +
-      "'" +
-      " WHERE ID=" +
-      Did;
+      String query = "UPDATE VHSHOSPITAL.RECEPTIONISTS SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "AADHAAR=" + Aadhaarno + "," + "PAN=" + "'" + Panno + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opd + "," +  "ADDRESS=" + "'" + Address + "'," + "UPHOTO=" + "'" + photo + "'," + "USERNAME=" + "'" + Userid + "'," + "PASSWORD=" + "'" + Password + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PIN=" + Pincode + ",EDUCATION=" + "'" + Education + "'," + "DATEOFJOIN=" + "'" + DateJoin + "'," + "JOBEXP=" + "'" + Jobexperience + "'" + " WHERE ID=" + Did;
     System.out.println(query);
 
     try {
@@ -5180,9 +5110,8 @@ public class ADMIN extends javax.swing.JFrame {
 
     try {
       getData3();
-      String query =
-        "INSERT INTO VHSHOSPITAL.NURSES (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "','" + Dob + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
-   System.out.println(query);
+      String query = "INSERT INTO VHSHOSPITAL.NURSES (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','NU_" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
+      System.out.println(query);
       statement.execute(query);
       clearFields();
       getAllUsers();
@@ -5192,7 +5121,7 @@ public class ADMIN extends javax.swing.JFrame {
   }//GEN-LAST:event_NSUBMITActionPerformed
 
   private void RUPDATE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATE1ActionPerformed
-    // TODO add your handling code here:
+  
   }//GEN-LAST:event_RUPDATE1ActionPerformed
 
   private void RDELETE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDELETE1ActionPerformed
@@ -5313,7 +5242,7 @@ public class ADMIN extends javax.swing.JFrame {
   private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {}
 
   private void DIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DIDKeyPressed
-    if (evt.getKeyCode() == 10) {
+     if (evt.getKeyCode() == 10) {
       String getQuery =
         "SELECT * FROM VHSHOSPITAL.DOCTORS WHERE ID =" + DID.getText();
       try {
@@ -5385,10 +5314,10 @@ public class ADMIN extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_DIDKeyPressed
 
-  private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    //    String af = txt_search7.getText();
-    //    search(af);
-  }//GEN-LAST:event_jButton4ActionPerformed
+  private void search4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search4ActionPerformed
+        String af = txt_search4.getText();
+        search3(af);
+  }//GEN-LAST:event_search4ActionPerformed
 
     private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
      
@@ -5610,13 +5539,61 @@ jTabbedPane1.setSelectedIndex(9);
     }
     }//GEN-LAST:event_PIDKeyPressed
 
+    private void search2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search2ActionPerformed
+      String af = txt_search2.getText();
+        search1(af);
+    }//GEN-LAST:event_search2ActionPerformed
+
+    private void search3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search3ActionPerformed
+        String af = txt_search3.getText();
+        search2(af);
+    }//GEN-LAST:event_search3ActionPerformed
+
+    private void DIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DIDKeyTyped
+char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_DIDKeyTyped
+
+    private void AGEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AGEKeyTyped
+char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_AGEKeyTyped
+
+    private void OPD_NOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_OPD_NOKeyTyped
+char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_OPD_NOKeyTyped
+
+    private void FEEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FEEKeyTyped
+char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_FEEKeyTyped
+
+    private void CONTACT1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CONTACT1KeyTyped
+char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_CONTACT1KeyTyped
+
+    private void CONTACT2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CONTACT2KeyTyped
+char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_CONTACT2KeyTyped
+
  
   public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-     * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-     */
+  
     try {
       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
         if ("Nimbus".equals(info.getName())) {
@@ -5643,7 +5620,6 @@ jTabbedPane1.setSelectedIndex(9);
     }
     //</editor-fold>
 
-    /* Create and display the form */
     java.awt.EventQueue.invokeLater(
       new Runnable() {
         public void run() {
@@ -5674,8 +5650,8 @@ jTabbedPane1.setSelectedIndex(9);
     private javax.swing.JTextField DISTRICT;
     private com.toedter.calendar.JDateChooser DOB;
     private javax.swing.JPanel DOCTORLIST;
-    private javax.swing.JTable DOCTORSLIST3;
-    private javax.swing.JPanel DOCTORS_1;
+    private javax.swing.JPanel DOCTORS_CREATE;
+    private javax.swing.JTable DOCTORS_LIST;
     private javax.swing.JTextField DOCUMENT;
     private javax.swing.JLabel DRNAME;
     private javax.swing.JLabel DTIME;
@@ -5725,8 +5701,8 @@ jTabbedPane1.setSelectedIndex(9);
     private javax.swing.JTextField NSTATE;
     private javax.swing.JButton NSUBMIT;
     private javax.swing.JPanel NURSEEE;
-    private javax.swing.JTable NURSELIST;
-    private javax.swing.JPanel NURSE_3;
+    private javax.swing.JPanel NURSE_CREATE;
+    private javax.swing.JTable NURSE_LIST;
     private javax.swing.JTextField NUSERNAME;
     private javax.swing.JTextField NUSERPHOTO;
     private javax.swing.JTextField OPD_NO;
@@ -5736,7 +5712,7 @@ jTabbedPane1.setSelectedIndex(9);
     private javax.swing.JLabel PATIENTS;
     private javax.swing.JLabel PATIENTS1;
     private javax.swing.JPanel PATIENTSD;
-    private javax.swing.JTable PATIENTSDATA4;
+    private javax.swing.JTable PATIENTS_DATA;
     private javax.swing.JComboBox<String> PATIENT_STATUS;
     private javax.swing.JTextField PID;
     private javax.swing.JTextField PINCODE;
@@ -5760,8 +5736,8 @@ jTabbedPane1.setSelectedIndex(9);
     private com.toedter.calendar.JDateChooser RDOB;
     private javax.swing.JTextField RDOCUMENT;
     private javax.swing.JPanel RECEPTIONISTDARA;
-    private javax.swing.JTable RECEPTIONISTLISH;
-    private javax.swing.JPanel RECEPTIONIST_2;
+    private javax.swing.JPanel RECEPTIONIST_CREATE;
+    private javax.swing.JTable RECEPTIONIST_LIST;
     private javax.swing.JTextField REDUCATION;
     private javax.swing.JTextField REMAIL;
     private javax.swing.JTextField RFNAME;
@@ -5807,7 +5783,6 @@ jTabbedPane1.setSelectedIndex(9);
     private javax.swing.JTextField USERPHOTO;
     private javax.swing.JButton VIEW;
     private javax.swing.JComboBox<String> WARDNAME;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
@@ -6015,11 +5990,12 @@ jTabbedPane1.setSelectedIndex(9);
     private javax.swing.JTable jTable1;
     private javax.swing.JButton search1;
     private javax.swing.JButton search2;
-    private javax.swing.JButton search5;
-    private javax.swing.JTextField searchPatientsField;
+    private javax.swing.JButton search3;
+    private javax.swing.JButton search4;
     private javax.swing.JTextField txt_search1;
     private javax.swing.JTextField txt_search2;
-    private javax.swing.JTextField txt_search5;
+    private javax.swing.JTextField txt_search3;
+    private javax.swing.JTextField txt_search4;
     // End of variables declaration//GEN-END:variables
 
 }

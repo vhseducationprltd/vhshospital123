@@ -400,8 +400,9 @@ void showTime(){
             ResultSet rs3 = stm.executeQuery(sql3);
             
              if(rs3.next()){ 
+                 rs3.beforeFirst();
                 this.dispose();
-                WARD D = new  WARD();
+                WARD D = new  WARD(rs3);
                      D.setVisible(true);                        
                      this.setVisible(false);
             }

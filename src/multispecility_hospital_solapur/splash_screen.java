@@ -1,8 +1,4 @@
-
 package multispecility_hospital_solapur;
-
-import java.awt.Color;
-import javax.swing.UIManager;
 import java.sql.Statement;
 import multispecility_hospital_solapur.use.GetConnection;
 

@@ -1,7 +1,6 @@
 
 package multispecility_hospital_solapur.DOCTOR;
 
-import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,17 +13,23 @@ import javax.swing.Timer;
 import multispecility_hospital_solapur.LOGIN_FORM;
 import multispecility_hospital_solapur.use.GetConnection;
 
-/**
- *
- * @author heman
- */
+
 public class WARD extends javax.swing.JFrame {
 
-    /**
-     * Creates new form WARD
-     */
-    public WARD() {
+    public WARD(ResultSet res) {
         initComponents();
+        showDate();
+        showTime();
+        this.setExtendedState(MAXIMIZED_BOTH);
+        String nurseName="";
+        try{
+          while(res.next()){
+            nurseName = res.getString("FNAME")+" "+res.getString("LNAME");
+          }  
+          NURSENAME.setText(nurseName);
+        }catch(Exception e){
+            
+        }
         statement= new GetConnection().Connect_mysql();
     }
 
@@ -65,10 +70,11 @@ public class WARD extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         REPORTS = new javax.swing.JTextArea();
+        DRNAME = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         TIME = new javax.swing.JLabel();
         DATE = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        NURSENAME = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
 
@@ -296,6 +302,8 @@ public class WARD extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        DRNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -306,7 +314,9 @@ public class WARD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(224, 224, 224)
-                .addComponent(FNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(DRNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(AGE, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -340,7 +350,8 @@ public class WARD extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(GENDER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(GENDER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DRNAME, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(148, 148, 148)
@@ -362,8 +373,8 @@ public class WARD extends javax.swing.JFrame {
         DATE.setFont(new java.awt.Font("Dialog", 3, 16)); // NOI18N
         DATE.setText("DATE");
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel8.setText("DR NAME");
+        NURSENAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        NURSENAME.setText("DR NAME");
 
         jLabel13.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel13.setText("DATE :");
@@ -388,7 +399,7 @@ public class WARD extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(NURSENAME, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel6)
                                 .addGap(609, 609, 609)
@@ -413,7 +424,7 @@ public class WARD extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8))
+                        .addComponent(NURSENAME))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
@@ -466,20 +477,21 @@ public class WARD extends javax.swing.JFrame {
 
     private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
            getData();
-           String DBNAME=""; 
-           String NAME=""; 
+           String DBNAME="";  
 
            try{
-               DBNAME ="dr_"+ statement.executeQuery("SELECT ID AS ID FROM VHSHOSPITAL.DOCTORS WHERE PID="+Pid).getString("ID");
+               ResultSet res =  statement.executeQuery("SELECT ID AS ID FROM VHSHOSPITAL.DOCTORS WHERE ID="+Pid);
+               while(res.next()){
+                   DBNAME ="doc_"+res.getString("ID");
+               }
                
-               String query= "INSERT INTO "+DBNAME+".P_"+Pid+"(ID,SYMPTOMS,MEDICINES,TREATMENT,TEST,TESTREPORTS,DATE,TIME)VALUES("+Pid+",'"+Symptoms+"','"+Medicines+"','"+Treatments+"','"+Reports+"','"+Date+"','"+Time+"')";
+               String query= "INSERT INTO "+DBNAME+".P_"+Pid+"(ID,SYMPTOMS,MEDICINES,TREATMENT,TEST,TESTREPORTS,DATE,TIME)VALUES("+Pid+",'"+Symptoms+"','"+Medicines+"','"+Treatments+"','"+Tests+"','"+Reports+"','"+Date+"','"+Time+"')";
                System.out.println(query);
-//               statement.execute(query);+654
-//                       ''
+               statement.execute(query);
+               clearFields();
            }catch(Exception e){
                 System.out.println(e);
            }
-//         String query = "INSERT INTO "++"SR,ID,SYMPTOMS,MEDICINES,TREATMENT,TEST,TESTREPORTS,DATE,TIME)VALUES(";
      
     }//GEN-LAST:event_SUBMITActionPerformed
   void getData() {
@@ -532,6 +544,8 @@ public class WARD extends javax.swing.JFrame {
                      FNAME.setText("NAME : "+FF);
                      AGE.setText("AGE : " + result.getString("AGE"));
                      GENDER.setText("GENDER :" + result.getString("GENDER"));
+                     DRNAME.setText("DR NAME :" + result.getString("DRNAME")); 
+
                  }
              }catch(Exception e){
                  System.out.println(e);
@@ -594,11 +608,7 @@ public class WARD extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new WARD().setVisible(true);
-            }
-        });
+    
     }
       Statement statement;
     String PtableName;
@@ -614,10 +624,12 @@ public class WARD extends javax.swing.JFrame {
     private javax.swing.JLabel AGE;
     private javax.swing.JLabel DATE;
     private javax.swing.JButton DELETE;
+    private javax.swing.JLabel DRNAME;
     private javax.swing.JLabel FNAME;
     private javax.swing.JLabel GENDER;
     private javax.swing.JButton LOGOUT;
     private javax.swing.JTextArea MEDICINES;
+    private javax.swing.JLabel NURSENAME;
     private javax.swing.JTextField PID;
     private javax.swing.JTextArea REPORTS;
     private javax.swing.JButton SUBMIT;
@@ -639,7 +651,6 @@ public class WARD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -651,6 +662,19 @@ public class WARD extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     // End of variables declaration//GEN-END:variables
+
+    private void clearFields() {
+        PID.setText("");
+        TREATMENT.setText("");
+        SYMPTOMS.setText("");
+        MEDICINES.setText("");
+        REPORTS.setText("");
+        TEST.setText("");
+        FNAME.setText("NAME :");
+        AGE.setText("AGE :");
+        GENDER.setText("GENDER :"); 
+         DRNAME.setText("DR NAME :");
+    }
 
  
 }
