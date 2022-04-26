@@ -5320,9 +5320,7 @@ public class ADMIN extends javax.swing.JFrame {
   }//GEN-LAST:event_search4ActionPerformed
 
     private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
-     
-jTabbedPane1.setSelectedIndex(9);
-
+       jTabbedPane1.setSelectedIndex(9); 
     }//GEN-LAST:event_jPanel20MouseClicked
 
     private void jPanel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel22MouseClicked

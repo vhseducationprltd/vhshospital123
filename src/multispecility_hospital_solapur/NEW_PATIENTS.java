@@ -1097,15 +1097,7 @@ getData();
                         CONTACT2.setText(result.getString("CONTACT2"));
                         AADHAARNO.setText(result.getString("AADHAARNO"));
                         PANNO.setText(result.getString("PANNO"));
-                        
-                        switch(result.getString("DRNAME")){
-                            case "HEMANT":DRNAME.setSelectedIndex(0);
-                                         break;
-                            case "VIVEK":DRNAME.setSelectedIndex(1);
-                                         break;
-                            case "SUNNY":DRNAME.setSelectedIndex(2);
-                                         break;
-                        }
+                         
                         FEE.setText(result.getString("FEE"));
                         OPDNO.setText(result.getString("OPDNO"));
                         SYMPTOMS.setText(result.getString("SYMPTOMS"));
