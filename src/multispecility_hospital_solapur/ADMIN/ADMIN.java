@@ -4,6 +4,7 @@ import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.ResultSet;
@@ -261,7 +262,7 @@ public class ADMIN extends javax.swing.JFrame {
     String totall = "";
     try {
       ResultSet ress = statement.executeQuery(
-        "SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.DOCTORS;"
+        "SELECT MAX(ID) AS max  FROM VHSHOSPITAL.DOCTORS;"
       );
       while (ress.next()) {
         totall = ress.getString("max");
@@ -284,7 +285,7 @@ public class ADMIN extends javax.swing.JFrame {
 
     try {
       ResultSet ress = statement.executeQuery(
-        "SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.RECEPTIONISTS;"
+        "SELECT MAX(ID) AS max  FROM VHSHOSPITAL.RECEPTIONISTS;"
       );
       while (ress.next()) {
         totall = ress.getString("max");
@@ -305,7 +306,7 @@ public class ADMIN extends javax.swing.JFrame {
 
     try {
       ResultSet ress = statement.executeQuery(
-        "SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.NURSES;"
+        "SELECT MAX(ID) AS max  FROM VHSHOSPITAL.NURSES;"
       );
       while (ress.next()) {
         totall = ress.getString("max");
@@ -327,7 +328,7 @@ public class ADMIN extends javax.swing.JFrame {
 
     try {
       ResultSet ress = statement.executeQuery(
-        "SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.APPOINTMENTS;"
+        "SELECT MAX(ID) AS max  FROM VHSHOSPITAL.APPOINTMENTS;"
       );
       while (ress.next()) {
         totall = ress.getString("max");
@@ -338,14 +339,13 @@ public class ADMIN extends javax.swing.JFrame {
     }
     if (totall == null) {
       totall = "1";
-    }
-
+    } 
     PID.setText(totall);
     TPATIENTS.setText(total);
 
     try {
       ResultSet ress = statement.executeQuery(
-        "SELECT MAX(Sr) AS max  FROM VHSHOSPITAL.WARD;"
+        "SELECT MAX(ID) AS max  FROM VHSHOSPITAL.WARD;"
       );
       while (ress.next()) {
         totall = ress.getString("max");
@@ -417,8 +417,6 @@ public class ADMIN extends javax.swing.JFrame {
   }
 
   void getData2() {
-    //    Sr = Integer.parseInt(SR.getText());
-
     Rid = Integer.parseInt(RID.getText());
     Fname = RFNAME.getText();
     Mname = RMNAME.getText();
@@ -455,8 +453,7 @@ public class ADMIN extends javax.swing.JFrame {
     Time = TIME.getText();
   }
 
-  void getData() {
-    //    Sr = Integer.parseInt(SR.getText());
+  void getData() {  
     Did = Integer.parseInt(DID.getText());
     Fname = FNAME.getText();
     Mname = MNAME.getText();
@@ -493,7 +490,7 @@ public class ADMIN extends javax.swing.JFrame {
     DateJoin = LocalDate.parse(date2).toString();
     Userid = USERNAME.getText();
     Password = PASSWORD.getText();
-    Cpassword = CPASSWORD.getText();
+    Cpassword = CPASSWORD.getText(); 
   }
 
   void getwarddata() {
@@ -606,11 +603,13 @@ public class ADMIN extends javax.swing.JFrame {
     WARD.setText("");
     CHARGES.setText("");
     ERRORLABLE.setText("");
+    
+    ERR.setText(" ");
   }
 
   int Sr;
   int Did;
-  String Fname;
+  String Fname; 
   String Mname;
   String Lname;
   int Age;
@@ -654,6 +653,7 @@ public class ADMIN extends javax.swing.JFrame {
   String Password;
   String Cpassword;
   Statement statement;
+  boolean status=true;
 
   @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -775,7 +775,6 @@ public class ADMIN extends javax.swing.JFrame {
         DATEOFJOINING = new com.toedter.calendar.JDateChooser();
         PASSWORD = new javax.swing.JPasswordField();
         CPASSWORD = new javax.swing.JPasswordField();
-        DOCERROR = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         TIME = new javax.swing.JLabel();
         DATE = new javax.swing.JLabel();
@@ -1911,9 +1910,6 @@ public class ADMIN extends javax.swing.JFrame {
             }
         });
 
-        DOCERROR.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        DOCERROR.setText("  ");
-
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
@@ -1935,10 +1931,8 @@ public class ADMIN extends javax.swing.JFrame {
                         .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(DOCERROR, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ERR)
+                        .addGap(32, 32, 32)
+                        .addComponent(ERR, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -2086,9 +2080,7 @@ public class ADMIN extends javax.swing.JFrame {
                     .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(DID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ERR)
-                        .addComponent(DOCERROR)))
+                    .addComponent(ERR))
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel28Layout.createSequentialGroup()
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -2120,54 +2112,57 @@ public class ADMIN extends javax.swing.JFrame {
                                         .addComponent(DOB, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(20, 20, 20)
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                            .addGroup(jPanel28Layout.createSequentialGroup()
+                                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel28Layout.createSequentialGroup()
+                                        .addComponent(jLabel34)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(PASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel28Layout.createSequentialGroup()
+                                        .addComponent(jLabel31)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(MSTATUS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel32))
+                                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel28Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel28Layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel39)
+                                                    .addGroup(jPanel28Layout.createSequentialGroup()
+                                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel38)
+                                                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(JOB_EXPERIENCE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(LKNOWN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(EDUCATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addGroup(jPanel28Layout.createSequentialGroup()
+                                                .addComponent(jLabel36)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(SPECIALIZATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel28Layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jLabel40)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(DOCUMENT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel28Layout.createSequentialGroup()
                                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel33)
                                     .addComponent(jLabel35))
                                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel28Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(USERNAME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(USERPHOTO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel28Layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
-                                        .addComponent(CPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel28Layout.createSequentialGroup()
-                                .addComponent(jLabel34)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(PASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel28Layout.createSequentialGroup()
-                                .addComponent(jLabel31)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(MSTATUS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel32))
-                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel28Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(CPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel28Layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel39)
-                                            .addGroup(jPanel28Layout.createSequentialGroup()
-                                                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel38)
-                                                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(JOB_EXPERIENCE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(LKNOWN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(EDUCATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(jPanel28Layout.createSequentialGroup()
-                                        .addComponent(jLabel36)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(SPECIALIZATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel28Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel40)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(DOCUMENT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(USERPHOTO)
+                                            .addComponent(USERNAME, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel28Layout.createSequentialGroup()
@@ -2235,7 +2230,7 @@ public class ADMIN extends javax.swing.JFrame {
                             .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(DISTRICT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(STATE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel28Layout.createSequentialGroup()
                         .addComponent(jLabel43)
@@ -2338,14 +2333,14 @@ public class ADMIN extends javax.swing.JFrame {
             .addGroup(DOCTORS_CREATELayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DOCTORS_CREATELayout.setVerticalGroup(
             DOCTORS_CREATELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DOCTORS_CREATELayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab2", DOCTORS_CREATE);
@@ -5261,9 +5256,9 @@ public class ADMIN extends javax.swing.JFrame {
 
   private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
     getData();
+    if(status){
     String query =
       "INSERT INTO VHSHOSPITAL.DOCTORS ( ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,FEE,OPDNO,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,ECONTACT,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Did + ",'" + Fname + "'," + "'" + Mname + "'," + "'" + Lname + "'," + "" + Age + "," + "'" + Gender + "'," + "'" + Dob + "'," + "'" + Mstatus + "'," + "'" + photo + "'," + "'DR_" + Userid + "'," + "'" + Password + "'," + "'" + Specilization + "'," + "'" + Education + "'," + Fee + "," + Opd + "," + "'" + Jobexperience + "'," + "'" + DateJoin + "'," + "'" + Lknown + "'," + "'" + Document + "'," + "'" + Email + "'," + "" + Contact1 + "," + "" + Contact2 + "," + "" + EContact + "," + Aadhaarno + "," + "'" + Panno + "'," + "'" + Address + "'," + "'" + City + "'," + "'" + District + "'," + "'" + State + "'," + "'" + Country + "'," + Pincode + "," + "'" + Date + "'," + "'" + Time + "'" + ")";
-
     try {
       try {
         statement.execute(query);
@@ -5355,6 +5350,9 @@ public class ADMIN extends javax.swing.JFrame {
 
     clearFields();
     getAllUsers();
+    }else{
+        
+    }
   }//GEN-LAST:event_SUBMITActionPerformed
 
   private void UPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEActionPerformed
@@ -5443,7 +5441,7 @@ public class ADMIN extends javax.swing.JFrame {
       chooser.showOpenDialog(null);
       File f = chooser.getSelectedFile();
       String filename = f.getAbsolutePath();
-      USERPHOTO.setText(filename);
+      
       String DbName = "doc" + "_" + DID.getText();
       String newPath = "C://VHS_MULTISPECILITY_HOSPITAL/DOCTORS/DR_PHOTO/";
       File directionary = new File(newPath);
@@ -5455,9 +5453,11 @@ public class ADMIN extends javax.swing.JFrame {
       String extension = filename.substring(filename.lastIndexOf('.') + 1);
       sourcsfile = new File(filename);
       destinationFile = new File(newPath + DbName + "." + extension);
-      Files.copy(sourcsfile.toPath(), destinationFile.toPath());
-
-    } catch (Exception e) {}
+      Files.copy(sourcsfile.toPath(), destinationFile.toPath());  
+      USERPHOTO.setText(newPath+DbName+"."+extension); 
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }//GEN-LAST:event_USERPHOTOMouseClicked
 
   private void JOB_EXPERIENCEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JOB_EXPERIENCEMouseClicked
@@ -5465,8 +5465,7 @@ public class ADMIN extends javax.swing.JFrame {
       JFileChooser chooser = new JFileChooser();
       chooser.showOpenDialog(null);
       File f = chooser.getSelectedFile();
-      String filename = f.getAbsolutePath();
-      JOB_EXPERIENCE.setText(filename);
+      String filename = f.getAbsolutePath(); 
       String DbName = "doc" + "_" + DID.getText();
       String newPath =
         "C://VHS_MULTISPECILITY_HOSPITAL/DOCTORS/DR_EXPERIENCE_PHOTO/";
@@ -5479,9 +5478,11 @@ public class ADMIN extends javax.swing.JFrame {
       String extension = filename.substring(filename.lastIndexOf('.') + 1);
       sourcsfile = new File(filename);
       destinationFile = new File(newPath + DbName + "." + extension);
-      Files.copy(sourcsfile.toPath(), destinationFile.toPath());
-      System.out.println(sourcsfile.toPath());
-    } catch (Exception e) {}
+      Files.copy(sourcsfile.toPath(), destinationFile.toPath()); 
+      JOB_EXPERIENCE.setText(newPath + DbName + "." + extension);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }//GEN-LAST:event_JOB_EXPERIENCEMouseClicked
 
   private void EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EMAILActionPerformed
@@ -5585,8 +5586,8 @@ public class ADMIN extends javax.swing.JFrame {
   private void RSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSUBMITActionPerformed
     getData2();
     String query =
-      "INSERT INTO VHSHOSPITAL.RECEPTIONISTS (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','REC_" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
-
+      "INSERT INTO VHSHOSPITAL.RECEPTIONISTS (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','REC_" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + ",'" + Address + "','" + City + "','" + District + "','" + State + "','" + Country + "'," + Pincode + ",'" + Date + "','" + Time + "')";
+System.out.println(query);
     try {
       statement.execute(query);
     } catch (Exception e) {
@@ -5664,8 +5665,7 @@ public class ADMIN extends javax.swing.JFrame {
       JFileChooser chooser = new JFileChooser();
       chooser.showOpenDialog(null);
       File f = chooser.getSelectedFile();
-      String filename = f.getAbsolutePath();
-      RJOB_EXPERIENCE.setText(filename);
+      String filename = f.getAbsolutePath(); 
       String DbName = "Rec" + "_" + RID.getText();
       String newPath =
         "C://VHS_MULTISPECILITY_HOSPITAL/RECPTIONIST/RES_DOCUMENT/";
@@ -5679,6 +5679,7 @@ public class ADMIN extends javax.swing.JFrame {
       sourcsfile = new File(filename);
       destinationFile = new File(newPath + DbName + "." + extension);
       Files.copy(sourcsfile.toPath(), destinationFile.toPath());
+      RDOCUMENT.setText(newPath + DbName + "." + extension);
       System.out.println(sourcsfile.toPath());
     } catch (Exception e) {}
   }//GEN-LAST:event_RDOCUMENTMouseClicked
@@ -6054,19 +6055,16 @@ public class ADMIN extends javax.swing.JFrame {
     search3(af);
   }//GEN-LAST:event_search4ActionPerformed
 
-<<<<<<< HEAD
-  private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
+
+  private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {                                      
     jTabbedPane1.setSelectedIndex(9);
-  }//GEN-LAST:event_jPanel20MouseClicked
+  }                                     
 
   private void jPanel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel22MouseClicked
     jTabbedPane1.setSelectedIndex(10);
   }//GEN-LAST:event_jPanel22MouseClicked
-=======
-    private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
-       jTabbedPane1.setSelectedIndex(9); 
-    }//GEN-LAST:event_jPanel20MouseClicked
->>>>>>> 903fccfd60e15d6cf7a9fb55dfb2756752d07289
+
+  
 
   private void jPanel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel40MouseClicked
     jTabbedPane1.setSelectedIndex(11);
@@ -7092,20 +7090,7 @@ public class ADMIN extends javax.swing.JFrame {
   }//GEN-LAST:event_RLKNOWNKeyTyped
 
   private void RUSERNAMEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RUSERNAMEKeyTyped
-    char c = evt.getKeyChar();
-    if (
-      Character.isLetter(c) ||
-      Character.isWhitespace(c) ||
-      Character.isISOControl(c)
-    ) {
-      RUSERNAME.setEditable(false);
-    } else {
-      RUSERNAME.setEditable(true);
-      char b = evt.getKeyChar();
-      if (Character.isDigit(b)) {
-        evt.consume();
-      }
-    }
+   
   }//GEN-LAST:event_RUSERNAMEKeyTyped
 
   private void RUSERPHOTOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RUSERPHOTOKeyTyped
@@ -7511,7 +7496,6 @@ public class ADMIN extends javax.swing.JFrame {
     private javax.swing.JPanel DISCHARGE_FORM;
     private javax.swing.JTextField DISTRICT;
     private com.toedter.calendar.JDateChooser DOB;
-    private javax.swing.JLabel DOCERROR;
     private javax.swing.JPanel DOCTORLIST;
     private javax.swing.JPanel DOCTORS_CREATE;
     private javax.swing.JTable DOCTORS_LIST;

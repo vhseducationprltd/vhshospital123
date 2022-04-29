@@ -5,13 +5,11 @@ import multispecility_hospital_solapur.use.GetConnection;
 
 public class splash_screen extends javax.swing.JFrame {
 
-    
     public splash_screen() {
         initComponents();
         
         Statement stat = new GetConnection().Connect_mysql();
         String databaseCreate = "CREATE DATABASE IF NOT EXISTS VHSHOSPITAL";
-        
         
         String adminCreate = "CREATE TABLE IF NOT EXISTS  VHSHOSPITAL.ADMIN(SR INT NULL PRIMARY KEY AUTO_INCREMENT , USERNAME VARCHAR(255) NOT NULL UNIQUE, PASSWORD VARCHAR(255) NOT NULL );";
         String addAdmin = "INSERT INTO VHSHOSPITAL.ADMIN(USERNAME , PASSWORD ) VALUES('VHS' , 'VHS');";
@@ -25,7 +23,6 @@ public class splash_screen extends javax.swing.JFrame {
 
        try{
             try{
-                
                 stat.execute(databaseCreate);                
                 stat.execute(adminCreate);
                 stat.execute(receptionistCreate);
@@ -34,16 +31,12 @@ public class splash_screen extends javax.swing.JFrame {
                 stat.execute(appointmentCreate);
                 stat.execute(addAdmin);   
                 stat.execute(ward);
-
             }catch(Exception e){
                 System.out.println("Error : " +e );
             }
-          
        }catch(Exception e){
            System.out.println("Error Occured in splash screen : " + e);
        }
-
-        
     }
 
    
@@ -131,11 +124,9 @@ public class splash_screen extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
         /* Create and display the form */
         splash_screen fs = new splash_screen();
         fs.setVisible(true);
-       
         try{
             for(int i=0;i<101;i++){
             Thread.sleep(10);
@@ -163,7 +154,7 @@ public class splash_screen extends javax.swing.JFrame {
             log.setVisible(true);   
              fs.setVisible(false);
         }catch(Exception e){
-        
+           System.out.println(e);
         }
     }
 
