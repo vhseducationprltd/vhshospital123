@@ -16,13 +16,10 @@ import multispecility_hospital_solapur.ADMIN.ADMIN;
 import multispecility_hospital_solapur.DATA_TABLES.PATIENTS;
 import multispecility_hospital_solapur.use.GetConnection;
 import multispecility_hospital_solapur.use.getTotalUsers;
-
-
-
+import static org.eclipse.persistence.internal.jpa.metadata.xml.XMLEntityMappingsReader.clear;
 
 public class NEW_PATIENTS extends javax.swing.JFrame {
 
-    
     public NEW_PATIENTS() {
         
         initComponents();  
@@ -434,6 +431,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
 
         OPDNO.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         OPDNO.setCaretColor(new java.awt.Color(255, 255, 255));
+        OPDNO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                OPDNOMouseEntered(evt);
+            }
+        });
         OPDNO.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 OPDNOKeyTyped(evt);
@@ -444,6 +446,11 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         jLabel22.setText("FEE");
 
         FEE.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        FEE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                FEEMouseEntered(evt);
+            }
+        });
         FEE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FEEActionPerformed(evt);
@@ -699,13 +706,12 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addComponent(jLabel20)
                                             .addGap(255, 255, 255)
-                                            .addComponent(jLabel21)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE))
+                                            .addComponent(jLabel21))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addComponent(DRNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(OPDNO, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(22, 22, 22)))
+                                            .addGap(18, 18, 18)
+                                            .addComponent(OPDNO, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel22)
                                         .addComponent(FEE, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1004,7 +1010,10 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_VIEWActionPerformed
 
-    private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {    
+        
+        
+        clear();
         int Sr = 0;
         getData();
        
@@ -1097,15 +1106,7 @@ getData();
                         CONTACT2.setText(result.getString("CONTACT2"));
                         AADHAARNO.setText(result.getString("AADHAARNO"));
                         PANNO.setText(result.getString("PANNO"));
-                        
-                        switch(result.getString("DRNAME")){
-                            case "HEMANT":DRNAME.setSelectedIndex(0);
-                                         break;
-                            case "VIVEK":DRNAME.setSelectedIndex(1);
-                                         break;
-                            case "SUNNY":DRNAME.setSelectedIndex(2);
-                                         break;
-                        }
+                         
                         FEE.setText(result.getString("FEE"));
                         OPDNO.setText(result.getString("OPDNO"));
                         SYMPTOMS.setText(result.getString("SYMPTOMS"));
@@ -1368,6 +1369,15 @@ char b = evt.getKeyChar();
                }
            }        // TODO add your handling code here:
     }//GEN-LAST:event_PANNOKeyTyped
+
+    private void OPDNOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OPDNOMouseEntered
+        OPDNO.setEditable(false);
+    }//GEN-LAST:event_OPDNOMouseEntered
+
+    private void FEEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FEEMouseEntered
+         FEE.setEditable(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FEEMouseEntered
 //
     /**
      * @param args the command line arguments
@@ -1431,7 +1441,8 @@ char b = evt.getKeyChar();
     String Time;
     Statement statement;
     ArrayList<String> DrOpds = new ArrayList();
-    ArrayList<String> DrFees = new ArrayList();
+    ArrayList<String> DrFees = new ArrayList();  
+
 
             
 

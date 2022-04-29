@@ -17,7 +17,7 @@ public class LOGIN_FORM extends javax.swing.JFrame {
 
     public LOGIN_FORM() {
         initComponents();
-        Statement stat = new GetConnection().Connect_mysql();
+        statement = new GetConnection().Connect_mysql(ShowError);
       
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         showDate();
@@ -118,6 +118,7 @@ void showTime(){
             }
         });
 
+        ShowError.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         ShowError.setForeground(new java.awt.Color(153, 0, 0));
         ShowError.setText("                                                      ");
 
@@ -135,26 +136,24 @@ void showTime(){
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(UsernameLable))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(PasswordLable)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edtPassword)
-                            .addComponent(edtUsername)))
+                        .addGap(13, 13, 13)
+                        .addComponent(UsernameLable))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(ShowError, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 245, Short.MAX_VALUE)))
+                        .addComponent(PasswordLable)))
+                .addGap(115, 115, 115)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(edtPassword)
+                    .addComponent(edtUsername))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 433, Short.MAX_VALUE)
                 .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(27, 27, 27))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ShowError, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,10 +167,10 @@ void showTime(){
                     .addComponent(edtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PasswordLable, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(ShowError)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ShowError, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(37, 37, 37))
         );
 
         SeparatorLine.setBackground(new java.awt.Color(0, 0, 0));
@@ -300,7 +299,7 @@ void showTime(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-         authenticate(); 
+
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void edtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUsernameActionPerformed
@@ -374,30 +373,31 @@ void showTime(){
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 
+    Statement statement;
     private void authenticate() {
          try{
       
             String username =  edtUsername.getText();  
-            String password =  edtPassword.getText();
-            Statement stm = new GetConnection().Connect_mysql();
-            
+            String password =  edtPassword.getText(); 
             String sql1 = "select * from VHSHOSPITAL.ADMIN WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs1 = stm.executeQuery(sql1);
+            ResultSet rs1 = statement.executeQuery(sql1);
             if(rs1.next()){ 
                this.dispose();
                 ADMIN log = new  ADMIN(); 
                 log.setVisible(true);                        
                 this.setVisible(false);
+                return;
             }
             String sql2 = "select * from VHSHOSPITAL.DOCTORS WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet result = stm.executeQuery(sql2);
+            ResultSet result = statement.executeQuery(sql2);
             if(result.next()){ 
                 this.dispose(); 
                 new OPD(result).setVisible(true);
                 this.setVisible(false);
+                return;
            }
             String sql3 = "select * from VHSHOSPITAL.NURSES WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs3 = stm.executeQuery(sql3);
+            ResultSet rs3 = statement.executeQuery(sql3);
             
              if(rs3.next()){ 
                  rs3.beforeFirst();
@@ -405,25 +405,25 @@ void showTime(){
                 WARD D = new  WARD(rs3);
                      D.setVisible(true);                        
                      this.setVisible(false);
+                     return;
             }
              String sql4 = "select * from VHSHOSPITAL.RECEPTIONISTS WHERE USERNAME='"+username+"' and PASSWORD='"+password+"'";
-            ResultSet rs4 = stm.executeQuery(sql4);
+            ResultSet rs4 = statement.executeQuery(sql4);
             
              if(rs4.next()){ 
                 this.dispose();
                 NEW_PATIENTS D = new  NEW_PATIENTS();
                      D.setVisible(true);                        
                      this.setVisible(false);
+                     return;
             }else{
-                 
+                 JOptionPane.showMessageDialog(rootPane, "WRONG USERNAME OR PASSWORD..");
                 edtUsername.setText("");   
-                edtPassword.setText("");
+                edtPassword.setText(""); 
+                
            } 
         }catch(Exception e){
-            
-            JOptionPane.showMessageDialog(rootPane,"PLEASE LOGIN CURRECT USER");
-
-            System.out.println("hiiii");
+            System.out.println(e);  
             System.out.println(e.getMessage());
         }
     }

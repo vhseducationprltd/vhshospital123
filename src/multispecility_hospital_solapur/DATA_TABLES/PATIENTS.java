@@ -113,9 +113,74 @@ public void search(String str){
             new String [] {
                 "SR", "PID", "FIRST NAME", "MIDDLE NAME", "LAST NAME", "AGE", "GENDER", "DATE OF BIRTH", "MSTATUS", "CONTACT1", "CONTACT2", "AADHAAR NO", "PAN NO", "DR NAME", "OPD NO", "FEE", "SYSMPTOMS", "ADDRESS", "CITY", "DISTRICT", "STATE", "COUNTRY", "PINCODE", "DATE", "TIME"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         PATIENTSDATA.setGridColor(new java.awt.Color(145, 178, 224));
         jScrollPane1.setViewportView(PATIENTSDATA);
+        if (PATIENTSDATA.getColumnModel().getColumnCount() > 0) {
+            PATIENTSDATA.getColumnModel().getColumn(0).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(0).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(1).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(1).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(2).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(2).setPreferredWidth(110);
+            PATIENTSDATA.getColumnModel().getColumn(3).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(3).setPreferredWidth(110);
+            PATIENTSDATA.getColumnModel().getColumn(4).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(4).setPreferredWidth(110);
+            PATIENTSDATA.getColumnModel().getColumn(5).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(5).setPreferredWidth(30);
+            PATIENTSDATA.getColumnModel().getColumn(6).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(6).setPreferredWidth(30);
+            PATIENTSDATA.getColumnModel().getColumn(7).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(7).setPreferredWidth(40);
+            PATIENTSDATA.getColumnModel().getColumn(8).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(8).setPreferredWidth(20);
+            PATIENTSDATA.getColumnModel().getColumn(9).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(9).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(10).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(10).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(11).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(11).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(12).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(13).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(13).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(14).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(14).setPreferredWidth(20);
+            PATIENTSDATA.getColumnModel().getColumn(15).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(15).setPreferredWidth(20);
+            PATIENTSDATA.getColumnModel().getColumn(16).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(17).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(17).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(18).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(18).setPreferredWidth(60);
+            PATIENTSDATA.getColumnModel().getColumn(19).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(19).setPreferredWidth(30);
+            PATIENTSDATA.getColumnModel().getColumn(20).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(20).setPreferredWidth(30);
+            PATIENTSDATA.getColumnModel().getColumn(21).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(21).setPreferredWidth(30);
+            PATIENTSDATA.getColumnModel().getColumn(22).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(22).setPreferredWidth(20);
+            PATIENTSDATA.getColumnModel().getColumn(23).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(23).setPreferredWidth(20);
+            PATIENTSDATA.getColumnModel().getColumn(24).setResizable(false);
+            PATIENTSDATA.getColumnModel().getColumn(24).setPreferredWidth(30);
+        }
 
         jLabel1.setFont(new java.awt.Font("Imprint MT Shadow", 3, 18)); // NOI18N
         jLabel1.setText("PATIENTS    DETAILS");

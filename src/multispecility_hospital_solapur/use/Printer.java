@@ -17,8 +17,8 @@ public class Printer {
                return Printable.NO_SUCH_PAGE;
            }
            Graphics2D graphics2d = (Graphics2D) graphics; 
-           graphics2d.translate(pageFormat.getImageableX()-40,pageFormat.getImageableY()-30);
-           graphics2d.scale(1.3,1.2);
+           graphics2d.translate(pageFormat.getImageableX()-30,pageFormat.getImageableY()-30);
+           graphics2d.scale(0.63,0.97);
            Print_p.paint(graphics2d);
            return Printable.PAGE_EXISTS;
        });

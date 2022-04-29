@@ -32,4 +32,18 @@ public class GetConnection {
        }
        return stat;
    }
+  public Statement Connect_mysql(JLabel lablel){
+       try{
+        Class.forName("com.mysql.jdbc.Driver");  
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","");   
+        stat=con.createStatement();   
+        System.out.println("ConnectedSuccessfully..");
+       }catch(Exception e){ 
+           if(e.getMessage().contains("Communications link failure")){
+               lablel.setText("Please Start The Database Server..");
+           }
+           System.out.println("Problem is Occured inside the : use -> GetConncection.java : " +e); 
+       }
+       return stat;
+   }
 }

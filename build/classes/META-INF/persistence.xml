@@ -3,6 +3,7 @@
   <persistence-unit name="VHSHOSPITALPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>multispecility_hospital_solapur.DATA_TABLES.Appointment</class>
+    <class>multispecility_hospital_solapur.ADMIN.Wards</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/VHSHOSPITAL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

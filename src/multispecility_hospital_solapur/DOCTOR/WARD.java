@@ -71,6 +71,7 @@ public class WARD extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         REPORTS = new javax.swing.JTextArea();
         DRNAME = new javax.swing.JLabel();
+        VIEW1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         TIME = new javax.swing.JLabel();
         DATE = new javax.swing.JLabel();
@@ -304,6 +305,15 @@ public class WARD extends javax.swing.JFrame {
 
         DRNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
+        VIEW1.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        VIEW1.setText("DISCHARGE");
+        VIEW1.setMargin(new java.awt.Insets(4, 27, 4, 27));
+        VIEW1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VIEW1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -333,7 +343,9 @@ public class WARD extends javax.swing.JFrame {
                 .addComponent(DELETE)
                 .addGap(18, 18, 18)
                 .addComponent(VIEW)
-                .addGap(44, 44, 44))
+                .addGap(18, 18, 18)
+                .addComponent(VIEW1)
+                .addGap(163, 163, 163))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -360,7 +372,8 @@ public class WARD extends javax.swing.JFrame {
                     .addComponent(VIEW)
                     .addComponent(UPDATE)
                     .addComponent(DELETE)
-                    .addComponent(SUBMIT))
+                    .addComponent(SUBMIT)
+                    .addComponent(VIEW1))
                 .addGap(18, 18, 18))
         );
 
@@ -555,13 +568,12 @@ public class WARD extends javax.swing.JFrame {
     }//GEN-LAST:event_PIDKeyPressed
 
     private void SYMPTOMSKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SYMPTOMSKeyPressed
-        
-        
-        
-        
-        
-        
+         
     }//GEN-LAST:event_SYMPTOMSKeyPressed
+
+    private void VIEW1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEW1ActionPerformed
+       new DISCHARGE().setVisible(true);
+    }//GEN-LAST:event_VIEW1ActionPerformed
 
      void showDate(){
         Date d = new Date();
@@ -639,6 +651,7 @@ public class WARD extends javax.swing.JFrame {
     private javax.swing.JTextArea TREATMENT;
     private javax.swing.JButton UPDATE;
     private javax.swing.JButton VIEW;
+    private javax.swing.JButton VIEW1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
