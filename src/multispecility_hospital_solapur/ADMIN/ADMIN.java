@@ -6054,6 +6054,7 @@ public class ADMIN extends javax.swing.JFrame {
     search3(af);
   }//GEN-LAST:event_search4ActionPerformed
 
+<<<<<<< HEAD
   private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
     jTabbedPane1.setSelectedIndex(9);
   }//GEN-LAST:event_jPanel20MouseClicked
@@ -6061,6 +6062,11 @@ public class ADMIN extends javax.swing.JFrame {
   private void jPanel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel22MouseClicked
     jTabbedPane1.setSelectedIndex(10);
   }//GEN-LAST:event_jPanel22MouseClicked
+=======
+    private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
+       jTabbedPane1.setSelectedIndex(9); 
+    }//GEN-LAST:event_jPanel20MouseClicked
+>>>>>>> 903fccfd60e15d6cf7a9fb55dfb2756752d07289
 
   private void jPanel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel40MouseClicked
     jTabbedPane1.setSelectedIndex(11);

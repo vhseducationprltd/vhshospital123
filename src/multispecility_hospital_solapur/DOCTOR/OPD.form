@@ -251,10 +251,20 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="AGE" max="32767" attributes="0"/>
                           <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
+<<<<<<< HEAD
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="PID" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="FULLNAME" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="ERRLABLE" alignment="3" max="32767" attributes="0"/>
+=======
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="PID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="FULLNAME" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ERRLABLE" alignment="3" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+>>>>>>> 903fccfd60e15d6cf7a9fb55dfb2756752d07289
                           </Group>
                           <Component id="GENDER" max="32767" attributes="0"/>
                       </Group>
