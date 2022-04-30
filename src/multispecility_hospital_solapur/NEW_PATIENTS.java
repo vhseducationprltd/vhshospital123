@@ -151,9 +151,6 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         DERR.setText("  ");
         new ADMIN().getAllUsers();
      }
-     
-     
-     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1009,7 +1006,6 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
 
     private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
        try {
-           
             PATIENTS data = new PATIENTS();
             data.setVisible(true);
             data.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1020,13 +1016,10 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_VIEWActionPerformed
 
-    private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {    
-        
-        
+    private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {
         clear();
         int Sr = 0;
         getData();
-       
         try {
             String query = "SELECT * FROM VHSHOSPITAL.APPOINTMENTS";
             ResultSet result = statement.executeQuery(query);
