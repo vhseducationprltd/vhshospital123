@@ -148,6 +148,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         STATE.setText("");
         COUNTRY.setText("");
         PINCODE.setText(""); 
+        DERR.setText("  ");
         new ADMIN().getAllUsers();
      }
      
@@ -215,6 +216,7 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
         UPDATE = new javax.swing.JButton();
         DELETE = new javax.swing.JButton();
         LOGOUT = new javax.swing.JButton();
+        DERR = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         TIME = new javax.swing.JLabel();
         DATE = new javax.swing.JLabel();
@@ -610,6 +612,10 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
             }
         });
 
+        DERR.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        DERR.setForeground(new java.awt.Color(204, 0, 0));
+        DERR.setText("    ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -620,7 +626,9 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(DERR, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -739,7 +747,9 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DERR)))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1031,6 +1041,9 @@ public class NEW_PATIENTS extends javax.swing.JFrame {
             getAllUsers();
         } catch (Exception e) {
             System.out.println("Something is happened In NewPatients ..");
+            if(e.getMessage().contains("Duplicate entry")){
+                DERR.setText("Duplicate Data..!");
+            }
             System.out.println(e);
         }
     }
@@ -1459,6 +1472,7 @@ char b = evt.getKeyChar();
     private javax.swing.JTextField COUNTRY;
     private javax.swing.JLabel DATE;
     private javax.swing.JButton DELETE;
+    private javax.swing.JLabel DERR;
     private javax.swing.JTextField DISTRICT;
     private com.toedter.calendar.JDateChooser DOB;
     private javax.swing.JComboBox<String> DRNAME;

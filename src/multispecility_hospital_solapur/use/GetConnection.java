@@ -1,11 +1,13 @@
 package multispecility_hospital_solapur.use; 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement; 
 import javax.swing.JLabel;
 
 public class GetConnection {
+//    DERBY
    Statement stat;  
    public Statement connect_derby(JLabel lablel){
        try{
@@ -21,6 +23,7 @@ public class GetConnection {
        return stat;
    }
    
+//   MY SQL WITHOUT ERROR LABLE
   public Statement Connect_mysql(){
        try{
         Class.forName("com.mysql.jdbc.Driver");  
@@ -32,6 +35,7 @@ public class GetConnection {
        }
        return stat;
    }
+//  MY SQL WITH ERROR LABLE
   public Statement Connect_mysql(JLabel lablel){
        try{
         Class.forName("com.mysql.jdbc.Driver");  
@@ -45,5 +49,17 @@ public class GetConnection {
            System.out.println("Problem is Occured inside the : use -> GetConncection.java : " +e); 
        }
        return stat;
+   }
+  public Connection Connect_mysql_Prep(){ 
+      Connection con=null;
+       try{
+        Class.forName("com.mysql.jdbc.Driver");  
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","");     
+        System.out.println("ConnectedSuccessfully..");
+       }catch(Exception e){ 
+          
+           System.out.println("Problem is Occured inside the : use -> GetConncection.java : " +e); 
+       }
+       return con;
    }
 }

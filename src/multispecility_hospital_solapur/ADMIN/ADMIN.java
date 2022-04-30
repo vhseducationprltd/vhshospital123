@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.Timer;
@@ -88,7 +91,6 @@ public class ADMIN extends javax.swing.JFrame {
 
     try {
       DefaultTableModel table = (DefaultTableModel) NURSE_LIST.getModel();
-      System.out.println("Inside the pati");
       String query = "SELECT * FROM VHSHOSPITAL.DOCTORS";
       Statement statement = new GetConnection().Connect_mysql();
       ResultSet result = statement.executeQuery(query);
@@ -597,7 +599,7 @@ public class ADMIN extends javax.swing.JFrame {
     NGENDER.setSelectedIndex(0);
     NDATEOFJOINING.setDate(null);
     NCPASSWORD.setText("");
-
+    NERR.setText("  ");
     ///
     WID.setText("");
     WARD.setText("");
@@ -888,7 +890,6 @@ public class ADMIN extends javax.swing.JFrame {
         jLabel101 = new javax.swing.JLabel();
         RVIEW1 = new javax.swing.JButton();
         NSUBMIT = new javax.swing.JButton();
-        RUPDATE1 = new javax.swing.JButton();
         RDELETE1 = new javax.swing.JButton();
         jLabel102 = new javax.swing.JLabel();
         jLabel103 = new javax.swing.JLabel();
@@ -927,6 +928,8 @@ public class ADMIN extends javax.swing.JFrame {
         NDATEOFJOINING = new com.toedter.calendar.JDateChooser();
         NPASSWORD = new javax.swing.JPasswordField();
         NCPASSWORD = new javax.swing.JPasswordField();
+        NUPDATE = new javax.swing.JButton();
+        NERR = new javax.swing.JLabel();
         jLabel118 = new javax.swing.JLabel();
         RDATE1 = new javax.swing.JLabel();
         RTIME1 = new javax.swing.JLabel();
@@ -2110,7 +2113,7 @@ public class ADMIN extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(DOB, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel28Layout.createSequentialGroup()
                                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2136,20 +2139,19 @@ public class ADMIN extends javax.swing.JFrame {
                                                             .addComponent(jLabel38)
                                                             .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING))
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(JOB_EXPERIENCE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(LKNOWN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(EDUCATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                            .addComponent(LKNOWN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(EDUCATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(JOB_EXPERIENCE, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                             .addGroup(jPanel28Layout.createSequentialGroup()
                                                 .addComponent(jLabel36)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(SPECIALIZATION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(jPanel28Layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                                         .addGap(14, 14, 14)
                                         .addComponent(jLabel40)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(DOCUMENT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(12, 12, 12)
+                                        .addComponent(DOCUMENT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel28Layout.createSequentialGroup()
                                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel33)
@@ -2163,7 +2165,7 @@ public class ADMIN extends javax.swing.JFrame {
                                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(USERPHOTO)
                                             .addComponent(USERNAME, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel28Layout.createSequentialGroup()
                                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -3412,15 +3414,6 @@ public class ADMIN extends javax.swing.JFrame {
             }
         });
 
-        RUPDATE1.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        RUPDATE1.setText("UPDATE");
-        RUPDATE1.setMargin(new java.awt.Insets(7, 24, 7, 24));
-        RUPDATE1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RUPDATE1ActionPerformed(evt);
-            }
-        });
-
         RDELETE1.setBackground(new java.awt.Color(255, 0, 0));
         RDELETE1.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         RDELETE1.setText("DELETE");
@@ -3545,6 +3538,11 @@ public class ADMIN extends javax.swing.JFrame {
                 NPINCODEActionPerformed(evt);
             }
         });
+        NPINCODE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NPINCODEKeyTyped(evt);
+            }
+        });
 
         jLabel110.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel110.setText("STATE");
@@ -3667,6 +3665,19 @@ public class ADMIN extends javax.swing.JFrame {
 
         NCPASSWORD.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
 
+        NUPDATE.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        NUPDATE.setText("UPDATE");
+        NUPDATE.setMargin(new java.awt.Insets(7, 24, 7, 24));
+        NUPDATE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NUPDATEActionPerformed(evt);
+            }
+        });
+
+        NERR.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        NERR.setForeground(new java.awt.Color(204, 0, 0));
+        NERR.setText("   ");
+
         javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
         jPanel35.setLayout(jPanel35Layout);
         jPanel35Layout.setHorizontalGroup(
@@ -3675,131 +3686,135 @@ public class ADMIN extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel35Layout.createSequentialGroup()
-                        .addComponent(jLabel90)
-                        .addGap(45, 45, 45)
-                        .addComponent(NID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel35Layout.createSequentialGroup()
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(NCOUNTRY, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel108))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel109)
-                                .addComponent(NPINCODE, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel35Layout.createSequentialGroup()
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel111)
-                                .addComponent(NADDRESS, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel112)
-                                .addComponent(NCITY, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel107)
-                                .addComponent(NDISTRICT, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(NSTATE, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel110))
-                            .addGap(30, 30, 30)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel121)
-                                .addComponent(NDATEOFJOINING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel35Layout.createSequentialGroup()
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel113)
-                                .addComponent(NEMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel114)
-                                .addComponent(NCONTACT1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel115)
-                                .addComponent(NCONTACT2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(10, 10, 10)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel116)
-                                .addComponent(NAADHAARNO, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel117)
-                                .addComponent(NPANNO)))
-                        .addGroup(jPanel35Layout.createSequentialGroup()
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel113)
+                            .addComponent(NEMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel114)
+                            .addComponent(NCONTACT1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel115)
+                            .addComponent(NCONTACT2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel116)
+                            .addComponent(NAADHAARNO, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel117)
+                            .addComponent(NPANNO)))
+                    .addGroup(jPanel35Layout.createSequentialGroup()
+                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel35Layout.createSequentialGroup()
+                                .addComponent(jLabel90)
+                                .addGap(45, 45, 45)
+                                .addComponent(NID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(NERR, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel35Layout.createSequentialGroup()
                                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel91)
-                                    .addComponent(NFNAME, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel97)
-                                .addComponent(NMSTATUS, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel98)
-                                .addComponent(jLabel92)
-                                .addComponent(NMNAME)
-                                .addComponent(NUSERPHOTO, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel35Layout.createSequentialGroup()
-                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel93)
-                                        .addComponent(NLNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel94)
-                                        .addComponent(NAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel95)
-                                        .addComponent(NGENDER, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel35Layout.createSequentialGroup()
-                                            .addGap(12, 12, 12)
-                                            .addComponent(NDOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(jLabel96)))
-                                .addGroup(jPanel35Layout.createSequentialGroup()
-                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel99)
-                                        .addComponent(NUSERNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel100)
-                                        .addComponent(NPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel101)
-                                    .addGap(121, 121, 121))))
-                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(NCPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel35Layout.createSequentialGroup()
-                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel102)
-                                    .addComponent(NSPECIALIZATION, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(NCOUNTRY, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel108))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel103)
-                                    .addComponent(NEDUCATION, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel109)
+                                    .addComponent(NPINCODE, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel35Layout.createSequentialGroup()
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel111)
+                                    .addComponent(NADDRESS, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel104)
-                                    .addComponent(NJOB_EXPERIENCE, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel112)
+                                    .addComponent(NCITY, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel105)
-                                    .addComponent(NLKNOWN, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel107)
+                                    .addComponent(NDISTRICT, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel106)
-                                    .addComponent(NDOCUMENT, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(NSTATE, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel110))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel121)
+                                    .addComponent(NDATEOFJOINING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel35Layout.createSequentialGroup()
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel91)
+                                        .addComponent(NFNAME, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel97)
+                                    .addComponent(NMSTATUS, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel98)
+                                    .addComponent(jLabel92)
+                                    .addComponent(NMNAME)
+                                    .addComponent(NUSERPHOTO, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel35Layout.createSequentialGroup()
+                                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel93)
+                                            .addComponent(NLNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel94)
+                                            .addComponent(NAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel95)
+                                            .addComponent(NGENDER, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel35Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(NDOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jLabel96)))
+                                    .addGroup(jPanel35Layout.createSequentialGroup()
+                                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel99)
+                                            .addComponent(NUSERNAME, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel100)
+                                            .addComponent(NPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel101)
+                                        .addGap(121, 121, 121))))
+                            .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(NCPASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel35Layout.createSequentialGroup()
+                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel102)
+                                        .addComponent(NSPECIALIZATION, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel103)
+                                        .addComponent(NEDUCATION, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel104)
+                                        .addComponent(NJOB_EXPERIENCE, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel105)
+                                        .addComponent(NLKNOWN, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel106)
+                                        .addComponent(NDOCUMENT, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(33, 33, 33))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel35Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(NSUBMIT)
-                .addGap(34, 34, 34)
-                .addComponent(RUPDATE1)
-                .addGap(29, 29, 29)
+                .addGap(33, 33, 33)
+                .addComponent(NUPDATE)
+                .addGap(35, 35, 35)
                 .addComponent(RDELETE1)
                 .addGap(18, 18, 18)
                 .addComponent(RVIEW1)
@@ -3811,7 +3826,8 @@ public class ADMIN extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel90, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NERR))
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel35Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
@@ -3959,9 +3975,9 @@ public class ADMIN extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RVIEW1)
-                    .addComponent(RUPDATE1)
                     .addComponent(RDELETE1)
-                    .addComponent(NSUBMIT))
+                    .addComponent(NSUBMIT)
+                    .addComponent(NUPDATE))
                 .addGap(21, 21, 21))
         );
 
@@ -5251,7 +5267,8 @@ public class ADMIN extends javax.swing.JFrame {
   }//GEN-LAST:event_USERNAMEActionPerformed
 
   private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
-    jTabbedPane1.setSelectedIndex(9);
+   getdata();
+      jTabbedPane1.setSelectedIndex(9);
   }//GEN-LAST:event_VIEWActionPerformed
 
   private void SUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMITActionPerformed
@@ -5600,7 +5617,7 @@ System.out.println(query);
 
   private void RUPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RUPDATEActionPerformed
     getData2();
-    String query = "UPDATE VHSHOSPITAL.RECEPTIONISTS SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "AADHAAR=" + Aadhaarno + "," + "PAN=" + "'" + Panno + "'," + "FEE=" + Fee + "," + "OPDNO=" + Opd + "," + "ADDRESS=" + "'" + Address + "'," + "UPHOTO=" + "'" + photo + "'," + "USERNAME=" + "'" + Userid + "'," + "PASSWORD=" + "'" + Password + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PIN=" + Pincode + ",EDUCATION=" + "'" + Education + "'," + "DATEOFJOIN=" + "'" + DateJoin + "'," + "JOBEXP=" + "'" + Jobexperience + "'" + " WHERE ID=" + Did;
+    String query = "UPDATE VHSHOSPITAL.RECEPTIONISTS SET " + "FNAME=" + "'" + Fname + "'," + "MNAME=" + "'" + Mname + "'," + "LNAME=" + "'" + Lname + "'," + "AGE=" + Age + "," + "GENDER=" + "'" + Gender + "'," + "DOB=" + "'" + Dob + "'," + "MSTATUS=" + "'" + Mstatus + "'," + "CONTACT1=" + Contact1 + "," + "CONTACT2=" + Contact2 + "," + "AADHAAR=" + Aadhaarno + "," + "PAN=" + "'" + Panno + "'," + "ADDRESS=" + "'" + Address + "'," + "UPHOTO=" + "'" + Userphoto + "'," + "USERNAME=" + "'" + Username + "'," + "PASSWORD=" + "'" + Password + "'," + "CITY=" + "'" + City + "'," + "DISTRICT=" + "'" + District + "'," + "STATE=" + "'" + State + "'," + "COUNTRY=" + "'" + Country + "'," + "PIN=" + Pincode + ",EDUCATION=" + "'" + Education + "'," + "DATEOFJOIN=" + "'" + Dateofjoin + "'," + "JOBEXP=" + "'" + Jobexperience + "'" + " WHERE ID=" + Rid;
     System.out.println(query);
 
     try {
@@ -5827,19 +5844,23 @@ System.out.println(query);
   private void RVIEW1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RVIEW1ActionPerformed
     // TODO add your handling code here:
   }//GEN-LAST:event_RVIEW1ActionPerformed
-
+  private void NURSEUPDATEActionPerformed(java.awt.event.ActionEvent evt){
+      
+  }
   private void NSUBMITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NSUBMITActionPerformed
-    // TODO add your handling code here:
-
+     // TODO add your handling code here: 
     try {
       getData3();
-      String query = "INSERT INTO VHSHOSPITAL.NURSES (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','NU_" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + "," + Address + "," + City + "," + District + "," + State + "," + Country + "," + Pincode + ",'" + Date + "','" + Time + "')";
+      String query = "INSERT INTO VHSHOSPITAL.NURSES (ID,FNAME,MNAME,LNAME,AGE,GENDER,DOB,MSTATUS,UPHOTO,USERNAME,PASSWORD,SPECIALIZATION,EDUCATION,JOBEXP,DATEOFJOIN,LKNOWN,DOCUMENT,EMAIL,CONTACT1,CONTACT2,AADHAAR,PAN,ADDRESS,CITY,DISTRICT,STATE,COUNTRY,PIN,DATE,TIME)VALUES(" + Rid + ",'" + Fname + "','" + Mname + "','" + Lname + "','" + Age + "','" + Gender + "','" + Dob + "','" + Mstatus + "','" + Userphoto + "','NU_" + Username + "','" + Password + "','" + Specialization + "','" + Education + "','" + Jobexperience + "','" + Dateofjoin + "','" + Lknown + "','" + Document + "','" + Email + "'," + Contact1 + "," + Contact2 + "," + Aadhaarno + "," + Panno + ",'" + Address + "','" + City + "','" + District + "','" + State + "','" + Country + "'," + Pincode + ",'" + Date + "','" + Time + "')";
       System.out.println(query);
       statement.execute(query);
       clearFields();
       getAllUsers();
     } catch (Exception e) {
       System.out.println(e);
+      if(e.getMessage().contains("Duplicate")){
+          NERR.setText("Duplicate Data..!");
+      }
     }
   }//GEN-LAST:event_NSUBMITActionPerformed
 
@@ -6151,7 +6172,10 @@ System.out.println(query);
         "SELECT * FROM VHSHOSPITAL.NURSES WHERE ID =" + NID.getText();
       try {
         ResultSet result = statement.executeQuery(getQuery);
-        while (result.next()) {
+        if(result.next()){
+            result.beforeFirst();
+            NERR.setText("   ");
+            while (result.next()) {
           NID.setText(result.getString("ID"));
           NFNAME.setText(result.getString("FNAME"));
           NMNAME.setText(result.getString("MNAME"));
@@ -6206,6 +6230,10 @@ System.out.println(query);
           }
           NCPASSWORD.setText(result.getString("USERNAME"));
         }
+        }else{ 
+          NERR.setText("No Data..!"); 
+        }
+        
       } catch (Exception e) {
         clearFields();
         System.out.println(e);
@@ -6432,9 +6460,7 @@ System.out.println(query);
     try {
       statement.execute(
         "DELETE FROM  VHSHOSPITAL.WARDS WHERE WID=" + WID.getText()
-      );
-      //             String query = "DELETE FROM VHSHOSPITAL.WARDS WHERE WID=" + Wid;
-      //            statement.execute(query);
+      ); 
       clearFields();
       getAllUsers();
       getAllWards();
@@ -7441,6 +7467,75 @@ System.out.println(query);
     } // TODO add your handling code here:
   }//GEN-LAST:event_NDOCUMENTKeyTyped
 
+    private void NPINCODEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NPINCODEKeyTyped
+  char b = evt.getKeyChar();
+        if(!Character.isDigit(b)){
+            evt.consume();
+        }
+ String p = NPINCODE.getText();
+           int length = p.length();
+           char c = evt.getKeyChar();
+           if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+               if(length<6){
+                   NPINCODE.setEditable(true);
+               }else{
+                   NPINCODE.setEditable(false);
+               }
+           }else{
+               if(evt.getExtendedKeyCode()==KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                   NPINCODE.setEditable(true);
+               }else{
+                   NPINCODE.setEditable(true);
+               }
+           }        // TODO add your handling code here:
+    }//GEN-LAST:event_NPINCODEKeyTyped
+
+    private void NUPDATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NUPDATEActionPerformed
+        Connection connection = new GetConnection().Connect_mysql_Prep();
+        try{
+            getData3();
+            PreparedStatement query = connection.prepareStatement("UPDATE VHSHOSPITAL.NURSES SET ID = ? ,FNAME = ? ,MNAME = ? ,LNAME = ? ,AGE = ? ,GENDER = ? ,DOB = ? ,MSTATUS = ? ,UPHOTO = ? ,USERNAME = ? ,PASSWORD = ? ,SPECIALIZATION = ? ,EDUCATION = ? ,JOBEXP = ? ,DATEOFJOIN = ? ,LKNOWN = ? ,DOCUMENT = ? ,EMAIL = ? ,CONTACT1 = ? ,CONTACT2 = ? ,AADHAAR = ? ,PAN = ? ,ADDRESS = ? ,CITY = ? ,DISTRICT = ? ,STATE = ? ,COUNTRY = ? ,PIN = ? ,DATE = ? ,TIME=? WHERE ID= ? ");
+            query.setInt(1,Rid);     
+            query.setString(2,Fname);
+            query.setString(3,Mname);
+            query.setString(4,Lname);
+            query.setInt(5,Age); 
+            query.setString(6,Gender);
+            query.setString(7,Dob);
+            query.setString(8,Mstatus);
+            query.setString(9,Userphoto);
+            query.setString(10,Username);
+            query.setString(11,Password);
+            query.setString(12,Specialization);
+            query.setString(13,Education);
+            query.setString(14,Jobexperience);
+            query.setString(15,Dateofjoin);
+            query.setString(16,Lknown);
+            query.setString(17,Document);
+            query.setString(18,Email);
+            query.setLong(19, Contact1);
+            query.setLong(20, Contact2);
+            query.setLong(21, Aadhaarno);
+            query.setString(22,Panno);
+            query.setString(23,Address);
+            query.setString(24,City);
+            query.setString(25,District);
+            query.setString(26,State);
+            query.setString(27,Country);
+            query.setLong(28,Pincode);
+            query.setString(29,Date);
+            query.setString(30,Time);
+            query.setInt(31,Rid);    
+            System.out.println(query);
+            query.execute();
+            clearFields();
+            getAllUsers();
+         }catch(Exception e){
+            System.out.println(e);
+        }
+        
+    }//GEN-LAST:event_NUPDATEActionPerformed
+
   public static void main(String args[]) {
     try {
       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -7532,6 +7627,7 @@ System.out.println(query);
     private javax.swing.JTextField NDOCUMENT;
     private javax.swing.JTextField NEDUCATION;
     private javax.swing.JTextField NEMAIL;
+    private javax.swing.JLabel NERR;
     private javax.swing.JTextField NFNAME;
     private javax.swing.JComboBox<String> NGENDER;
     private javax.swing.JTextField NID;
@@ -7548,6 +7644,7 @@ System.out.println(query);
     private javax.swing.JTextField NSTATE;
     private javax.swing.JButton NSUBMIT;
     private javax.swing.JButton NSUBMIT1;
+    private javax.swing.JButton NUPDATE;
     private javax.swing.JPanel NURSEEE;
     private javax.swing.JPanel NURSE_CREATE;
     private javax.swing.JTable NURSE_LIST;
@@ -7612,7 +7709,6 @@ System.out.println(query);
     private javax.swing.JLabel RTIME3;
     private javax.swing.JLabel RTIME4;
     private javax.swing.JButton RUPDATE;
-    private javax.swing.JButton RUPDATE1;
     private javax.swing.JButton RUPDATE2;
     private javax.swing.JTextField RUSERNAME;
     private javax.swing.JTextField RUSERPHOTO;

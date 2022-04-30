@@ -141,7 +141,7 @@ public class OPD extends javax.swing.JFrame {
      
      private void clearFields() {
          PID.setText(""); 
-         GENDER.setText("");
+         GENDER.setText("GENDER : ");
       
          SYMPTOMS.setText("");
          MEDICINES.setText("");
@@ -150,7 +150,8 @@ public class OPD extends javax.swing.JFrame {
              //      DATEOFADMIT.setText("");
              //      WARDNAME.setText("");
          BEDNO.setText("");
-      
+         FULLNAME.setText("NAME : ");
+         AGE.setText("AGE : ");
          CFULLNAME.setText("");
          CAGE.setText("");
              //      CGENDER.setText("");
@@ -159,7 +160,8 @@ public class OPD extends javax.swing.JFrame {
       
          RTOPATIENT.setText("");
          CADDRESS.setText("");
-     
+         ERRLABLE.setText("  ");
+         DATEOFADMIT.setDate(null);
      
      }
 
@@ -725,7 +727,7 @@ public class OPD extends javax.swing.JFrame {
         FULLNAME.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         FULLNAME.setText("NAME : ");
 
-        ERRLABLE.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        ERRLABLE.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         ERRLABLE.setForeground(new java.awt.Color(255, 0, 0));
         ERRLABLE.setText("              ");
 
@@ -781,12 +783,10 @@ public class OPD extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(AGE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(PID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(FULLNAME)
                         .addComponent(ERRLABLE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-
                     .addComponent(GENDER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1043,6 +1043,9 @@ public class OPD extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("nahi jal");
             System.out.println(e);
+            if(e.getMessage().contains("Duplicate entry")){
+                ERRLABLE.setText("Patient Already Admitted..!");
+            }
         }
 
         }
@@ -1064,6 +1067,7 @@ public class OPD extends javax.swing.JFrame {
         System.out.println("inside the event..") ;
 //       
         if(evt.getKeyCode()==10){ 
+            ERRLABLE.setText("");
              try{ 
                  Pid = Integer.parseInt(PID.getText()); 
                  ResultSet result = statement.executeQuery("SELECT * FROM VHSHOSPITAL.APPOINTMENTS WHERE PID="+PID.getText());
@@ -1080,8 +1084,7 @@ public class OPD extends javax.swing.JFrame {
                            GENDER.setText("GENDER :" + result.getString("GENDER")); 
                            ERRLABLE.setText("");
                        }else{
-                           ERRLABLE.setText("NOT UER PATIENT..");
-                           clearFields();
+                           ERRLABLE.setText("NOT UER PATIENT.."); 
                        }
                   } 
              }catch(Exception e){

@@ -32,14 +32,15 @@ public class splash_screen extends javax.swing.JFrame {
                 stat.execute(addAdmin);   
                 stat.execute(ward);
             }catch(Exception e){
-                System.out.println("Error : " +e );
+                if(!e.getMessage().contains("Duplicate entry 'VHS' for key 'USERNAME'")){
+                    System.out.println("Error : " +e );
+                }
             }
        }catch(Exception e){
            System.out.println("Error Occured in splash screen : " + e);
        }
-    }
+    } 
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
